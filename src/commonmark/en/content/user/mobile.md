@@ -1066,7 +1066,7 @@ the default message.
 TRACKED\_ENTITY\_REGISTRATION\_PARSER can be used to enrol tracked
 entity into the system.
 
-![](resources/images/dhis2_mobile_sms/TEI_parser.png)
+![](resources/images/dhis2_mobile/tracker.png)
 
 Command name will be followed by tracked entity attributes pertaining to
 specific program which this command is associated with. Program
@@ -1087,7 +1087,7 @@ provide those parameters then default ones will be used.
 PROGRAM\_STAGE\_DATAENTRY\_PARSER can be used to enter program stage
 related data for a specific tracked entity instance.
 
-![](resources/images/dhis2_mobile_sms/programstage_data_parser.png)
+![](resources/images/dhis2_mobile/program-stage-parser.png)
 
 Command name will be followed by data elements pertaining to specific
 program stage which this command is associated with. Program and program

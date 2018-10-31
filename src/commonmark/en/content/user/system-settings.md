@@ -47,7 +47,7 @@
 </tr>
 <tr class="odd">
 <td><p><strong>Default relative period for analysis</strong></p></td>
-<td><p>Setting this value will determine which relative period is selected as the default in the analytics apps.</p></td>
+<td><p>TBA</p></td>
 </tr>
 <tr class="even">
 <td><p><strong>Feedback recipients</strong></p></td>
@@ -77,8 +77,16 @@
 <p>If you've enabled this setting, you can in the <strong>Data Entry</strong> app, click on the parent organisation unit for the children that you want to enter data for, and the data set list will include data sets that are assigned to the children of that parent.</p></td>
 </tr>
 <tr class="odd">
-<td><strong>Acceptance required before approval</strong></td>
-<td>When this setting is selected, acceptance of data will be required first before submission to the next approval level is possible.</td>
+<td><p><strong>Days after period end to qualify for timely data submission</strong></p></td>
+<td><p>Sets the number of days after the end of a period in which a data entry form must be marked as complete in order to be considered timely.</p>
+<p>The setting affects the <strong>Reporting rate summary</strong> report you create in the <strong>Reports</strong> app. This report lists data entry forms marked as complete as well as data entry forms marked as completed on time.</p>
+<p>The default value is 15.</p></td>
+</tr>
+<tr class="even">
+<td><p><strong>Omit indicator values with zero numerator value in data mart:</strong></p></td>
+<td><p>Defines whether aggregated indicator values with zero as the numerator value should be written to the indicator data mart table.</p>
+<p>You must write such values for example when connecting Excel pivot tables to the data mart since Excel will need the numerator data to correctly aggregate up in the organisation unit hierarchy.</p>
+<p>If third-party tools are not used with DHIS2, this will reduce the total number of values written to the data mart (which again will improve performance) and could safely be set to omit.</p></td>
 </tr>
 </tbody>
 </table>
@@ -106,40 +114,36 @@
 <p>Recommended setting: the most commonly used relative period among your users.</p></td>
 </tr>
 <tr class="even">
-<td><strong>Financial year relative start month</strong></td>
-<td>Defines which month (April, July or October) the the relative financial year in the analytics apps should begin on.</td>
-</tr>
-<tr class="odd">
 <td><p><strong>Cacheability</strong></p></td>
 <td><p>Sets whether analytics data responses should be served with public or private visibility.</p>
 <p><strong>Private</strong>: Any node or server between the DHIS2 server and the end user which has the ability to cache can NOT cache the web page. This is useful if the page served can or do contain sensitive information. This means that each time you want a web page, either you get a new page from the DHIS2 server, or the DHIS2 server caches the page. No other server than the DHIS2 server are allowed to cache the page.</p>
 <p><strong>Public</strong>: Any node or server between the DHIS2 server and the end user which has the ability to cache can cache the web page. This relives the traffic to the DHIS2 server and potentially speeds up the subsequent page loading speed.</p></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><p><strong>Cache strategy</strong></p></td>
-<td><p>Decides for how long reports analytics responses should be cached.</p>
-<p>If you use the scheduled, nightly analytics update, select <strong>Cache until 6 AM tomorrow</strong>. This is because data in reports change at that time, and you can safely cache data up to the moment when the analytics tables are updated.</p>
+<td><p>Decides for how long reports and responses related to analysis should be cached.</p>
+<p>If you use the scheduled, nightly analytics tables update, select <strong>Cache until 6 AM tomorrow</strong>. This is because data in reports change at that time, and you can safely cache data up to the moment when the analytics tables are updated.</p>
 <p>If you are loading data continuously into the analytics tables, select <strong>No cache</strong>.</p></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><p><strong>Max number of years to hide unapproved data in analytics</strong></p></td>
-<td><p>Sets whether and for how long back in time analytics should respect the approval level of the data. Typically, data which is several years old would be considered to be approved by default. In order to speed up analytics requests, you can choose to ignore the actual approval level of historical data.</p>
+<td><p>Sets whether and for how long back in time the analytics engine should hide unapproved data.</p>
 <p><strong>Never check approval</strong>: no data will be hidden, irrespective of its data approval status.</p>
 <p><strong>Check approval for all data</strong>: approval status will always be checked.</p>
 <p>Other options, for example <strong>Last 3 years</strong>: approval status will be checked for data which is newer than 3 years old; older data will not be checked.</p></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><p><strong>Threshold for analytics data caching</strong></p></td>
 <td><p>Sets whether to enable caching data older than the specified number of years only.</p>
 <p>This allows for returning the most recent data directly with no caching, while serving cached version of older data for performance concerns.</p></td>
 </tr>
-<tr class="odd">
-<td><p><strong>Respect category option start and end date in analytics table export</strong></p></td>
-<td><p>This setting controls whether analytics should filter data which is associated with a category option with a start and end date, but which is not associated with a period within the category options interval of validity.</p></td>
-</tr>
 <tr class="even">
+<td><p><strong>Respect category option start and end date in analytics table export</strong></p></td>
+<td><p>Sets whether aggregate data values where the data period falls outside the start and end date of the category options of the data attribute category option combination should be filtered out of the analytics tables when generated.</p></td>
+</tr>
+<tr class="odd">
 <td><p><strong>Put analytics in maintenance mode</strong></p></td>
-<td>Places the analytics and web API of DHIS2 in maintenance mode. This means that &quot;503 Service Unavailable&quot; will be returned for all requests.
+<td><p>Puts the analytics engine and web API resource in maintenance mode. This means that &quot;503 Service Unavailable&quot; will be returned for all requests.</p>
 <p>This is useful when you need to perform maintenance on the server, for example rebuilding indexes while the server is running in production, in order to reduce load and more efficiently carry out the maintenance.</p></td>
 </tr>
 </tbody>
@@ -348,10 +352,27 @@
 
 <!--DHIS2-SECTION-ID:system_messaging_settings-->
 
+A message that something happened internally that you have to
+investigate.
+
+\- A general seetting, if user doesn't have hes/hers "own" notification
+settings.
+
+\- Used in internal DHIS2 messaging system: System message (generated by
+the system, can be many things, something has gone wrong), private
+message, ticket message, validation result message (result of validation
+analysis) (4 type of messages right now)
+
+\- Push analysis don't go through internal DHIS2 messaging system,
+always send via email
+
+\- Can also send despite all settings (force send)
+
 <table>
+<caption>Messaging settings</caption>
 <colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
+<col width="50%" />
+<col width="50%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -362,11 +383,11 @@
 <tbody>
 <tr class="odd">
 <td><p><strong>Enable message email notifications</strong></p></td>
-<td><p>Defines whether DHIS2 user messages should be delivered to the email address associated with the user by default. This setting can be overridden by user settings.</p></td>
+<td><p>Defines whether DHIS 2 user messages should be delivered to the email address associated with the user by default. This setting can be overridden by user settings.</p></td>
 </tr>
 <tr class="even">
 <td><p><strong>Enable message SMS notifications</strong></p></td>
-<td><p>Defines whether DHIS2 user messages should be delivered as SMS to the mobile phone number associated with the user by default. This setting can be overridden by user settings.</p></td>
+<td><p>Defines whether DHIS 2 user messages should be delivered as SMS to the mobile phone number associated with the user by default. This setting can be overridden by user settings.</p></td>
 </tr>
 </tbody>
 </table>
@@ -439,33 +460,67 @@
 <p>If you don't want to force users to change password, select <strong>Never</strong>.</p></td>
 </tr>
 <tr class="odd">
-<td><strong>Enable password expiry alerts</strong></td>
-<td>When set, users will receive a notification when their password is about to expire.</td>
-</tr>
-<tr class="even">
 <td><p><strong>Minimum characters in password</strong></p></td>
 <td><p>Defines the minimum number of characters users must have in their passwords.</p>
 <p>You can select 8 (default), 10, 12 or 14.</p></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><p><strong>OpenID provider</strong></p></td>
 <td><p>Defines the OpenID provider.</p></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><p><strong>OpenID provider label</strong></p></td>
 <td><p>Defines the label to display for the specified OpenID provider.</p></td>
 </tr>
-<tr class="odd">
-<td><p><strong>CORS whitelist</strong></p></td>
-<td><p>Whitelists a set of URLs which can access the DHIS2 API from another domain. Each URL should be entered on separate lines. Cross-origin resource sharing (CORS) is a mechanism that allows restricted resources (e.g. javascript files) on a web page to be requested from another domain outside the domain from which the first resource was served.</p></td>
-</tr>
 <tr class="even">
+<td><p><strong>CORS whitelist</strong></p></td>
+<td><p>Whitelists a set of URLs which can access the DHIS 2 API from another domain. Each URL should be entered on separate lines. Cross-origin resource sharing (CORS) is a mechanism that allows restricted resources (e.g. javascript files) on a web page to be requested from another domain outside the domain from which the first resource was served.</p></td>
+</tr>
+<tr class="odd">
 <td><p><strong>Mapzen search API key</strong></p></td>
 <td><p>Defines the API key for the Mapzen API. This API is used to search addresses globally within DHIS 2.</p></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><p><strong>Google Maps API key</strong></p></td>
-<td><p>Defines the API key for the Google Maps API. This is used to display maps within DHIS2.</p></td>
+<td><p>Defines the API key for the Google Maps API. This is used to display maps within DHIS 2.</p></td>
+</tr>
+</tbody>
+</table>
+
+## Approval settings
+
+<!--DHIS2-SECTION-ID:system_approval_settings-->
+
+> **Note**
+> 
+> For more information about how you configure data approvals, refer to
+> [Data
+> approval](https://docs.dhis2.org/master/en/user/html/data_approval.html)
+
+<table>
+<caption>Approval settings</caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><p>Setting</p></th>
+<th><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><p>Approval level</p></td>
+<td><p>The levels at which you want to approve data in the system.</p></td>
+</tr>
+<tr class="even">
+<td><p>Approval workflow</p></td>
+<td><p>The workflows that the system will use to approve data. Each workflow can be associated with one or more approval levels.</p></td>
+</tr>
+<tr class="odd">
+<td><p><strong>Acceptance required before approval</strong></p></td>
+<td><p>Defines whether to include an acceptance step before the approval step in the approval workflow.</p></td>
 </tr>
 </tbody>
 </table>
@@ -561,7 +616,7 @@ The following settings are used for both data and metadata
 synchronization.
 
 > **Note**
->
+> 
 > For more information about how you configure metadata synchronization,
 > refer to [Configure metadata
 > synchronizing](https://docs.dhis2.org/master/en/user/html/metadata_sync.html)
@@ -625,6 +680,41 @@ synchronization.
 </tbody>
 </table>
 
+## System monitoring
+
+<!--DHIS2-SECTION-ID:system_monitoring_settings-->
+
+Use the system monitoring settings when you want to make a call to a URL
+with user name and password.
+
+<table>
+<caption>System monitoring settings</caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><p>Setting</p></th>
+<th><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><p><strong>System monitoring URL</strong></p></td>
+<td><p>The URL you want to make the call to.</p></td>
+</tr>
+<tr class="even">
+<td><p><strong>System monitoring user name</strong></p></td>
+<td><p>The user name you want to use in the call.</p></td>
+</tr>
+<tr class="odd">
+<td><p><strong>System monitoring password</strong></p></td>
+<td><p>The password for the user name you use in the call.</p></td>
+</tr>
+</tbody>
+</table>
+
 ## OAuth2 clients
 
 <!--DHIS2-SECTION-ID:system_oauth2_settings-->
@@ -639,7 +729,7 @@ app.
 3.  Enter **Name**, **Client ID** and **Client secret**.
 
 4.  Select **Grant types**.
-
+    
     <table>
     <colgroup>
     <col style="width: 50%" />
@@ -667,5 +757,6 @@ app.
     </tbody>
     </table>
 
-5.  Enter **Redirect URIs**. If you've multiple URIs, separate them with
+5.  Enter **Redirect URLs**. If you've multiple URLs, separate them with
     a line.
+

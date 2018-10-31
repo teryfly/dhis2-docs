@@ -128,7 +128,7 @@ send a payload like this:
     }
 
     SERVER="https://play.dhis2.org/dev"
-    curl -X POST -H "Content-Type: application/json" -d @client.json
+    curl -X POST -H "Content-Type: application/json" -d @client.json 
       -u admin:district $SERVER/api/oAuth2Clients
 
 We will use this client as the basis for our next grant type examples.
@@ -138,13 +138,13 @@ We will use this client as the basis for our next grant type examples.
 <!--DHIS2-SECTION-ID:webapi_oauth2_password-->
 
 The simplest of all grant types is the **password** grant type. This
-grant type is similar to basic authentication in the sense that it
+grant type is similar to basic authenticaion in the sense that it
 requires the client to collect the users username and password. As an
 example we can use our demo server:
 
     SERVER="https://play.dhis2.org/dev"
     SECRET="1e6db50c-0fee-11e5-98d0-3c15c2c6caf6"
-
+    
     curl -X POST -H "Accept: application/json" -u demo:$SECRET $SERVER/uaa/oauth/token
     -d grant_type=password -d username=admin -d password=district
 
@@ -172,14 +172,14 @@ all data elements using our token:
 In general the access tokens have limited validity. You can have a look
 at the **expires\_in** property of the response in the previous example
 to understand when a token expires. To get a fresh **access\_token** you
-can make another round trip to the server and use **refresh\_token**
+can make another roundtrip to the server and use **refresh\_token**
 which allows you to get an updated token without needing to ask for the
 user credentials one more time.
 
     SERVER="https://play.dhis2.org/dev"
     SECRET="1e6db50c-0fee-11e5-98d0-3c15c2c6caf6"
     REFRESH_TOKEN="a4e4de45-4743-481d-9345-2cfe34732fcc"
-
+    
     curl -X POST -H "Accept: application/json" -u demo:$SECRET $SERVER/uaa/oauth/token
     -d grant_type=refresh_token -d refresh_token=$REFRESH_TOKEN
 
@@ -202,8 +202,8 @@ redirect URIs, you might want to add
 \&redirect\_uri=http://www.example.org) :
 
     SERVER="https://play.dhis2.org/dev"
-
-    $SERVER/uaa/oauth/authorize?client_id=demo&response_type=code
+    
+    $SERVER/uaa/oauth/authorize?client_xml:id=demo&response_type=code
 
 Step 2: After the user have successfully logged in and accepted your
 client access, it will redirect back to your redirect uri like this:
@@ -215,8 +215,8 @@ using the given code, we will now ask for a access token:
 
     SERVER="https://play.dhis2.org/dev"
     SECRET="1e6db50c-0fee-11e5-98d0-3c15c2c6caf6"
-
-    curl -X POST -u demo:$SECRET -H "Accept: application/json" $SERVER/uaa/oauth/token
+    
+    curl -X POST -u demo:$SECRET -H "Accept: application/json" $SERVER/token 
       -d grant_type=authorization_code -d code=XYZ
 
 ## Error and info messages
@@ -260,7 +260,7 @@ http status message **forbidden** and a descriptive message.
 </tr>
 <tr class="odd">
 <td>status</td>
-<td>DHIS2 status, possible values are <em>OK</em> | <em>WARNING</em> | <em>ERROR</em>, where <strong>OK</strong> is means everything was successful, <strong>ERROR</strong> means that operation did not complete and <strong>WARNING</strong> means operation was partially successful, if there message contains a <strong>response</strong> property, please look there for more information.</td>
+<td>DHIS2 status, possible values are <em>OK</em> | <em>WARNING</em> | <em>ERROR</em>, where <strong>OK</strong> is means everything was successful, <strong>ERROR</strong> means that operation did not complete and <strong>WARNING</strong> means operation was partially successful, if there message contains a <strong>response</strong> property, please look there for more information.</td>
 </tr>
 <tr class="even">
 <td>message</td>
@@ -268,7 +268,7 @@ http status message **forbidden** and a descriptive message.
 </tr>
 <tr class="odd">
 <td>devMessage</td>
-<td>A more technical, developer-friendly message (not currently in use).</td>
+<td>A more techincal developer friendly message (not currently in use).</td>
 </tr>
 <tr class="even">
 <td>response</td>
@@ -346,22 +346,10 @@ API endpoint */api/periodTypes*)
 <td>Week 8 with start Sunday</td>
 </tr>
 <tr class="odd">
-<td>Bi-week</td>
-<td><em>yyyy</em>BiW<em>n</em></td>
-<td>2015BiW1</td>
-<td>Week 1-2 20015</td>
-</tr>
-<tr class="even">
 <td>Month</td>
 <td><em>yyyyMM</em></td>
 <td>200403</td>
 <td>March 2004</td>
-</tr>
-<tr class="odd">
-<td>Bi-month</td>
-<td><em>yyyyMM</em>B</td>
-<td>200401B</td>
-<td>January-February 2004</td>
 </tr>
 <tr class="even">
 <td>Quarter</td>
@@ -451,7 +439,7 @@ below, using the name of the property to use in queries:
   - trackedEntityAttributeIdScheme
 
 The general idScheme applies to all types of objects. It can be
-overridden by specific object types.
+overriden by specific object types.
 
 The default scheme for all parameters is UID (stable DHIS 2
 identifiers). The supported identifier schemes are described in the
@@ -712,7 +700,7 @@ translations. The fields available are *property* with options **NAME**,
 **SHORT\_NAME**, **DESCRIPTION**, the *locale* which supports any valid
 locale ID and the the *value* itself.
 
-*Example of NAME property for French locale:*
+*Example of NAME property for french locale:*
 
     {
       "property": "NAME",
@@ -792,19 +780,19 @@ associated objects or collection of objects, are supported as well.
 <tbody>
 <tr class="odd">
 <td>eq</td>
-<td>string | boolean | integer | float | enum | collection (checks for size) | date</td>
+<td>string | boolean | integer | float | enum | collection (checks for size) | date</td>
 <td>true</td>
 <td>Equality</td>
 </tr>
 <tr class="even">
 <td>!eq</td>
-<td>string | boolean | integer | float | enum | collection (checks for size) | date</td>
+<td>string | boolean | integer | float | enum | collection (checks for size) | date</td>
 <td>true</td>
 <td>Inequality</td>
 </tr>
 <tr class="odd">
 <td>ne</td>
-<td>string | boolean | integer | float | enum | collection (checks for size) | date</td>
+<td>string | boolean | integer | float | enum | collection (checks for size) | date</td>
 <td>true</td>
 <td>Inequality</td>
 </tr>
@@ -921,18 +909,6 @@ associated objects or collection of objects, are supported as well.
 <td>collection</td>
 <td>false</td>
 <td>Collection is empty</td>
-</tr>
-<tr class="odd">
-<td>token</td>
-<td>string</td>
-<td>true</td>
-<td>Match on multiple tokens in search property</td>
-</tr>
-<tr class="even">
-<td>!token</td>
-<td>string</td>
-<td>true</td>
-<td>Not match on multiple tokens in search property</td>
 </tr>
 <tr class="odd">
 <td>in</td>
@@ -1060,7 +1036,7 @@ using the ':' operator.
 </tr>
 <tr class="odd">
 <td>!&lt;field-name&gt;, &lt;object&gt;[!&lt;field-name&gt;</td>
-<td>Do not include this field name, also works inside objects/collections. Useful when you use a preset to include fields.</td>
+<td>Do not include this field name, also works inside objects/collections. Useful when you use a preset to inlude fields.</td>
 </tr>
 <tr class="even">
 <td>*, &lt;object&gt;[*]</td>
@@ -1138,7 +1114,7 @@ further customization of the properties on the server side.
 
 This will rename the *id* property to *i* and *name* property to *n*.
 
-Multiple transformers can be used by repeating the transformer
+Multipe transformers can be used by repeating the transformer
     syntax:
 
     /api/26/dataElementGroups.json?fields=id,displayName,dataElements~isNotEmpty~rename(haveDataElements)
@@ -1251,7 +1227,7 @@ request.
 <td>enum</td>
 <td>false</td>
 <td>REPLACE, MERGE</td>
-<td>Strategy for merging of objects when doing updates. REPLACE will just overwrite the property with the new value provided, MERGE will only set the property if its not null (only if the property was provided).</td>
+<td>Strategy for merging of objects when doing updates. REPLACE will just overwrite the propery with the new value provided, MERGE will only set the property if its not null (only if the property was provided).</td>
 </tr>
 </tbody>
 </table>
@@ -1287,13 +1263,13 @@ The same content as an XML payload:
 We are now ready create the new *constant* by sending a POST request to
 the *constants*endpoint with the JSON payload using curl:
 
-    curl -d @constant.json "http://server/api/26/constants" -X POST
+    curl -d @constant.json "http://server/api/26/constants" -X POST 
     -H "Content-Type: application/json" -u user:password
 
 A specific example of posting the constant to the demo
     server:
 
-    curl -d @constant.json "https://play.dhis2.org/api/26/constants" -X POST
+    curl -d @constant.json "https://play.dhis2.org/api/26/constants" -X POST 
     -H "Content-Type: application/json" -u admin:district
 
 If everything went well, you should see an output similar to:
@@ -1311,7 +1287,7 @@ to the JSON/XML payload, find out the *ID* of the constant, and then
 send a PUT request to the endpoint including ID:
 
 ``` bash
-curl -X PUT -d @pi.json -H "Content-Type: application/json"
+curl -X PUT -d @pi.json -H "Content-Type: application/json" 
 -u user:password http://server/api/26/constants/ID
 ```
 
@@ -1451,7 +1427,7 @@ section before, you would send it like this:
 A simple (non-validating) example would
     be:
 
-    curl -X POST -d "{\"name\": \"some name\"}" -H "Content-Type: application/json"
+    curl -X POST -d "{\"name\": \"some name\"}" -H "Content-Type: application/json" 
     -u admin:district https://play.dhis2.org/dev/api/schemas/dataElement
 
 Which would yield the result:
@@ -1481,19 +1457,31 @@ Which would yield the result:
 
 For cases where you don't want or need to update all properties on a
 object (which means downloading a potentially huge payload, change one
-property, then upload again) we now support partial update, for one or
-more properties.
+property, then upload again) we now support partial update, both for
+single properties and for multiple properties.
 
-The payload for doing partial updates are the same as when you are
-doing a full update, the only difference is that you only include the
-properties you want to update, i.e.:
+The format for updating a single property is the same as when you are
+updating a complete object, just with only 1 property in the JSON/XML
+file,
+    i.e.:
+
+    curl -X PATCH -d "{\"name\": \"New Name\"}" -H "Content-Type: application/json" 
+    -u admin:district https://play.dhis2.org/dev/api/26/dataElements/fbfJHSPpUQD/name
+
+Please note that we are including the property name two times, one time
+in the payload, and one time in the endpoint, the generic endpoint for
+this is */api/type/id/property-name*, and the *Content-Type* must also
+be included as usual (since we support multiple formats).
+
+The format for updating multiple properties are similar, just that we
+don't include the property names in the url, i.e.:
 
     { // file.json
       "name": "Updated Name",
       "zeroIsSignificant": true
     }
 
-    curl -X PATCH -d @file.json -H "Content-Type: application/json"
+    curl -X PATCH -d @file.json -H "Content-Type: application/json" 
     -u admin:district https://play.dhis2.org/dev/api/26/dataElements/fbfJHSPpUQD
 
 ## Metadata export
@@ -1554,11 +1542,6 @@ enable/disable export of certain types by setting *type=true/false*.
 <td>INCLUDE/EXCLUDE</td>
 <td>Should auto-generated category object be included or not in the payload. If you are moving metadata between 2 non-synced instances, it might make sense to set this to EXCLUDE to ease the handling of these generated objects.</td>
 </tr>
-<tr class="odd">
-<td>skipSharing</td>
-<td>false/true</td>
-<td>Enabling this will strip the sharing properties from the exported objects. This includes <em>user</em>, <em>publicAccess</em>, <em>userGroupAccesses</em>, <em>userAccesses</em>, and <em>externalAccess</em>.</td>
-</tr>
 </tbody>
 </table>
 
@@ -1605,7 +1588,7 @@ These exports can then be imported using */api/26/metadata*.
 
 <!--DHIS2-SECTION-ID:webapi_metadata_import-->
 
-This section explains the metadata API which is available at
+This section explains the metatada API which is available at
 */api/23/metadata* and */api/26/metadata*endpoints. XML and JSON
 resource representations are supported.
 
@@ -1630,7 +1613,7 @@ exporter. The various parameters are listed below.
 <tr class="odd">
 <td>importMode</td>
 <td>COMMIT, VALIDATE</td>
-<td>Sets overall import mode, decides whether or not to only <strong>VALIDATE</strong> or also <strong>COMMIT</strong> the metadata, this has similar functionality as our old dryRun flag.</td>
+<td>Sets overall import mode, decides whether or not to only <strong>VALIDATE</strong> or also <strong>COMMIT</strong> the metadata, this have similar functionality as our old dryRun flag.</td>
 </tr>
 <tr class="even">
 <td>identifier</td>
@@ -1660,17 +1643,17 @@ exporter. The various parameters are listed below.
 <tr class="odd">
 <td>mergeMode</td>
 <td>MERGE, REPLACE</td>
-<td>Sets the merge mode, when doing updates we have two ways of merging the old object with the new one, <strong>MERGE</strong> mode will only overwrite the old property if the new one is not-null, for <strong>REPLACE</strong> mode all properties are overwritten regardless of null or not.</td>
+<td>Sets the merge mode, when doing updates we have two ways of merging the old object with the new one, <strong>MERGE</strong> mode will only overwrite the old property if the new one is not-null, for <strong>REPLACE</strong> mode all properties are overwritten regardsless of null or not.</td>
 </tr>
 <tr class="even">
 <td>flushMode</td>
 <td>AUTO, OBJECT</td>
-<td>Sets the flush mode, which controls when to flush the internal cache. It is <em>strongly</em> recommended to keep this to <strong>AUTO</strong> (which is the default). Only use <strong>OBJECT</strong> for debugging purposes, where you are seeing hibernate exceptions and want to pinpoint the exact place where the stack happens (hibernate will only throw when flushing, so it can be hard to know which object had issues).</td>
+<td>Sets the flush mode, decides when to flush the internal cache, <em>strongly</em> reommended to keep this to <strong>AUTO</strong> (which is the default). Only use <strong>OBJECT</strong> for debugging purposes, where you are seeing hibernate exceptions and want to pinpoint the exact place where the stack happens (hibernate will only throw when flushing, so it can be hard to know which object had issues).</td>
 </tr>
 <tr class="odd">
 <td>skipSharing</td>
 <td>false, true</td>
-<td>Skip sharing properties, does not merge sharing when doing updates, and does not add user group access when creating new objects.</td>
+<td>Skip sharing properties, does not merge sharing when doing updates, and does not add user group accessses when creating new objects.</td>
 </tr>
 <tr class="even">
 <td>skipValidation</td>
@@ -1680,22 +1663,12 @@ exporter. The various parameters are listed below.
 <tr class="odd">
 <td>async</td>
 <td>false, true</td>
-<td>Asynchronous import, returns immediately with a <em>Location</em> header pointing to the location of the <em>importReport</em>. The payload also contains a json object of the job created.</td>
+<td>Asynchronous import, returns immediately with a <em>Location</em> header pointing to the location of the <em>importReport</em>.</td>
 </tr>
 <tr class="even">
 <td>inclusionStrategy</td>
 <td>NON_NULL, ALWAYS, NON_EMPTY</td>
-<td><em>NON_NULL</em> includes properties which are not null, <em>ALWAYS</em> include all properties, <em>NON_EMPTY</em> includes non empty properties (will not include strings of 0 length, collections of size 0, etc.)</td>
-</tr>
-<tr class="odd">
-<td>userOverrideMode</td>
-<td>NONE, CURRENT, SELECTED</td>
-<td>Allows you to override the user property of every object you are importing, the options are NONE (do nothing), CURRENT (use import user), SELECTED (select a specific user using overrideUser=X)</td>
-</tr>
-<tr class="even">
-<td>overrideUser</td>
-<td>User ID</td>
-<td>If userOverrideMode is SELECTED, use this parameter to select the user you want override with.</td>
+<td><em>NON_NULL</em> includes properties which are not null, <em>ALWAYS</em> include all properties, <em>NON_EMPTY</em> includes non empty properties (will not include strings of 0 length, collections of size 0 etc)</td>
 </tr>
 </tbody>
 </table>
@@ -1704,394 +1677,42 @@ exporter. The various parameters are listed below.
 
 <!--DHIS2-SECTION-ID:webapi_metadata_audit-->
 
-If you need information about who created, edited, or deleted DHIS2
-metadata objects you can enable metadata audit. There are two
-configuration options (dhis.conf) you can enable to support this:
+If you need information about who created, edited, or deleted some part
+of the DHIS2 metadata, you can enable metadata audit, there are two
+configuration options (your in your \`dhis.conf\`) you can enable to
+support this:
 
     metadata.audit.log = on
 
-This enables additional log output in your servlet container (e.g.
+This enabled additional log output in your servlet container (e.g.
 tomcat catalina.log) which contains full information about the object
 created, object edited, or object deleted including full JSON payload,
 date of audit event, and the user who did the action.
 
     metadata.audit.persist = on
 
-This enables persisted audits, i.e. audits saved to the database. The
-information stored is the same as with audit log; however this
-information is now placed into the *metadataaudit* table in the
-database.
+This enables persisted audits (audits saved to the database) the
+information stored is the same as with audit log, but this information
+is now placed into the \`metadataaudit\` table in your database.
 
 We do not recommended enabling these options on a empty database if you
-intend to bootstrap your system, as it slows down the import and the
-audit might not be that useful.
-
-### Metadata audit query
-
-<!--DHIS2-SECTION-ID:webapi_metadata_audit_query-->
-
-If you have enabled persisted metadata audits on your DHIS2 instance,
-you can access metadata audits at the following endpoint:
-
-    /api/29/metadataAudits
-
-The endpoints supports the following query parameters:
-
-<table>
-<caption>Metadata audit API query parameters</caption>
-<colgroup>
-<col style="width: 22%" />
-<col style="width: 27%" />
-<col style="width: 51%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Name</th>
-<th>Values</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>uid</td>
-<td></td>
-<td>Object uid to query by (can be more than one)</td>
-</tr>
-<tr class="even">
-<td>code</td>
-<td></td>
-<td>Object code to query by (can be more than one)</td>
-</tr>
-<tr class="odd">
-<td>klass</td>
-<td></td>
-<td>Object class to query by (can be more than one), please note that the full java package name is required here (to avoid name collisions)</td>
-</tr>
-<tr class="even">
-<td>createdAt</td>
-<td></td>
-<td>Query by creation date</td>
-</tr>
-<tr class="odd">
-<td>createdBy</td>
-<td></td>
-<td>Query by who made the change (username)</td>
-</tr>
-<tr class="even">
-<td>type</td>
-<td>CREATE, UPDATE, DELETE</td>
-<td>Query by audit type</td>
-</tr>
-</tbody>
-</table>
-
-## Render type (Experimental)
-
-<!--DHIS2-SECTION-ID:webapi_render_type-->
-
-Some metadata types have a property named *renderType*. The render type
-property is a map between a *device* and a *renderingType*. Applications
-can use this information as a hint on how the object should be rendered
-on a specific device. For example, a mobile device might want to render
-a data element differently than a desktop computer.
-
-There is currently two different kinds of renderingTypes available:
-
-1.  Value type rendering
-
-2.  Program stage section rendering
-
-There is also 2 device types available:
-
-1.  MOBILE
-
-2.  DESKTOP
-
-The following table lists the metadata and rendering types available.
-The value type rendering has addition constraints based on the metadata
-configuration, which will be shown in a second table.
-
-<table>
-<caption>Metadata and RenderingType overview</caption>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Metadata type</th>
-<th>Available RenderingTypes</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Program Stage Section</td>
-<td><ul>
-<li><p>LISTING (default)</p></li>
-<li><p>SEQUENTIAL</p></li>
-<li><p>MATRIX</p></li>
-</ul></td>
-</tr>
-<tr class="even">
-<td>Data element</td>
-<td><ul>
-<li><p>DEFAULT</p></li>
-<li><p>DROPDOWN</p></li>
-<li><p>VERTICAL_RADIOBUTTONS</p></li>
-<li><p>HORIZONTAL_RADIOBUTTONS</p></li>
-<li><p>VERTICAL_CHECKBOXES</p></li>
-<li><p>HORIZONTAL_CHECKBOXES</p></li>
-<li><p>SHARED_HEADER_RADIOBUTTONS</p></li>
-<li><p>ICONS_AS_BUTTONS</p></li>
-<li><p>SPINNER</p></li>
-<li><p>ICON</p></li>
-<li><p>TOGGLE</p></li>
-<li><p>VALUE</p></li>
-<li><p>SLIDER</p></li>
-<li><p>LINEAR_SCALE</p></li>
-</ul></td>
-</tr>
-<tr class="odd">
-<td>Tracked entity attribute</td>
-</tr>
-</tbody>
-</table>
-
-Since handling the default rendering of data elements and tracked entity
-attributes are depending on the value type of the object, there is also
-a DEFAULT type to tell the client it should be handled as normal.
-Program Stage Section are LISTING as default.
-
-<table>
-<caption>RenderingTypes allowed based on value types</caption>
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Value type</th>
-<th>Is object an optionset?</th>
-<th>RenderingTypes allowed</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>TRUE_ONLY</td>
-<td>No</td>
-<td>DEFAULT, VERTICAL_RADIOBUTTONS, HORIZONTAL_RADIOBUTTONS, VERTICAL_CHECKBOXES, HORIZONTAL_CHECKBOXES, TOGGLE</td>
-</tr>
-<tr class="even">
-<td>BOOLEAN</td>
-<td>No</td>
-</tr>
-<tr class="odd">
-<td>-</td>
-<td>Yes</td>
-<td>DEFAULT, DROPDOWN, VERTICAL_RADIOBUTTONS, HORIZONTAL_RADIOBUTTONS, VERTICAL_CHECKBOXES, HORIZONTAL_CHECKBOXES, SHARED_HEADER_RADIOBUTTONS, ICONS_AS_BUTTONS, SPINNER, ICON</td>
-</tr>
-<tr class="even">
-<td>INTEGER</td>
-<td>No</td>
-<td>DEFAULT, VALUE, SLIDER, LINEAR_SCALE, SPINNER</td>
-</tr>
-<tr class="odd">
-<td>INTEGER_POSITIVE</td>
-<td>No</td>
-</tr>
-<tr class="even">
-<td>INTEGER_NEGATIVE</td>
-<td>No</td>
-</tr>
-<tr class="odd">
-<td>INTEGER_ZERO_OR_POSITIVE</td>
-<td>No</td>
-</tr>
-<tr class="even">
-<td>NUMBER</td>
-<td>No</td>
-</tr>
-<tr class="odd">
-<td>UNIT_INTERVAL</td>
-<td>No</td>
-</tr>
-<tr class="even">
-<td>PERCENTAGE</td>
-<td>No</td>
-</tr>
-</tbody>
-</table>
-
-A complete reference of the previous table can also be retrieved using
-the following endpoint:
-
-    GET /api/staticConfiguration/renderingOptions
-
-Value type rendering also has some additional properties that can be
-set, which is usually needed when rendering some of the specific types:
-
-<table>
-<caption>renderType object properties</caption>
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Property</th>
-<th>Description</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>type</td>
-<td>The RenderingType of the object, as seen in the first table. This property is the same for both value type and program stage section, but is the only property available for program stage section.</td>
-<td>Enum (See list in the Metadata and Rendering Type table)</td>
-</tr>
-<tr class="even">
-<td>min</td>
-<td>Only for value type rendering. Represents the minimum value this field can have.</td>
-<td>Integer</td>
-</tr>
-<tr class="odd">
-<td>max</td>
-<td>Only for value type rendering. Represents the maximum value this field can have.</td>
-<td>Integer</td>
-</tr>
-<tr class="even">
-<td>step</td>
-<td>Only for value type rendering. Represents the size of the steps the value should increase, for example for SLIDER og LINEAR_SCALE</td>
-<td>Integer</td>
-</tr>
-<tr class="odd">
-<td>decimalPoints</td>
-<td>Only for value type rendering. Represents the number of decimal points the value should use.</td>
-<td>Integer</td>
-</tr>
-</tbody>
-</table>
-
-*renderingType* can be set when creating or updating the metadata listed
-in the first table. An example payload for the renderingType looks like
-this:
-
-    Program Stage Section:
-    {
-      ...
-      "renderingType": {
-        "type": "MATRIX"
-      }
-      ...
-    }
-
-    Value type (Data Element, Tracked Entity Attribute)
-    {
-      ...
-      "renderingType": {
-        "type": "SLIDER",
-        "min": 0,
-        "max": 1000,
-        "step": 50,
-        "decimalPoints": 0
-      }
-      ...
-    }
-
-## Object Style (Experimental)
-
-<!--DHIS2-SECTION-ID:webapi_object_style-->
-
-Most metadata have a property names "style". This property can be used
-by clients to represent the object in a certain way. The properties
-currently supported by style is as follows:
-
-<table>
-<caption>Style properties</caption>
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Property</th>
-<th>Description</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>color</td>
-<td>A color, represented by a hexadecimal.</td>
-<td>String (#000000)</td>
-</tr>
-<tr class="even">
-<td>icon</td>
-<td>An icon, represented by a icon-name.</td>
-<td>String</td>
-</tr>
-</tbody>
-</table>
-
-Currently there is no official list or support for icon-libraries, so
-this is currently up to the client to provide. The following list shows
-all objects that supports style:
-
-  - Data element
-
-  - Data element category option
-
-  - Data set
-
-  - Indicator
-
-  - Option
-
-  - Program
-
-  - Program Indicator
-
-  - Program Section
-
-  - Program Stage
-
-  - Program Stage Section
-
-  - Relationship (Tracker)
-
-  - Tracked Entity Attribute
-
-  - Tracked Entity Type
-
-When creating or updating any of these objects, you can include the
-following payload to change the style:
-
-    {
-      ...
-      "style": {
-        "color": "#ffffff",
-        "icon": "my-beautiful-icon"
-      }
-      ...
-    }
+intend to import a lot of metadata, as it slows down the import and the
+audit might not be that useful if you are bootstrapping a new system.
 
 ## AMQP/RabbitMQ integration
 
 <!--DHIS2-SECTION-ID:webapi_amqp_rabbitmq_integration-->
 
 If you have an external system that needs to know about updates inside
-of DHIS2 (update data element, create org unit, etc.) you can set up a
+of DHIS2 (update data element, create org unit, etc) you can set up a
 rabbitmq message broker, and have it receive messages from DHIS2, then
 other clients can listen to this broker and be notified when events
-happen. Configuration of this is performed in "dhis.conf" where the following
+happen. Configuration of this happens in "dhis.conf" and the following
 keys are available (defaults values are shown):
 
     rabbitmq.host =
     rabbitmq.port = 5672
-    rabbitmq.addresses =
+    rabbitmq.addresses = 
     rabbitmq.virtual-host = /
     rabbitmq.exchange = dhis2
     rabbitmq.username = guest
@@ -2109,7 +1730,7 @@ the following keys are sent out:
     metadata.<type>.<action>.<id>
 
 Where type can be any type inside of DHIS2 (data element, indicator, org
-unit, etc.), action is *CREATE, UPDATE, DELETE* and *id* is the id of the
+unit, etc), action is *CREATE, UPDATE, DELETE* and *id* is the id of the
 type being handled. The event also contains a payload, for *CREATE* and
 *DELETE* this is the full serialized version of the object, for *UPDATE*
 its a patch containing the updates that are happening on that object.
@@ -2575,7 +2196,7 @@ option.
     "Color",,"COLOR","Yellow",,"YELLOW"
     "Sex",,,"Male",,"MALE"
     "Sex",,,"Female",,"FEMALE"
-    "Sex",,,"Unknown",,"UNKNOWN"
+    "Sex",,,"Uknown",,"UNKNOWN"
     "Result",,,"High",,"HIGH"
     "Result",,,"Medium",,"MEDIUM"
     "Result",,,"Low",,"LOW"
@@ -2706,33 +2327,13 @@ forward:
 
     GET /api/deletedObjects.json?klass=Indicator&deletedAt=2015-01-01
 
-## Favorites
-
-<!--DHIS2-SECTION-ID:webapi_favorites-->
-
-Certain types of metadata objects can be marked as favorites for the
-currently logged in user. This applies currently for dashboards.
-
-    /api/29/dashboards/<uid>/favorite
-
-To make a dashboard a favorite you can make a *POST* request (no content
-type required) to a URL like this:
-
-    /api/29/dashboards/iMnYyBfSxmM/favorite
-
-To remove a dashboard as a favorite you can make a *DELETE* request
-using the same URL as above.
-
-The favorite status will appear as a boolean *favorite* field on the
-object (e.g. the dashboard) in the metadata response.
-
 ## File resources
 
 <!--DHIS2-SECTION-ID:webapi_file_resources-->
 
 *File resources* are objects used to represent and store binary content.
 The *FileResource* object itself contains the file meta-data (name,
-Content-Type, size, etc.) as well as a key allowing retrieval of the
+Content-Type, size, etc) as well as a key allowing retrieval of the
 contents from a database-external file store. The *FileResource* object
 is stored in the database like any other but the content (file) is
 stored elsewhere and is retrievable using the contained reference
@@ -2785,7 +2386,7 @@ Note that the response is a *202 Accepted*, indicating that the returned
 resource has been submitted for background processing (persisting to the
 external file store in this case). Also note the *storageStatus* field
 which indicates whether the contents have been stored or not. At this
-point the persistence to the external store is not yet finished (it is
+point the persistance to the external store is not yet finished (it is
 likely being uploaded to a cloud-based store somewhere) as seen by the
 *PENDING* status.
 
@@ -3030,7 +2631,7 @@ two types of metadata.
     exist.
 
 > **Note**
->
+> 
 > It's recommended to have ATOMIC type of versions to ensure that all
 > systems (central and local) have the same metadata. Any missing
 > reference is caught in the validation phase itself. Please see the
@@ -3095,7 +2696,7 @@ two types of metadata.
 <tr class="odd">
 <td><p>versionName</p></td>
 <td><p>true</p></td>
-<td><p>Path parameter of the form &quot;Version_&lt;id&gt;&quot; so that the api downloads the specific version</p></td>
+<td><p>Path parameter of the form &quot;Version_&lt;id&gt;&quot; so that the api  downloads the specific version</p></td>
 </tr>
 </tbody>
 </table>
@@ -3113,7 +2714,7 @@ two types of metadata.
 
 **Sample response:**
 
-```
+``` 
 {
     "date": "2016-06-30T06:10:23.120+0000",
     "dataElements": [{
@@ -3134,7 +2735,7 @@ two types of metadata.
             "id": "xE7jOejl9FI"
         }
     }]
-}
+}            
 ```
 
 ## Metadata Synchronization
@@ -3332,13 +2933,13 @@ directory where this file resides we invoke the following from the
 command
     line:
 
-    curl -d @datavalueset.xml "https://play.dhis2.org/demo/api/26/dataValueSets"
+    curl -d @datavalueset.xml "https://play.dhis2.org/demo/api/26/dataValueSets" 
       -H "Content-Type:application/xml" -u admin:district -v
 
 For sending JSON content you must set the content-type header
 accordingly:
 
-    curl -d @datavalueset.json "https://play.dhis2.org/demo/api/26/dataValueSets"
+    curl -d @datavalueset.json "https://play.dhis2.org/demo/api/26/dataValueSets" 
       -H "Content-Type:application/json" -u admin:district -v
 
 The command will dispatch a request to the demo Web API, set
@@ -3401,14 +3002,14 @@ In CSV
 We test by using cURL to send the data values in XML
     format:
 
-    curl -d @datavalueset.xml "https://play.dhis2.org/demo/api/26/dataValueSets"
+    curl -d @datavalueset.xml "https://play.dhis2.org/demo/api/26/dataValueSets" 
       -H "Content-Type:application/xml" -u admin:district -v
 
 Note that when using CSV format you must use the binary data option to
 preserve the line-breaks in the CSV
     file:
 
-    curl --data-binary @datavalueset.csv "https://play.dhis2.org/demo/24/api/dataValueSets"
+    curl --data-binary @datavalueset.csv "https://play.dhis2.org/demo/24/api/dataValueSets" 
       -H "Content-Type:application/csv" -u admin:district -v
 
 The data value set resource provides an XML response which is useful
@@ -3449,7 +3050,7 @@ The import process can be customized using a set of import parameters:
 <tbody>
 <tr class="odd">
 <td>dataElementIdScheme</td>
-<td>id | name | code | attribute:ID</td>
+<td>id | name | code | attribute:ID</td>
 <td>Property of the data element object to use to map the data values.</td>
 </tr>
 <tr class="even">
@@ -3459,12 +3060,12 @@ The import process can be customized using a set of import parameters:
 </tr>
 <tr class="odd">
 <td>categoryOptionComboIdScheme</td>
-<td>id | name | code | attribute:ID</td>
+<td>id | name | code | attribute:ID</td>
 <td>Property of the category option combo and attribute option combo objects to use to map the data values.</td>
 </tr>
 <tr class="even">
 <td>idScheme</td>
-<td>id | name | code| attribute:ID</td>
+<td>id | name | code| attribute:ID</td>
 <td>Property of all objects including data elements, org units and category option combos, to use to map the data values.</td>
 </tr>
 <tr class="odd">
@@ -3479,7 +3080,7 @@ The import process can be customized using a set of import parameters:
 </tr>
 <tr class="odd">
 <td>importStrategy</td>
-<td>CREATE | UPDATE | CREATE_AND_UPDATE | DELETE</td>
+<td>CREATE | UPDATE | CREATE_AND_UPDATE | DELETE</td>
 <td>Save objects of all, new or update import status on the server.</td>
 </tr>
 <tr class="even">
@@ -3491,11 +3092,6 @@ The import process can be customized using a set of import parameters:
 <td>async</td>
 <td>false | true</td>
 <td>Indicates whether the import should be done asynchronous or synchronous. The former is suitable for very large imports as it ensures that the request does not time out, although it has a significant performance overhead. The latter is faster but requires the connection to persist until the process is finished.</td>
-</tr>
-<tr class="even">
-<td>force</td>
-<td>false | true</td>
-<td>Indicates whether the import should be forced. Data import could be rejected for various reasons of data set locking for example due to approval, data input period, expiry days, etc. In order to override such locks and force data input one can use data import with force=true. However, one needs to be a **superuser** for this parameter to work.</td>
 </tr>
 </tbody>
 </table>
@@ -3517,7 +3113,7 @@ parameters.
 
 Note that the *preheatCache* parameter can have huge impact for
 performance. For small import files, leaving it to false will be fast.
-For large import files which contain a large number of distinct data
+For large import files which contain a large number of distint data
 elements and organisation units, setting it to true will be orders of
 magnitude faster.
 
@@ -3527,8 +3123,8 @@ magnitude faster.
 
 Data value import supports a set of value types. For each value type
 there is a special requirement. The following table lists the edge cases
-for value types. For information about all other cases, see
-[Data elements](#webapi_csv_data_elements).
+for value types. For information about all other cases, see [Data
+elements](#webapi_csv_data_elements).
 
 <table>
 <caption>Value type requirements</caption>
@@ -3543,7 +3139,7 @@ for value types. For information about all other cases, see
 <tr class="odd">
 <td>BOOLEAN</td>
 <td>true | false | 1 | 0 | t | f |</td>
-<td>Used when the value is a boolean, true or false value. The import service does not care if the input has upper or lower case initial.</td>
+<td>Used when the value is a boolean, true or false value. The import service does not care if the input has upper or lower case intial.</td>
 </tr>
 </tbody>
 </table>
@@ -3558,12 +3154,12 @@ In certain interoperability situations we might experience that external
 system decides the identifiers of the objects. In that case we can use
 the *code* property of the organisation units and other objects to set
 fixed identifiers. When importing data values we hence need to reference
-the code property instead of the identifier property of these metadata
+the code property instead of the identfier property of these metadata
 objects. Identifier schemes can be specified in the XML message as well
 as in the request as query parameters. To specify it in the XML payload
 you can do this:
 
-    <dataValueSet xmlns="http://dhis2.org/schema/dxf/2.0"
+    <dataValueSet xmlns="http://dhis2.org/schema/dxf/2.0" 
       dataElementIdScheme="CODE" orgUnitIdScheme="UID" idScheme="CODE">
       ..
     </dataValueSet>
@@ -3581,7 +3177,7 @@ precedence:
   - The default id scheme is UID, which will be used if no explicit id
     scheme is defined.
 
-The following identifier schemes are available.
+The following identifier schemes are availabe.
 
   - uid (default)
 
@@ -3850,11 +3446,11 @@ We can also use the start and end dates query parameters to request a
 larger bulk of data values. I.e. you can also request data values for
 multiple data sets and org units and a time span in order to export
 larger chunks of data. Note that the period query parameter takes
-precedence over the start and end date parameters. An example looks like
+presedence over the start and end date parameters. An exampe looks like
 this:
 
     curl "https://play.dhis2.org/demo/api/26/dataValueSets?dataSet=pBOMPrpg1QX&dataSet=BfMAe6Itzgt
-      &startDate=2013-01-01&endDate=2013-01-31&orgUnit=YuQRtpLP10I&orgUnit=vWbkYPRmKyS&children=true"
+      &startDate=2013-01-01&endDate=2013-01-31&orgUnit=YuQRtpLP10I&orgUnit=vWbkYPRmKyS&children=true" 
       -H "Accept:application/xml" -u admin:district -v
 
 To retrieve data values which have been created or updated within the
@@ -3992,21 +3588,16 @@ The following query parameters are supported for this resource:
 <td>Attribute option identifiers, separated with ; for multiple values</td>
 </tr>
 <tr class="odd">
-<td>ds</td>
-<td>No</td>
-<td>Data set, to check if POST or DELETE is allowed for period and organisation unit. If specified, the data element must be assigned to this data set. If not specified, a data set containing the data element will be chosen to check if the operation is allowed.</td>
-</tr>
-<tr class="even">
 <td>value</td>
 <td>No</td>
 <td>Data value</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>comment</td>
 <td>No</td>
 <td>Data comment</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>followUp</td>
 <td>No</td>
 <td>Follow up on data value, will toggle the current boolean value</td>
@@ -4112,39 +3703,39 @@ reference to a small
 
     <adx xmlns="urn:ihe:qrph:adx:2015" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="urn:ihe:qrph:adx:2015 ../schema/adx_loose.xsd" exported="2015-02-08T19:30:00Z">
-
+    
       <group orgUnit="OU_559" period="2015-06-01/P1M" completeDate="2015-07-01" dataSet="(TB/HIV)VCCT">
-
+    
         <dataValue dataElement="VCCT_0" GENDER="FMLE" HIV_AGE="AGE0-14" value="32"/>
         <dataValue dataElement="VCCT_1" GENDER="FMLE" HIV_AGE="AGE0-14" value="20"/>
         <dataValue dataElement="VCCT_2" GENDER="FMLE" HIV_AGE="AGE0-14" value="10"/>
         <dataValue dataElement="PLHIV_TB_0" GENDER="FMLE" HIV_AGE="AGE0-14" value="10"/>
         <dataValue dataElement="PLHIV_TB_1" GENDER="FMLE" HIV_AGE="AGE0-14" value="10"/>
-
+    
         <dataValue dataElement="VCCT_0" GENDER="MLE" HIV_AGE="AGE0-14" value="32"/>
         <dataValue dataElement="VCCT_1" GENDER="MLE" HIV_AGE="AGE0-14" value="20"/>
         <dataValue dataElement="VCCT_2" GENDER="MLE" HIV_AGE="AGE0-14" value="10"/>
         <dataValue dataElement="PLHIV_TB_0" GENDER="MLE" HIV_AGE="AGE0-14" value="10"/>
         <dataValue dataElement="PLHIV_TB_1" GENDER="MLE" HIV_AGE="AGE0-14" value="10"/>
-
+    
         <dataValue dataElement="VCCT_0" GENDER="FMLE" HIV_AGE="AGE15-24" value="32"/>
         <dataValue dataElement="VCCT_1" GENDER="FMLE" HIV_AGE="AGE15-24" value="20"/>
         <dataValue dataElement="VCCT_2" GENDER="FMLE" HIV_AGE="AGE15-24" value="10"/>
         <dataValue dataElement="PLHIV_TB_0" GENDER="FMLE" HIV_AGE="AGE15-24" value="10"/>
         <dataValue dataElement="PLHIV_TB_1" GENDER="FMLE" HIV_AGE="AGE15-24" value="10"/>
-
+    
         <dataValue dataElement="VCCT_0" GENDER="MLE" HIV_AGE="AGE15-24" value="32"/>
         <dataValue dataElement="VCCT_1" GENDER="MLE" HIV_AGE="AGE15-24" value="20"/>
         <dataValue dataElement="VCCT_2" GENDER="MLE" HIV_AGE="AGE15-24" value="10"/>
         <dataValue dataElement="PLHIV_TB_0" GENDER="MLE" HIV_AGE="AGE15-24" value="10"/>
         <dataValue dataElement="PLHIV_TB_1" GENDER="MLE" HIV_AGE="AGE15-24" value="10"/>
-
+    
       </group>
     </adx>
 
 ### The adx root element
 
-The adx root element has only one mandatory attribute, which is the
+The adx root element has only one manadatory attribute, which is the
 *exported* timestamp. In common with other adx elements, the schema is
 extensible in that it does not restrict additional application specific
 attributes.
@@ -4171,94 +3762,6 @@ is a period of 1 month (P1M) starting on 2015-06-01. So it is the data
 for June 2015. The notation is a bit more verbose, but it is very
 flexible and allows us to support all existing period types in DHIS2
 
-### ADX period definitions
-
-DHIS2 supports a limited number of periods or durations during import.
-Periods should begin with the date which the duration begins,followed by
-a "/" and then the duration notation as noted in the table. The
-following table details all of the ADX supported period types, along
-with examples.
-
-<table>
-<caption>ADX Periods</caption>
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Period type</th>
-<th>Duration notation</th>
-<th>Example</th>
-<th>Duration</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Daily</td>
-<td>P1D</td>
-<td>2017-10-01/P1M</td>
-<td>Oct 01 2017</td>
-</tr>
-<tr class="even">
-<td>Weekly</td>
-<td>P7D</td>
-<td>2017-10-01/P7D</td>
-<td>Oct 01 2017-Oct 07-2017</td>
-</tr>
-<tr class="odd">
-<td>Monthly</td>
-<td>P1M</td>
-<td>2017-10-01/P1M</td>
-<td>Oct 01 2017-Oct 31 2017</td>
-</tr>
-<tr class="even">
-<td>Bi-monthly</td>
-<td>P2M</td>
-<td>2017-11-01/P1M</td>
-<td>Nov 01 2017-Dec 31 2017</td>
-</tr>
-<tr class="odd">
-<td>Quarterly</td>
-<td>P3M</td>
-<td>2017-09-01/P3M</td>
-<td>Sep 01 2017-Dec 31 2017</td>
-</tr>
-<tr class="even">
-<td>Six-monthly</td>
-<td>P6M</td>
-<td>2017-01-01/P6M</td>
-<td>Jan 01 2017-Jun 30 2017</td>
-</tr>
-<tr class="odd">
-<td>Yearly</td>
-<td>P1Ý</td>
-<td>2017-01-01/P1Y</td>
-<td>Jan 01 2017-Dec 31 2017</td>
-</tr>
-<tr class="even">
-<td>Financial October</td>
-<td>P1Y</td>
-<td>2017-10-01/P1Y</td>
-<td>Oct 01 2017-Sep 30 2018</td>
-</tr>
-<tr class="odd">
-<td>Financial April</td>
-<td>P1Y</td>
-<td>2017-04-01/P1Y</td>
-<td>April 1 2017-Mar 31 2018</td>
-</tr>
-<tr class="even">
-<td>Financial July</td>
-<td>P1Y</td>
-<td>2017-07-01/P1Y</td>
-<td>July 1 2017-June 30 2018</td>
-</tr>
-</tbody>
-</table>
-
 ### Data values
 
 The dataValue element in adx is very similar to its equivalent in DXF.
@@ -4274,7 +3777,7 @@ adx is that the categories used for dataElements in the dataSet MUST
 have a code assigned to them, and further, that code must be of a form
 which is suitable for use as an XML attribute. The exact constraint on
 an XML attribute name is described in the W3C XML standard - in practice
-this means no spaces, no non-alphanumeric characters other than '\_' and
+this means no spaces, no non-alphanumeric chracters other than '\_' and
 it may not start with a letter. The example above shows examples of
 'good' category codes ('GENDER' and 'HIV\_AGE').
 
@@ -4287,7 +3790,7 @@ suitable.
 The main benefits of using explicit dimensions of disaggregated data are
 that
 
-  - The system producing the data does not have to be synchronised with the
+  - The system producing the data does not have to be synched with the
     categoryOptionCombo within DHIS2.
 
   - The producer and consumer can match their codes to a 3rd party
@@ -4378,7 +3881,7 @@ program for the "Ngelehun CHC" facility in the demo database can be seen
 below:
 
     <?xml version="1.0" encoding="utf-8"?>
-    <event program="eBAyeGv0exc" orgUnit="DiszpKrYNg8"
+    <event program="eBAyeGv0exc" orgUnit="DiszpKrYNg8" 
       eventDate="2013-05-17" status="COMPLETED" storedBy="admin">
       <coordinate latitude="59.8" longitude="10.9" />
       <dataValues>
@@ -4392,7 +3895,7 @@ To perform some testing we can save the XML payload as a file
 called*event.xml* and send it as a POST request to the events resource
 in the API using curl with the following command:
 
-    curl -d @event.xml "https://play.dhis2.org/demo/api/26/events"
+    curl -d @event.xml "https://play.dhis2.org/demo/api/26/events" 
       -H "Content-Type:application/xml" -u admin:district -v
 
 The same payload in JSON format looks like this:
@@ -4425,7 +3928,7 @@ XML format might look like this:
 
     <?xml version="1.0" encoding="utf-8"?>
     <events>
-        <event program="eBAyeGv0exc" orgUnit="DiszpKrYNg8"
+        <event program="eBAyeGv0exc" orgUnit="DiszpKrYNg8" 
           eventDate="2013-05-17" status="COMPLETED" storedBy="admin">
           <coordinate latitude="59.8" longitude="10.9" />
           <dataValues>
@@ -4433,7 +3936,7 @@ XML format might look like this:
             <dataValue dataElement="oZg33kd9taw" value="Male" />
           </dataValues>
         </event>
-        <event program="eBAyeGv0exc" orgUnit="DiszpKrYNg8"
+        <event program="eBAyeGv0exc" orgUnit="DiszpKrYNg8" 
           eventDate="2013-05-17" status="COMPLETED" storedBy="admin">
           <coordinate latitude="59.8" longitude="10.9" />
           <dataValues>
@@ -4574,10 +4077,10 @@ matches on a *unique* metadata attribute value.
 the same, but the URL you are posting to must add the identifier to the
 end of the URL string and the request must be PUT.
 
-    curl -X PUT -d @updated_event.xml "localhost/api/26/events/ID"
+    curl -X PUT -d @updated_event.xml "localhost/api/26/events/ID" 
       -H "Content-Type: application/xml" -u admin:district
 
-    curl -X PUT -d @updated_event.json "localhost/api/26/events/ID"
+    curl -X PUT -d @updated_event.json "localhost/api/26/events/ID" 
       -H "Content-Type: application/json" -u admin:district
 
 **Delete**: To delete an existing event, all you need is to send a
@@ -4634,16 +4137,6 @@ The import process can be customized using a set of import parameters:
 <td>skipNotifications</td>
 <td>true | false</td>
 <td>Indicates whether to send notifications for completed events.</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>importReportMode</td>
-<td>FULL, ERRORS, DEBUG</td>
-<td>Sets the <strong>ImportReport</strong> mode, controls how much is reported back after the import is done. <strong>ERRORS</strong> only includes <em>ObjectReports</em> for object which has errors. <strong>FULL</strong> returns an <em>ObjectReport</em> for all objects imported, and <strong>DEBUG</strong> returns the same plus a name for the object (if available).</td>
 </tr>
 </tbody>
 </table>
@@ -5169,10 +4662,6 @@ model.
 <li><p><em>dataElement</em> - if defined, this data element will be set to be mandatory in the data entry form.</p></li>
 <li><p><em>trackedEntityAttribute</em> - if defined, this tracked entity attribute will be set to mandatory in the registration form or profile.</p></li>
 </ul></li>
-<li><p><strong>SENDMESSAGE</strong> - Send message at completion of event/enrollment</p>
-<ul>
-<li><p><em>messageTemplate</em> - if defined, this template will be delivered either as SMS or EMAIL depending upon DeliveryChannel value in message template.</p></li>
-</ul></li>
 </ul></td>
 <td>Compulsory</td>
 </tr>
@@ -5350,66 +4839,8 @@ creating such forms directly for a data set. This can be done through a
 POST or PUT request with content type text/html where the payload is the
 custom form markup such as:
 
-    curl -d @form.html "localhost/api/26/dataSets/BfMAe6Itzgt/form"
+    curl -d @form.html "localhost/api/26/dataSets/BfMAe6Itzgt/form" 
       -H "Content-Type:text/html" -u admin:district -X PUT -v
-
-## Documents
-
-References to files can be stored with the document resource.
-
-<table>
-<caption>Document fields</caption>
-<colgroup>
-<col width="50%" />
-<col width="50%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Field name</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>name</td>
-<td>unique name of document</td>
-</tr>
-<tr class="even">
-<td>external</td>
-<td>flag identifying the location of the document. TRUE for external files, FALSE for internal ones</td>
-</tr>
-<tr class="odd">
-<td>url</td>
-<td>the location of the file. URL for external files. File resource id for internal ones (see <a href="#webapi_file_resources">section_title</a>)</td>
-</tr>
-</tbody>
-</table>
-
-A GET request to the documents endpoint will return all documents:
-
-    /api/29/documents
-
-A POST request to the doucuments endpoint will create a new document:
-
-    curl -X POST -d @document.json -H "Content-type: allication/json"
-      http://dhis.domain/api/29/documents
-
-    {
-      "name": "dhis home",
-      "external": true,
-      "url": "https://www.dhis2.org"
-    }
-
-A GET request with the id of a document appended will return information
-about the document. A PUT request to the same endpoint will update the
-fields of the document:
-
-    /api/29/documents/<documentId>
-
-Appending */data* to the GET request will return the actual file content
-of the document:
-
-    /api/29/documents/<documentId>/data
 
 ## Validation
 
@@ -5428,12 +4859,17 @@ Scheduled validation.
 Custom validation can be initiated through the "Data Quality" app, where
 you can configure the periods, validation rule groups and organisation
 units to be included in the analysis and if you want to send out
-notifications for and/or persist the results found. The result of this
-analysis will be a list of violations found using your criteria.
+notifications for the results found. The result of this analysis will be
+a list of violations found using your criteria.
 
-The way server jobs was scheduled was changed in 2.29. It now has
-options for configuration. See the [Scheduling](#webapi_scheduling) api
-for more information.
+The scheduled validation on the other hand, is an async task you can
+chose to scheduled to run once a day, or you can trigger it using the
+resource table endpoint as described in [resource
+tables](https://docs.dhis2.org/master/en/developer/html/dhis2_developer_manual_full.html#webapi_generating_resource_analytics_tables)
+When running the scheduled validation task, any violations found will be
+persisted as validation results. These results can be accessed trouh the
+[validation result
+api](https://docs.dhis2.org/master/en/developer/html/dhis2_developer_manual_full.html#webapi_validation_results).
 
 The first path variable is an identifier referring to the data set to
 validate. XML and JSON resource representations are supported. The
@@ -5542,32 +4978,9 @@ the table below.
 
 ## Validation Results
 
-<!--DHIS2-SECTION-ID:webapi_validation_results-->
-
-Validation results are persisted results of violations found during a
-validation analysis. If you choose "persist results" when starting or
-scheduling a validation analysis, any violations found will be stored in
-the database. When a result is stored in the database it will be used
-for 3 things:
-
-1.  Generating analytics based on the stored results.
-
-2.  Peristed results that has not generated a notification, will do so,
-    once.
-
-3.  Keeping track of whether or not the result has generated a
-    notification.
-
-4.  Skipping rules that have been already checked when running
-    validation analysis.
-
-This means if you don't persist your results, you will be unable to
-generate analytics for validation results, if checked, results will
-generate notfications every time it's found and running validation
-analysis might be slower.
-
-The validation results persisted can be viewed at the following
-endpoint:
+Validation results are objects created when violations are found during
+a scheduled validation analysis. These results can be accessed through
+the api using the following endpoint:
 
     /api/26/validationResults
 
@@ -5861,10 +5274,8 @@ basic format of this payload, given as *XML* in this example, is like
 so:
 
     <completeDataSetRegistrations xmlns="http://dhis2.org/schema/dxf/2.0">
-      <completeDataSetRegistration period="200810" dataSet="eZDhcZi6FLP" organisationUnit="qhqAxPSTUXp"
-        attributeOptionCombo="bRowv6yZOF2" storedBy="imported"/>
-      <completeDataSetRegistration period="200811" dataSet="eZDhcZi6FLP" organisationUnit="qhqAxPSTUXp"
-        attributeOptionCombo="bRowv6yZOF2" storedBy="imported"/>
+      <completeDataSetRegistration period="200810" dataSet="eZDhcZi6FLP" organisationUnit="qhqAxPSTUXp" attributeOptionCombo="bRowv6yZOF2" storedBy="imported"/>
+      <compelteDataSetRegistration ...> <!-- Any number of elements allowed -->
     </completeDataSetRegistrations>
 
 The *storedBy* attribute is optional (as it is a nullable property on
@@ -6104,7 +5515,7 @@ parameters are supported:
 
 This section explains how to approve, unapprove and check approval
 status using the *dataApprovals* resource. Approval is done per data
-approval workflow, period, organisation unit and attribute option combo.
+set, period, organisation unit and attribute option combo.
 
     /api/26/dataApprovals
 
@@ -6116,7 +5527,7 @@ To get approval information for a data set you can issue a GET request
 similar to
     this:
 
-    GET http://server.com/api/dataApprovals?wf=rIUL3hYOjJc&pe=201801&ou=YuQRtpLP10I
+    GET http://server.com/api/dataApprovals?ds=aLpVgfXiz0f&pe=2013&ou=DiszpKrYNg8
 
 <table style="width:100%;">
 <caption>Data approval query parameters</caption>
@@ -6134,9 +5545,9 @@ similar to
 </thead>
 <tbody>
 <tr class="odd">
-<td>wf</td>
+<td>ds</td>
 <td>Yes</td>
-<td>Data approval workflow identifier</td>
+<td>Data set identifier</td>
 </tr>
 <tr class="even">
 <td>pe</td>
@@ -6148,18 +5559,8 @@ similar to
 <td>Yes</td>
 <td>Organisation unit identifier</td>
 </tr>
-<tr class="even">
-<td>aoc</td>
-<td>No</td>
-<td>Attribute option combination identifier</td>
-</tr>
 </tbody>
 </table>
-
-(Note: for backwards compatibility, the partameter ds for data set may
-be given instaed of wf for workflow in this and other data approval
-requests as described below. If the data set is given, the workflow
-associated with that data set will be used.)
 
 This will give you a response something like this:
 
@@ -6287,7 +5688,7 @@ to fetch data approval records for individual attribute option combos
 from the following
     resource:
 
-    GET api/dataApprovals/categoryOptionCombos?wf=rIUL3hYOjJc&pe=201801&ou=YuQRtpLP10I
+    GET api/dataApprovals/categoryOptionCombos?ds=aLpVgfXiz0f&pe=2013&ou=DiszpKrYNg8
 
 ### Approve data
 
@@ -6299,11 +5700,11 @@ dataApprovals resource.
 
     POST DELETE /api/26/dataApprovals
 
-To accept data that is already approved you can issue a *POST* request
-to the *dataAcceptances* resource. To un-accept data you can issue a
-*DELETE* request to the *dataAcceptances* resource.
+To accept data you can issue a *POST* request to the
+*dataApprovals/acceptances* resource. To un-accept data you can issue a
+*DELETE* request to the *dataApprovals/acceptances* resource.
 
-    POST DELETE /api/26/dataAcceptances
+    POST DELETE /api/26/dataApprovals/acceptances
 
 These requests contain the following parameters:
 
@@ -6323,9 +5724,9 @@ These requests contain the following parameters:
 </thead>
 <tbody>
 <tr class="odd">
-<td>wf</td>
+<td>ds</td>
 <td>Yes</td>
-<td>Data approval workflow identifier</td>
+<td>Data set identifier</td>
 </tr>
 <tr class="even">
 <td>pe</td>
@@ -6337,23 +5738,21 @@ These requests contain the following parameters:
 <td>Yes</td>
 <td>Organisation unit identifier</td>
 </tr>
-<tr class="even">
-<td>aoc</td>
-<td>No</td>
-<td>Attribute option combination identifier</td>
-</tr>
 </tbody>
 </table>
 
 Note that, unlike querying the data approval status, you must specify
 parameters that correspond to a selection of data that could be
-approved. In particular, both of the following must be true:
+approved. In particular, all of the following must be true:
 
-  - The organisation unit's level must be specified by an approval level
-    in the workfow.
+  - The organisation unit's level must be specified by an approval
+    level.
 
-  - The time period specified must match the period type of the
-    workflow.
+  - The time period specified must match the period type of the data
+    set.
+
+  - The data set must specify that data can be approved for this data
+    set.
 
 ### Bulk approve data
 
@@ -6382,7 +5781,7 @@ You can unaccept a bulk of records by posting to the
 The approval payload is supported as JSON and looks like this:
 
     {
-      "wf": [
+      "ds": [
         "pBOMPrpg1QX", "lyLU2wR22tC"
       ],
       "pe": [
@@ -6740,12 +6139,12 @@ We use cURL to dispatch the message the the DHIS2 demo instance where we
 indicate that the content-type is XML and authenticate as the *admin*
 user:
 
-    curl -d @message.xml "https://play.dhis2.org/demo/api/26/messageConversations"
+    curl -d @message.xml "https://play.dhis2.org/demo/api/26/messageConversations" 
       -H "Content-Type:application/xml" -u admin:district -X POST -v
 
 A corresponding payload in JSON and POST command look like this:
 
-```
+``` 
 {
   "subject": "Hey",
   "text": "How are you?",
@@ -6784,7 +6183,7 @@ resource. We supply an *Accept* header with *application/xml* as the
 value to indicate that we are interested in the XML resource
 representation and we authenticate as the *mobile* user:
 
-    curl "https://play.dhis2.org/demo/api/26/messageConversations"
+    curl "https://play.dhis2.org/demo/api/26/messageConversations" 
       -H "Accept:application/xml" -u mobile:district -X GET -v
 
 In response we get the following XML:
@@ -6806,8 +6205,8 @@ we can reply directly to an existing message conversation once we know
 the URL by including the message text as the request payload (body). We
 are now able to construct a URL for sending our reply:
 
-    curl -d "Yes the Mortality data set has been reported"
-      "https://play.dhis2.org/demo/api/26/messageConversations/ZjHHSjyyeJ2"
+    curl -d "Yes the Mortality data set has been reported" 
+      "https://play.dhis2.org/demo/api/26/messageConversations/ZjHHSjyyeJ2" 
       -H "Content-Type:text/plain" -u mobile:district -X POST -v
 
 If all went according to plan you will receive a *200 OK* status code.
@@ -6860,14 +6259,14 @@ are given as query string parameters. The following example removes two
 separate message conversations for the current
     user:
 
-    curl "https://play.dhis2.org/demo/api/26/messageConversations?mc=WzMRrCosqc0&mc=lxCjiigqrJm"
+    curl "https://play.dhis2.org/demo/api/26/messageConversations?mc=WzMRrCosqc0&mc=lxCjiigqrJm" 
       -X DELETE -u admin:district
 
 If you have sufficient permissions, conversations can be removed on
 behalf of another user by giving an optional user id
     parameter.
 
-    curl "https://play.dhis2.org/demo/api/26/messageConversations?mc=WzMRrCosqc0&mc=lxCjiigqrJm&user=PhzytPW3g2J"
+    curl "https://play.dhis2.org/demo/api/26/messageConversations?mc=WzMRrCosqc0&mc=lxCjiigqrJm&user=PhzytPW3g2J" 
       -X DELETE -u admin:district
 
 As indicated, batch removals will return the same message format as for
@@ -6892,15 +6291,15 @@ optional *user* request parameter can be given.
 
 Let's mark a couple of messages as read by the current user:
 
-    curl "https://play.dhis2.org/dev/api/messageConversations/read"
-    -d '["ZrKML5WiyFm","Gc03smoTm6q"]'  -X POST
+    curl "https://play.dhis2.org/dev/api/messageConversations/read" 
+    -d '["ZrKML5WiyFm","Gc03smoTm6q"]'  -X POST 
     -H "Content-Type: application/json" -u admin:district -v
 
 The response is a *200 OK* with the following JSON body:
 
     { "markedRead" : [ "ZrKML5WiyFm", "Gc03smoTm6q" ] }
 
-### Tickets and Validation Result Notifications
+### Tickets
 
 <!--DHIS2-SECTION-ID:webapi_messaging_tickets-->
 
@@ -6912,12 +6311,6 @@ a status and a priority to a ticket. To do this, use these
     POST https://play.dhis2.org/demo/api/26/messageConversations/<uid>/status
 
     POST https://play.dhis2.org/demo/api/26/messageConversations/<uid>/priority
-
-In 2.29, messages generated by validation analysis now also be used in
-the status and priority properties. By default, messages generated by
-validation analysis will inherit the priority of the validation rule in
-question, or the highest importance if the message contains multiple
-rules.
 
 <table>
 <caption>A list of valid status and priority values</caption>
@@ -6956,7 +6349,7 @@ by users who have "Manage tickets" permissions. To create an internal
 reply, include the "internal" parameter, and set it to
 
     curl -d "This is an internal message"
-      "https://play.dhis2.org/demo/api/26/messageConversations/ZjHHSjyyeJ2?internal=true"
+      "https://play.dhis2.org/demo/api/26/messageConversations/ZjHHSjyyeJ2?internal=true" 
       -H "Content-Type:text/plain" -u admin:district -X POST -v
 
 ## Interpretations
@@ -7353,15 +6746,15 @@ representations are listed below.
 
     /api/26/charts/R0DVGvXDUNP/data
     /api/26/charts/R0DVGvXDUNP/data?date=2013-06-01
-
+    
     /api/26/reportTables/jIISuEWxmoI/data.html
     /api/26/reportTables/jIISuEWxmoI/data.html?date=2013-01-01
     /api/26/reportTables/FPmvWs7bn2P/data.xls
     /api/26/reportTables/FPmvWs7bn2P/data.pdf
-
+    
     /api/26/maps/DHE98Gsynpr/data
     /api/26/maps/DHE98Gsynpr/data?date=2013-07-01
-
+    
     /api/26/reports/OeJsA6K1Otx/data.pdf
     /api/26/reports/OeJsA6K1Otx/data.pdf?date=2014-01-01
 
@@ -7411,19 +6804,19 @@ referring to an existing table. The second is configured inline.
     <head>
       <script src="https://dhis2-cdn.org/v227/plugin/jquery-2.2.4.min.js"></script>
       <script src="https://dhis2-cdn.org/v227/plugin/reporttable.js"></script>
-
+    
       <script>
         reportTablePlugin.url = "https://play.dhis2.org/demo";
         reportTablePlugin.username = "admin";
         reportTablePlugin.password = "district";
         reportTablePlugin.loadingIndicator = true;
-
+    
         // Referring to an existing table through the id parameter, render to "report1" div
-
+        
         var r1 = { el: "report1", id: "R0DVGvXDUNP" };
-
+    
         // Table configuration, render to "report2" div
-
+        
         var r2 = {
           el: "report2",
           columns: [
@@ -7435,7 +6828,7 @@ referring to an existing table. The second is configured inline.
           filters: [
             {dimension: "ou", items: [{id: "USER_ORGUNIT"}]}
           ],
-
+    
           // All following properties are optional
           title: "My custom title",
           showColTotals: false,
@@ -7453,11 +6846,11 @@ referring to an existing table. The second is configured inline.
           digitGroupSeparator: "COMMA",
           legendSet: {id: "fqs276KXCXi"}
         };
-
+    
         reportTablePlugin.load([r1, r2]);
       </script>
     </head>
-
+    
     <body>
       <div id="report1"></div>
       <div id="report2"></div>
@@ -7663,7 +7056,7 @@ following *columns* config:
 <td>aggregationType</td>
 <td>string</td>
 <td>No</td>
-<td>&quot;DEFAULT&quot; | &quot;SUM&quot; |&quot;AVERAGE&quot; | &quot;AVERAGE_SUM_ORG_UNIT&quot;|&quot;LAST&quot;|&quot;LAST_AVERAGE_ORG_UNIT&quot;| &quot;COUNT&quot; | &quot;STDDEV&quot; | &quot;VARIANCE&quot; | &quot;MIN&quot; | &quot;MAX&quot;</td>
+<td>&quot;DEFAULT&quot; | &quot;COUNT&quot; | &quot;AVERAGE&quot; | &quot;SUM&quot; | &quot;STDDEV&quot; | &quot;VARIANCE&quot; | &quot;MIN&quot; | &quot;MAX&quot;</td>
 <td>Override the data element's default aggregation type</td>
 </tr>
 <tr class="odd">
@@ -7718,7 +7111,7 @@ following *columns* config:
 In this example we will see how we can embed good-looking Highcharts
 charts (<http://www.highcharts.com>) with data served from a DHIS2
 back-end into a Web page. To accomplish this we will use the DHIS2
-Visualizer plug-in. The plug-in is written in JavaScript and depends on
+Visualizer plug-in. The plug-in is written in javascript and depends on
 the jQuery library. A complete working example can be found at
 <http://play.dhis2.org/portal/chart.html>. Open the page in a web
 browser and view the source to see how it is set up.
@@ -7732,19 +7125,19 @@ referring to an existing chart. The second is configured inline.
     <head>
       <script src="https://dhis2-cdn.org/v227/plugin/jquery-2.2.4.min.js"></script>
       <script src="https://dhis2-cdn.org/v227/plugin/chart.js"></script>
-
+    
       <script>
         chartPlugin.url = "https://play.dhis2.org/demo";
         chartPlugin.username = "admin";
         chartPlugin.password = "district";
         chartPlugin.loadingIndicator = true;
-
+        
         // Referring to an existing chart through the id parameter, render to "report1" div
-
+        
         var r1 = { el: "report1", id: "R0DVGvXDUNP" };
-
+    
         // Chart configuration, render to "report2" div
-
+        
         var r2 = {
           el: "report2",
           columns: [
@@ -7756,7 +7149,7 @@ referring to an existing chart. The second is configured inline.
           filters: [
             {dimension: "ou", items: [{id: "USER_ORGUNIT"}]}
           ],
-
+    
           // All following properties are optional
           title: "Custom title",
           type: "line",
@@ -7777,13 +7170,13 @@ referring to an existing chart. The second is configured inline.
           domainAxisTitle: "My domain axis title",
           hideLegend: true
         };
-
+    
         // Render the charts
-
+    
         chartPlugin.load(r1, r2);
       </script>
     </head>
-
+    
     <body>
       <div id="report1"></div>
       <div id="report2"></div>
@@ -7791,7 +7184,7 @@ referring to an existing chart. The second is configured inline.
     </html>
 
 Two files are included in the header section of the HTML document. The
-first file is the jQuery JavaScript library (we use the DHIS2 content
+first file is the jQuery javascript library (we use the DHIS2 content
 delivery network in this case). The second file is the Visualizer chart
 plug-in. Make sure the path is pointing to your DHIS2 server
 installation.
@@ -8031,7 +7424,7 @@ following *columns* config:
 <td>aggregationType</td>
 <td>string</td>
 <td>No</td>
-<td>&quot;DEFAULT&quot; | &quot;SUM&quot; |&quot;AVERAGE&quot; | &quot;AVERAGE_SUM_ORG_UNIT&quot;|&quot;LAST&quot;|&quot;LAST_AVERAGE_ORG_UNIT&quot;| &quot;COUNT&quot; | &quot;STDDEV&quot; | &quot;VARIANCE&quot; | &quot;MIN&quot; | &quot;MAX&quot;</td>
+<td>&quot;DEFAULT&quot; | &quot;COUNT&quot; | &quot;AVERAGE&quot; | &quot;SUM&quot; | &quot;STDDEV&quot; | &quot;VARIANCE&quot; | &quot;MIN&quot; | &quot;MAX&quot;</td>
 <td>Override the data element's default aggregation type</td>
 </tr>
 <tr class="odd">
@@ -8071,7 +7464,7 @@ following *columns* config:
 
 In this example we will see how we can embed maps with data served from
 a DHIS2 back-end into a Web page. To accomplish this we will use the GIS
-map plug-in. The plug-in is written in JavaScript and depends on the Ext
+map plug-in. The plug-in is written in Javascript and depends on the Ext
 JS library only. A complete working example can be found at
 <http://play.dhis2.org/portal/map.html>. Open the page in a web browser
 and view the source to see how it is set up.
@@ -8088,12 +7481,12 @@ referring to an existing map. The second is configured inline.
       <script src="https://maps.google.com/maps/api/js?sensor=false"></script>
       <script src="http://dhis2-cdn.org/v215/openlayers/OpenLayers.js"></script>
       <script src="http://dhis2-cdn.org/v215/plugin/map.js"></script>
-
+    
       <script>
         var base = "https://play.dhis2.org/demo";
-
+    
         // Login - if OK, call the setLinks function
-
+    
         Ext.onReady( function() {
           Ext.Ajax.request({
             url: base + "dhis-web-commons-security/login.action",
@@ -8102,10 +7495,10 @@ referring to an existing map. The second is configured inline.
             success: setLinks
           });
         });
-
+    
         function setLinks() {
           DHIS.getMap({ url: base, el: "map1", id: "ytkZY3ChM6J" });
-
+    
           DHIS.getMap({
             url: base,
             el: "map2",
@@ -8124,7 +7517,7 @@ referring to an existing map. The second is configured inline.
         }
       </script>
     </head>
-
+    
     <body>
       <div id="map1"></div>
       <div id="map2"></div>
@@ -8132,9 +7525,9 @@ referring to an existing map. The second is configured inline.
     </html>
 
 Four files and Google Maps are included in the header section of the
-HTML document. The first two files are the Ext JS JavaScript library (we
+HTML document. The first two files are the Ext JS javascript library (we
 use the DHIS2 content delivery network in this case) and its stylesheet.
-The third file is the OpenLayers JavaScript mapping framework
+The third file is the OpenLayers javascript mapping framework
 (<http://openlayers.org>) and finally we include the GIS map plug-in.
 Make sure the path is pointing to your DHIS2 server
     installation.
@@ -8161,10 +7554,10 @@ DHIS2 installation.
     });
 
 Now let us have a look at the various options for the GIS plug-in. Two
-properties are required: *el* and *url* (please refer to the table
+properies are required: *el* and *url* (please refer to the table
 below). Now, if you want to refer to pre-defined maps already made in
 the DHIS2 GIS it is sufficient to provide the additional *id* parameter.
-If you instead want to configure a map dynamically you should omit the id
+If you instead want to configure a map dynamically you shoud omit the id
 parameter and provide *mapViews* (layers) instead. They should be
 configured with data dimensions inside a *columns* array, a *rows* array
 and optionally a *filters* array instead.
@@ -8358,7 +7751,7 @@ config options:
 <td>string / array</td>
 <td>No</td>
 <td></td>
-<td>Organisation unit identifiers, overrides organisation units associated with current user, single or array</td>
+<td>Organisation unit identifiers, overrides organisation units associated with curretn user, single or array</td>
 </tr>
 </tbody>
 </table>
@@ -8369,7 +7762,7 @@ the Web API here: <http://play.dhis2.org/demo/api/24/maps>.
 
     function setLinks() {
       DHIS.getMap({ url: base, el: "map1", id: "ytkZY3ChM6J" });
-
+    
       DHIS.getMap({
      url: base,
      el: "map2",
@@ -8394,7 +7787,7 @@ the Web API here: <http://play.dhis2.org/demo/api/24/maps>.
     }
 
 Finally we include some *div* elements in the body section of the HTML
-document with the identifiers referred to in the plug-in JavaScript.
+document with the identifiers referred to in the plug-in Javascript.
 
     <div id="map1"></div>
     <div id="map2"></div>
@@ -8440,7 +7833,7 @@ which refers to those div elements like this:
     DHIS.getChart({ uid: 'X0CPnV6uLjR', el: 'chartA2', url: base });
     DHIS.getChart({ uid: 'j1gNXBgwKVm', el: 'chartA3', url: base });
     DHIS.getChart({ uid: 'X7PqaXfevnL', el: 'chartA4', url: base });
-
+    
     new Ext.ux.carousel.Carousel( 'chartCarousel', {
       autoPlay: true,
       itemSelector: 'div.chart',
@@ -8457,7 +7850,7 @@ to render a button for the user to start and stop the carousel. Finally
 we need to insert the div elements in the body of the HTML document:
 
     <div id="chartCarousel">
-
+    
     <div id="chartA1"></div>
     <div id="chartA2"></div>
     <div id="chartA3"></div>
@@ -8491,7 +7884,7 @@ might look something like
     WHERE ou.coordinates is not null
     ORDER BY oul.level, par.name, ou.name
 
-We will use *curl* to first execute the view on the DHIS2 server. This
+We will use *curl* to first execute the view on the DHIS 2 server. This
 is essentially a materialization process, and ensures that we have the
 most recent data available through the SQL view when it is retrieved
 from the server. You can first look up the SQL view from the
@@ -8547,7 +7940,7 @@ organisation units at level 4 you can use the following
 
 <!--DHIS2-SECTION-ID:webapi_sql_view_variables-->
 
-SQL views support variable substitution. Variable substitution is only
+SQL views support variable subsitution. Variable subsitition is only
 available for SQL view of type *query*, meaning SQL views which are not
 created in the database but simply executed as regular SQL queries.
 Variables can be inserted directly into the SQL query and must be on
@@ -8571,7 +7964,7 @@ An example query corresponding to the example above can look like this:
 
     /api/26/sqlViews/dI68mLkP1wN/data.json?var=valueType:int
 
-The *valueType* variable will be substituted with the *int* value, and
+The *valueType* variable will be subsituted with the *int* value, and
 the query will return data elements with int value type.
 
 The variable parameter must contain alphanumeric characters only. The
@@ -8765,7 +8158,7 @@ JSON like this:
     }
 
 To update, e.g. rename, a dashboard, you can make a *PUT* request with a
-similar request payload the same api/dashboards resource.
+similar request payload the same api/dasboards resource.
 
 To remove a dashboard, you can make a *DELETE* request to the specific
 dashboard resource similar to this:
@@ -8847,7 +8240,7 @@ request to the dashboard resource URL.
 To remove a specific content resource within a dashboard item a consumer
 can make a *DELETE* request to the below resource URL, where
 \<content-resource-id\> should be replaced by the identifier of a
-resource associated with the dashboard item; e.g. the identifier of a
+resource associated with the dasboard item; e.g. the identifier of a
 report or a user. For instance, this can be used to remove a single
 report from a dashboard item of type reports, as opposed to removing the
 dashboard item
@@ -8909,7 +8302,7 @@ The analytics resource lets you specify a range of query parameters:
 <td>aggregationType</td>
 <td>No</td>
 <td>Aggregation type to use in the aggregation process.</td>
-<td>SUM | AVERAGE |AVERAGE_SUM_ORG_UNIT|LAST|LAST_AVERAGE_ORG_UNIT| COUNT | STDDEV | VARIANCE|MIN|MAX</td>
+<td>SUM | AVERAGE | COUNT | STDDEV | VARIANCE</td>
 </tr>
 <tr class="even">
 <td>measureCriteria</td>
@@ -8984,64 +8377,52 @@ The analytics resource lets you specify a range of query parameters:
 <td>false | true</td>
 </tr>
 <tr class="even">
-<td>includeMetadataDetails</td>
-<td>No</td>
-<td>Include metadata details to raw data response.</td>
-<td>false | true</td>
-</tr>
-<tr class="odd">
 <td>displayProperty</td>
 <td>No</td>
 <td>Property to display for metadata.</td>
 <td>NAME | SHORTNAME</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>outputIdScheme</td>
 <td>No</td>
 <td>Identifier scheme to use for metadata items the query response, can be identifier, code or attributes.</td>
-<td>UID | CODE |NAME| ATTRIBUTE:&lt;UID&gt;</td>
+<td>UID | CODE | ATTRIBUTE:&lt;UID&gt;</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>inputIdScheme</td>
 <td>No</td>
 <td>Identifier scheme to use for metadata items in the query request, can be identifier, code or attributes.</td>
 <td>UID | CODE | ATTRIBUTE:&lt;UID&gt;</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>approvalLevel</td>
 <td>No</td>
-<td>Include data which has been approved at least up to the given approval level, refers to identifier of approval level.</td>
+<td>Include data which has been approved at least up to the given approval level, refers to identfier of approval level.</td>
 <td>Identifier of approval level</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>relativePeriodDate</td>
 <td>No</td>
 <td>Date used as basis for relative periods.</td>
 <td>Date.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>userOrgUnit</td>
 <td>No</td>
 <td>Explicitly define the user org units to utilize, overrides organisation units associated with current user, multiple identifiers can be separated by semi-colon.</td>
 <td>Organisation unit identifiers.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>columns</td>
 <td>No</td>
 <td>Dimensions to use as columns for table layout.</td>
 <td>Any dimension (must be query dimension)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>rows</td>
 <td>No</td>
 <td>Dimensions to use as rows for table layout.</td>
 <td>Any dimension (must be query dimension)</td>
-</tr>
-<tr class="odd">
-<td>order</td>
-<td>No</td>
-<td>Specify ordering of rows based on value</td>
-<td>ASC | DESC</td>
 </tr>
 </tbody>
 </table>
@@ -9100,7 +8481,7 @@ data value is greater or equal to 6500 and less than
 Similar to *measureCriteria*, the *preAggregationMeasureCriteria* query
 parameter lets you filter out data, only before aggregation is
 performed. For example, the following query only aggregates data where
-the original value is within the criteria
+the original value is within the criterias
     defined:
 
     /api/26/analytics?dimension=dx:fbfJHSPpUQD;cYeuwXTCPkU&dimension=pe:2014
@@ -9119,14 +8500,6 @@ like
 
     /api/26/analytics.html?dimension=dx:fbfJHSPpUQD;cYeuwXTCPkU&dimension=pe:2014Q1;2014Q2
       &dimension=ou:O6uvpzGd5pu&tableLayout=true&columns=dx;ou&rows=pe
-
-The *order* parameter can be used for analytics resource to generate
-ordered data. The data will be ordered in ascending(or descending) order
-of values. An example request for ordering the values in descending
-order
-    is:
-
-    /api/26/analytics?dimension=dx:fbfJHSPpUQD&dimension=pe:LAST_12_MONTHS&dimension=ou:O6uvpzGd5pu&order=DESC
 
 ### Dimensions and items
 
@@ -9288,9 +8661,10 @@ entire level optionally constrained by any number of boundary
 organisation units with the LEVEL-\<level\> syntax. Boundary refers to a
 top node in a sub-hierarchy, meaning that all organisation units at the
 given level below the given boundary organisation unit in the hierarchy
-will be included in the response, and is provided as regular organisation unit
-dimension items. The level value can either be a numerical level or refer to the identifier
-of the organisation unit level entity. A simple query for all org units at level three:
+will be included in the response, and is provided as regular
+organisation unit dimension items. A simple query for all org units at
+level
+    three:
 
     /api/26/analytics?dimension=dx:fbfJHSPpUQD&dimension=pe:2016&dimension=ou:LEVEL-3
 
@@ -9452,7 +8826,7 @@ example looks like this:
       ?dimension=dx:DE_GROUP-qfxEYY9xAl6;IN_GROUP-oehv9EO3vP7;BfMAe6Itzgt.REPORTING_RATE
       &dimension=pe:LAST_12_MONTHS&filter=ou:ImspTQPwCqd
 
-Data element operands can optionally specify attribute option
+Data element operands can optionally specify attribut option
 combinations and use wildcards e.g. to specify all category option
 combination values:
 
@@ -9461,7 +8835,7 @@ combination values:
       &dimension=pe:LAST_12_MONTHS&filter=ou:ImspTQPwCqd
 
 > **Tip**
->
+> 
 > A great way to learn how to use the analytics API is to use the DHIS2
 > *pivot table* app. You can play around with pivot tables using the
 > various dimensions and items and click Download \> Plain data source
@@ -9601,7 +8975,7 @@ columns with dimension items (object or period identifiers) and a column
 with aggregated data values. The example response above has a
 data/indicator column, a period column and a value column. The first
 column contains indicator identifiers, the second contains ISO period
-identifiers and the third contains aggregated data values.
+identifiers and the third contains aggregeted data values.
 
 ### Constraints
 
@@ -9653,7 +9027,7 @@ of finer granularity compared to what the destination system is storing.
 
 As an example one can specify an indicator in the target system to
 summarize data for multiple data elements and import this data for a
-single data element in the destination system. As another example one
+single data element in the destionation system. As another example one
 can aggregate data collected at organisation unit level 4 in the target
 system to level 2 and import that data in the destination system.
 
@@ -9828,15 +9202,6 @@ format:
     &filter=J5jldMd8OHv:uYxK4wmcPqA;tDZVQ1WtwpA
     &startDate=2015-01-01&endDate=2015-12-31
     &dimension=ou:O6uvpzGd5pu
-
-The *outputIdScheme* parameter is useful if you want human readable data
-responses as it can be set to *NAME* like this:
-
-    /api/analytics/rawData.csv?dimension=dx:fbfJHSPpUQD;cYeuwXTCPkU
-    &filter=J5jldMd8OHv:uYxK4wmcPqA;tDZVQ1WtwpA
-    &startDate=2017-01-01&endDate=2017-12-31
-    &dimension=ou:O6uvpzGd5pu
-    &outputIdScheme=NAME
 
 The response from the *rawData* resource will look identical to the
 regular analytics resource; the difference is that the response contain
@@ -10013,28 +9378,16 @@ The analytics event API let you specify a range of query parameters.
 <td>No</td>
 <td>Date identifier e.g: &quot;2016-01-01&quot;. Overrides the start date of the relative period</td>
 </tr>
-<tr class="odd">
-<td>columns</td>
-<td>No</td>
-<td>Dimensions to use as columns for table layout.</td>
-<td>Any dimension (must be query dimension)</td>
-</tr>
-<tr class="even">
-<td>rows</td>
-<td>No</td>
-<td>Dimensions to use as rows for table layout.</td>
-<td>Any dimension (must be query dimension)</td>
-</tr>
 </tbody>
 </table>
 
 <table>
 <caption>Query parameters for event query analytics only</caption>
 <colgroup>
-<col style="width: 20%" />
-<col style="width: 11%" />
-<col style="width: 48%" />
-<col style="width: 19%" />
+<col width="20%" />
+<col width="11%" />
+<col width="48%" />
+<col width="19%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -10111,7 +9464,7 @@ The analytics event API let you specify a range of query parameters.
 <td>aggregationType</td>
 <td>No</td>
 <td>Aggregation type for the value dimension. Default is AVERAGE.</td>
-<td>|SUM|AVERAGE | AVERAGE_SUM_ORG_UNIT | COUNT | STDDEV | VARIANCE | MIN | MAX</td>
+<td>AVERAGE | SUM | COUNT | STDDEV | VARIANCE | MIN | MAX</td>
 </tr>
 <tr class="odd">
 <td>showHierarchy</td>
@@ -10446,8 +9799,8 @@ The default response JSON format will look similar to this:
             "names": {
                 "qrur9Dvnyt5": "Age",
                 "eBAyeGv0exc": "Inpatient morbidity and mortality",
-                "ImspTQPwCqd": "Sierra Leone",
-                "O6uvpzGd5pu": "Bo",
+                "ImspTQPwCqd": "Sierra Leone",
+                "O6uvpzGd5pu": "Bo",
                 "YuQRtpLP10I": "Badjia",
                 "oZg33kd9taw": "Gender"
             },
@@ -10479,24 +9832,12 @@ description in the "column" property.
 The *metaData* section, *ou* object contains the identifiers of all
 organisation units present in the response mapped to a string
 representing the hierarchy. This hierarchy string lists the identifiers
-of the ancestors (parents) of the organisation unit starting from the
+of the ancestors (parents) of the organistion unit starting from the
 root. The *names* object contains the identifiers of all items in the
 response mapped to their names.
 
 The *rows* section contains the events produced by the query. Each row
 represents exactly one event.
-
-In order to have the event analytics resource generate the data in the
-shape of a ready-made table, you can provide *rows* and *columns*
-parameters with requested dimension identifiers separated by semi-colons
-as values to indicate which ones to use as table columns and rows.
-Instead of generating a plain, normalized data source, the event
-analytics resource will now generate the data in table layout. The
-column and rows dimensions must be present as a data dimension in the
-query (not a filter). Such a request can look like
-    this:
-
-    /api/29/analytics.html+css?dimension=dx:cYeuwXTCPkU;fbfJHSPpUQD&dimension=pe:WEEKS_THIS_YEAR&filter=ou:ImspTQPwCqd&displayProperty=SHORTNAME&columns=dx&rows=pe
 
 ### Event aggregate analytics
 
@@ -10822,12 +10163,12 @@ like
 <!--DHIS2-SECTION-ID:webapi_push_analysis-->
 
 The push analysis api includes endpoints for previewing a push analysis
-report for the logged in user and manually triggering the system to
+report for the logged in user and manualy triggering the system to
 generate and send push analysis reports, in addition to the normal CRUD
 operations. When using the create and update endpoints for push
 analysis, the push analysis will be scheduled to run based on the
 properties of the push analysis. When deleting or updating a
-push analysis to be disabled, the job will also be stopped from running
+pushanalysis to be disabled, the job will also be stopped from running
 in the future.
 
 To get a HTML preview of an existing push analysis, you can do a GET
@@ -11515,7 +10856,7 @@ this URL:
 
 JSON and JSONP response formats are supported. The system info response
 currently includes the below properties. Note that if the user who is
-requesting this resource does not have full authority in the system then
+requesting this resourec does not have full authority in the system then
 only the first seven properties will be included, as this information is
 security sensitive.
 
@@ -11910,27 +11251,21 @@ messages.
 The Web API supports sending outgoing SMS using the POST method. SMS can
 be sent to a single or multiple destinations. One or more gateways need
 to be configured before using the service. An SMS will not be sent if
-there is no gateway configured.
- It needs a set of recipients and
+there is no gateway configured.  It needs a set of recipients and
 message text in JSON format as shown below.
-
-NOTE: Recipients list will be partitioned if its size exceed
-MAX\_ALLOWED\_RECIPIENTS limit which is 200.
 
     /api/26/sms/outbound
 
-    {
-      "message":"Sms Text",
-
+    { 
+      "message":"Sms Text",  
       "recipients": [
         "47XXXXXX1",
         "47XXXXXX2"
-      ]
-
+      ] 
     }
 
 The Web API also supports a query parameter version, but the
-parametrised API can only be used for sending SMS to a single
+parameterized API can only be used for sending SMS to a single
 destination.
 
     /api/26/sms/outbound?message=text&recipient=47XXXXXX
@@ -12082,7 +11417,7 @@ parameters.
       "receiveddate": "2016-05-01",
       "sentdate":"2016-05-01",
       "smsencoding": "1",
-      "smsstatus":"1"
+      "smsstatus":"1"          
     }
 
 The Web API also supports a query parameter-based
@@ -12175,7 +11510,7 @@ case of GenericHttpGateway to send one or more parameter as http header.
 
 *Bulksms*
 
-    {
+    { 
       "name": "bulkSMS",
       "username": "bulkuser",
       "password": "abc123",
@@ -12205,7 +11540,7 @@ case of GenericHttpGateway to send one or more parameter as http header.
     }
 
 HTTP.OK will be returned if configurations are saved successfully. In
-all other cases HTTP.ERROR will be returned.
+all other cases HTTP.ERROR will be retured.
 
 The various gateway configurations can be instantiated using the
 endpoints listed below.
@@ -12256,7 +11591,7 @@ The list of commands can be retrieved using GET.
 
     GET /api/smsCommands
 
-One particular command can be retrieved using GET.
+One particular command can be retreived using GET.
 
     GET /api/smsCommands/uid
 
@@ -12293,7 +11628,7 @@ One particular command can be deleted using DELETE.
 <!--DHIS2-SECTION-ID:webapi_program_messages-->
 
 Program message lets you send messages to tracked entity instances,
-contact addresses associated with organisation units, phone numbers and
+contact addresses assiociated with organisation units, phone numbers and
 email addresses. You can send messages through the *messages* resource.
 
     /api/26/messages
@@ -12418,7 +11753,7 @@ The fields are explained in the following table.
 <tr class="odd">
 <td>storeCopy</td>
 <td>No</td>
-<td>Whether to store a copy of the program message in DHIS2.</td>
+<td>Whether to store a copy of the program message in DHIS 2.</td>
 <td>false (default) | true</td>
 </tr>
 </tbody>
@@ -12427,7 +11762,7 @@ The fields are explained in the following table.
 A minimalistic example for sending a message over SMS to a tracked
 entity instance looks like this:
 
-    curl -d @message.json "https://play.dhis2.org/demo/api/26/messages"
+    curl -d @message.json "https://play.dhis2.org/demo/api/26/messages" 
       -H "Content-Type:application/json" -u admin:district -v
 
     {
@@ -12453,7 +11788,7 @@ The list of messages can be retrieved using GET.
 
     GET /api/26/messages
 
-One particular message can also be retrieved using GET.
+One particular message can also be retreived using GET.
 
     GET /api/26/messages/{uid}
 
@@ -12466,7 +11801,7 @@ Message can be deleted using DELETE.
 The program message API supports program message queries based on
 request parameters. Messages can be filtered based on below mentioned
 query parameters. All requests should use the GET HTTP verb for
-retrieving information.
+retreiving information.
 
 <table>
 <caption>Query program messages API</caption>
@@ -12614,7 +11949,7 @@ user:
 <!--DHIS2-SECTION-ID:webapi_users_credentials_query-->
 
 An alternative to the previous user query, is to directly query the user
-credentials (the part where username, etc., resides) using
+credentials (the part where username, etc resides) using
 */api/userCredentials* endpoint, it supports all regular field and
 object filters as the other endpoints.
 
@@ -12811,7 +12146,7 @@ the identifier of the user to replicate in the URL:
 
 An example of replicating a user using curl looks like this:
 
-    curl -d @replica.json "localhost/api/26/users/N3PZBUlN8vq/replica"
+    curl -d @replica.json "localhost/api/26/users/N3PZBUlN8vq/replica" 
       -H "Content-Type:application/json" -u admin:district -v
 
 ## Current user information and associations
@@ -12886,7 +12221,7 @@ parameter *includeDescendants=true* :
 
     /api/me/programs
 
-Gives the data approval levels which are relevant to the current user:
+Gives the data approval levels which are relenvant to the current user:
 
     /api/me/dataApprovalLevels
 
@@ -12907,19 +12242,19 @@ where content type is set to "text/plain". As an example, you can use
 curl like
     this:
 
-    curl "play.dhis2.org/demo/api/26/systemSettings/my-key" -d "My long value"
+    curl "play.dhis2.org/demo/api/26/systemSettings/my-key" -d "My long value" 
       -H "Content-Type: text/plain" -u admin:district -v
 
 To set system settings in bulk you can send a JSON object with a
 property and value for each system setting key-value pair using a POST
 request:
 
-```
+``` 
 {
   "keyApplicationNotification": "Welcome",
   "keyApplicationIntro": "DHIS2",
   "keyApplicationFooter": "Read more at dhis2.org"
-}
+}  
 ```
 
 You should replace my-key with your real key and my-val with your real
@@ -12936,7 +12271,7 @@ You can retrieve specific system settings as JSON by repeating the key
 query
     parameter:
 
-    curl "play.dhis2.org/demo/api/26/systemSettings?key=keyApplicationNotification&key=keyApplicationIntro"
+    curl "play.dhis2.org/demo/api/26/systemSettings?key=keyApplicationNotification&key=keyApplicationIntro" 
       -H "Content-Type: application/json" -u admin:district -v
 
 You can retrieve all system settings with a GET request:
@@ -13102,14 +12437,6 @@ The available system settings are listed below.
 <td>Do not require recaptcha for self registration. Default: &quot;false&quot;</td>
 </tr>
 <tr class="even">
-<td>recaptchaSecret</td>
-<td>Google API recaptcha secret. Default: dhis2 play instance API secret, but this will only works on you local instance and not in production.</td>
-</tr>
-<tr class="odd">
-<td>recaptchaSite</td>
-<td>Google API recaptcha site. Default: dhis2 play instance API site, but this will only works on you local instance and not in production.</td>
-</tr>
-<tr class="even">
 <td>keyOpenIdProvider</td>
 <td>OpenID provider</td>
 </tr>
@@ -13126,124 +12453,116 @@ The available system settings are listed below.
 <td>Analytics data older than this value (in years) will always be cached. &quot;0&quot; disabled this setting. Default: 0</td>
 </tr>
 <tr class="even">
-<td>analyticsFinancialYearStart</td>
-<td>Set financial year start. Default: October</td>
-</tr>
-<tr class="odd">
 <td>keyIgnoreAnalyticsApprovalYearThreshold</td>
 <td>&quot;0&quot; check approval for all data. &quot;-1&quot; disable approval checking. &quot;1&quot; or higher checks approval for all data that is newer than &quot;1&quot; year.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>keyAnalyticsMaxLimit</td>
 <td>Maximum number of analytics recors. Default: &quot;50000&quot;</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>keyAnalyticsMaintenanceMode</td>
 <td>Put analytics in maintenance mode. Default: &quot;false&quot;</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>keyDatabaseServerCpus</td>
 <td>Number of database server CPUs. Default: &quot;0&quot; (Automatic)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>helpPageLink</td>
 <td>Link to help page. Default: &quot;<a href="http://dhis2.github.io/dhis2-docs/master/en/user/html/dhis2_user_manual_en.html">https://dhis2.github.io/dhis2-docs/master/en/user/html/dhis2_user_manual_en.html</a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>keyAcceptanceRequiredForApproval</td>
 <td>Acceptance required before approval. Default: &quot;false&quot;</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>keySystemNotificationsEmail</td>
 <td>Where to email system notifications</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>keyAnalysisRelativePeriod</td>
 <td>Default relative period for analysis. Default: &quot;LAST_12_MONTHS&quot;</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>keyRequireAddToView</td>
 <td>Require authority to add to view object lists. Default: &quot;false&quot;</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>keyAllowObjectAssignment</td>
 <td>Allow assigning object to related objects during add or update. Default: &quot;false&quot;</td>
 </tr>
-<tr class="odd">
-<td>keyUseCustomLogoFront</td>
-<td>Enables the usage of a custom logo on the front page. Default: &quot;false&quot;</td>
-</tr>
 <tr class="even">
+<td>keyUseCustomLogoFront</td>
+<td>Enables the usage of a custom logo on the frontpage. Default: &quot;false&quot;</td>
+</tr>
+<tr class="odd">
 <td>keyUseCustomLogoBanner</td>
 <td>Enables the usage of a custom banner on the website. Default: &quot;false&quot;</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>keyDataImportStrictPeriods</td>
 <td>Require periods to match period type of data set. Default: &quot;false&quot;</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>keyDataImportStrictCategoryOptionCombos</td>
 <td>Require category option combos to match category combo of data element. Default: &quot;false&quot;</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>keyDataImportStrictOrganisationUnits</td>
 <td>Require organisation units to match assignment of data set. Default: &quot;false&quot;</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>keyDataImportStrictAttributeOptionsCombos</td>
 <td>Require attribute option combis to match category combo of data set. Default: &quot;false&quot;</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>keyDataImportRequireCategoryOptionCombo</td>
 <td>Require category option combo to be specified. Default: &quot;false&quot;</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>keyDataImportRequireAttributeOptionCombo</td>
 <td>Require attribute option combo to be specified. Default: &quot;false&quot;</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>keyCustomJs</td>
 <td>Custom JavaScript to be used on the website</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>keyCustomCss</td>
 <td>Custom CSS to be used on the website</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>keyCalendar</td>
 <td>The calendar type. Default: &quot;iso8601&quot;.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>keyDateFormat</td>
 <td>The format in which dates should be displayed. Default: &quot;yyyy-MM-dd&quot;.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>appStoreUrl</td>
 <td>The url used to point to the app store. Default: &quot;https://www.dhis2.org/appstore&quot;</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>keyStyle</td>
 <td>The style used on the DHIS2 webpages. Default: &quot;light_blue/light_blue.css&quot;.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>keyRemoteInstanceUrl</td>
 <td>Url used to connect to remote instance</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>keyRemoteInstanceUsername</td>
 <td>Username used to connect to remote DHIS2 instance</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>keyRemoteInstancePassword</td>
 <td>Password used to connect to remote DHIS2 instance</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>keyMapzenSearchApiKey</td>
 <td>Key for the Mapzen geo search API</td>
-</tr>
-<tr class="odd">
-<td>keyFileResourceRetentionStrategy</td>
-<td>Determines how long file resources associated with deleted or updated values are kept. NONE, THREE_MONTHS, ONE_YEAR, or FOREVER.</td>
 </tr>
 </tbody>
 </table>
@@ -13260,7 +12579,7 @@ of all user settings, you can send a *GET* request to the following URL:
 
     /api/26/userSettings
 
-User settings not set by the user, will fall back to the equivalent
+User settings not set by the user, will fall back to the equvalent
 system setting. To only return the values set explicitly by the user,
 you can append ?useFallback=false to the above URL, like this:
 
@@ -13281,7 +12600,7 @@ where content type is set to "text/plain". As an example, you can use
 curl like
     this:
 
-    curl "https://play.dhis2.org/demo/api/26/userSettings/my-key" -d "My long value"
+    curl "https://play.dhis2.org/demo/api/26/userSettings/my-key" -d "My long value" 
       -H "Content-Type: text/plain" -u admin:district -v
 
 As an example, to set the UI locale of the current user to French you
@@ -13455,7 +12774,7 @@ To get a list of organisation units you can use the following resource.
 To get an organisation unit with related organisation units you can use
 the following resource.
 
-    /api/24/organisationUnits/{id}
+    /api/24/organisationUnits/{id} 
 
 <table>
 <caption>Organisation unit parameters</caption>
@@ -13480,7 +12799,7 @@ the following resource.
 <tr class="even">
 <td>includeDescendants</td>
 <td>false | true</td>
-<td>Include all children of the specified organisation unit, i.e. all units in the sub-hierarchy.</td>
+<td>Include all children of the specified organisation unit, i.e. all units in the subhierarchy.</td>
 </tr>
 <tr class="odd">
 <td>includeAncestors</td>
@@ -13490,7 +12809,7 @@ the following resource.
 <tr class="even">
 <td>level</td>
 <td>integer</td>
-<td>Include children of the specified organisation unit at the given level of the sub-hierarchy (relative to the organisation unit where the immediate level below is level 1).</td>
+<td>Include children of the specified organisation unit at the given level of the subhierarchy (relative to the organisation unit where the immediate level below is level 1).</td>
 </tr>
 </tbody>
 </table>
@@ -13537,7 +12856,7 @@ To delete data set notification template you can issue a DELETE request:
 
 JSON payload sample is given below
 
-```
+``` 
 {
     "name": "dataSetNotificationTemplate1",
     "notificationTrigger": "COMPLETION",
@@ -13551,7 +12870,7 @@ JSON payload sample is given below
     "messageTemplate": "V{data_name}V{complete_registration_period}",
     "sendStrategy": "SINGLE_NOTIFICATION"
 }
-
+      
 ```
 
 ## Filled organisation unit levels
@@ -13594,7 +12913,7 @@ To do functional testing with curl you can issue the following
 
 <!--DHIS2-SECTION-ID:webapi_static_content-->
 
-The *staticContent* resource allows you to upload and retrieve custom
+The *staticContent* resource allowes you to upload and retrieve custom
 logos used in DHIS2. The resource lets the user upload a file with an
 associated key, which can later be retrieved using the key. Only PNG
 files are supported and can only be uploaded to the "logo\_banner" and
@@ -13763,7 +13082,7 @@ As an example, to set the feedback recipients user group you can invoke
 the following curl
     command:
 
-    curl "localhost/api/26/configuration/feedbackRecipients" -d "wl5cDMuUhmF"
+    curl "localhost/api/26/configuration/feedbackRecipients" -d "wl5cDMuUhmF" 
       -H "Content-Type:text/plain"-u admin:district -v
 
 ## Read-Only configuration service
@@ -13771,7 +13090,7 @@ the following curl
 <!--DHIS2-SECTION-ID:webapi_readonly_configuration_interface-->
 
 To access configuration you can now use read-only service. This service
-will provide read-only access to *UserSettings, SystemSettings and DHIS2
+will provide read-only access to *UserSettings, SystemSettings and DHIS
 server configurations* You can get XML and JSON responses through the
 *Accept* header. You can *GET* all settings from:
 
@@ -13840,7 +13159,7 @@ The request must be of type *POST* and use *application/json* as
 content-type. An example using curl, assuming the request data is saved
 as a file keys.json:
 
-    curl -d @keys.json "play.dhis2.org/demo/api/26/i18n" -X POST
+    curl -d @keys.json "play.dhis2.org/demo/api/26/i18n" -X POST 
       -H "Content-Type: application/json" -u admin:district -v
 
 The result will look like this:
@@ -13922,25 +13241,14 @@ For creating a new person in the system, you will be working with the
     {
         "trackedEntity": "tracked-entity-id",
         "orgUnit": "org-unit-id",
-        "coordinates": "[1, 1]",
         "attributes": [ {
             "attribute": "attribute-id",
             "value": "attribute-value"
         } ]
     }
 
-> **Note**
->
-> The "coordinates" field was introduced in 2.29, and accepts a
-> coordinate or polygon as a value.
-
-> **Note**
->
-> The "coordinates" field was introduced in 2.29, and accepts a
-> coordinate or polygon as a value.
-
 For getting the IDs for *relationship*, *attributes* you can have a look
-at the respective resources *relationshipTypes*,
+at the respective resources *relationshipTypes*,,
 *trackedEntityAttributes*. To create a tracked entity instance you must
 use the HTTP **POST** method. You can post the payload the the following
 URL:
@@ -13968,7 +13276,7 @@ specify its first name and last name attributes:
 To push this to the server you can use the cURL command like
     this:
 
-    curl -d @tei.json "https://play.dhis2.org/demo/api/trackedEntityInstances" -X POST
+    curl -d @tei.json "https://play.dhis2.org/demo/api/trackedEntityInstances" -X POST 
     -H "Content-Type: application/json" -u admin:district -v
 
 To create multiple instances in one request you can wrap the payload in
@@ -14142,75 +13450,24 @@ updating a new tracked entity instane.
 <!--DHIS2-SECTION-ID:webapi_generate_tei_attributes-->
 
 Tracked entity instance attributes that is using automatic generation of
-unique values has three endpoints that is used by apps. The endpoints
-are all used for generating and reserving values.
+unique values has two endpoints that is used by apps. One is used to
+generate values, the other to generate and reserve one or more values
+for use later.
 
-In 2.29 we introduced TextPattern for defining and generating these
-patterns. You can read more about [working with TextPattern
-here](#create-scorecards-pivot-table). All existing patterns will be
-converted to a valid TextPattern when upgrading to 2.29.
-
-> **Note**
->
-> As of 2.29, all these endpoint will require you to include any
-> variables reported by the *requiredValues* endpoint listed as
-> required. Existing patterns, consisting of only “\#”, will be upgraded
-> to the new TextPattern syntax “RANDOM(\<old-pattern\>)”. The RANDOM
-> segment of the TextPattern is not a required variable, so this
-> endpoint will work as before for patterns defined before 2.29.
-
-##### Finding required values
-
-A TextPattern can contain variables that change based on different
-factors. Some of these factors will be unknown to the server, so the
-values for these variables have to be supplied when generating and
-reserving values.
-
-This endpoint will return a map of required and optional values, that
-the server will inject into the TextPattern when generating new values.
-Required variables have to be supplied for the generation, but optional
-variables should only be supplied if you know what you are doing.
-
-    GET /api/trackedEntityAttributes/Gs1ICEQTPlG/requiredValues
-
-    {
-        "REQUIRED": [
-            "ORG_UNIT_CODE"
-        ],
-        "OPTIONAL": [
-            "RANDOM"
-        ]
-    }
-
-##### Generate value endpoint
+#### Generate value endpoint
 
 <!--DHIS2-SECTION-ID:webapi_generate_values-->
 
 Online web apps and other clients that wants to generate a value that
 will be used right away can use the simple generate endpoint. This
 endpoint will generate a value that is guaranteed to be unique at the
-time of generation. The value is also guaranteed not to be reserved. As
-of 2.29, this endpoint will also reserve the value generated for 3 days.
+time of generation. The value is also guaranteed not to be reserved by
+use of the generateAndReseve endpoint.
 
-If your TextPattern includes required values, you can pass them as
-parameters like the example below:
+    curl -X GET -H "Content-Type: application/json" -u admin:district 
+              https://play.dhis2.org/dev/api/trackedEntityAttributes/lZGmxYbs97q/generate
 
-The expiration time can also be overridden at the time of generation, by
-adding the ?expiration=\<number-of-days\> to the
-    request.
-
-    GET /api/trackedEntityAttributes/Gs1ICEQTPlG/generate?ORG_UNIT_CODE=OSLO
-
-    {
-        "ownerObject": "TRACKEDENTITYATTRIBUTE",
-        "ownerUid": "Gs1ICEQTPlG",
-        "key": "RANDOM(X)-OSL",
-        "value": "C-OSL",
-        "created": "2018-03-02T12:01:36.680",
-        "expiryDate": "2018-03-05T12:01:36.678"
-    }
-
-##### Generate and reserve value endpoint
+#### Generate and reserve value endpoint
 
 <!--DHIS2-SECTION-ID:webapi_generate_reserve_values-->
 
@@ -14218,60 +13475,44 @@ The generate and reserve endpoint is used by offline clients that needs
 to be able to register tracked entities with unique ids. They will
 reserve a number of unique ids that this device will then use when
 registering new tracked entity instances. The endpoint is called to
-retrieve a number of tracked entity instance reserved values. An
+retreieve a number of tracked entity instance reserved values. An
 optional parameter numberToReserve specifies how many ids to generate
 (default is 1).
 
-If your TextPattern includes required values, you can pass them as
-parameters like the example below:
+    curl -X GET -H "Content-Type: application/json" -u admin:district 
+              https://play.dhis2.org/dev/api/trackedEntityAttributes/lZGmxYbs97q/generateAndReserve?numberToReserve=3
 
-Similar to the /generate endpoint, this endpoint can also specify the
-expiration time in the same way. By adding the
-?expiration=\<number-of-days\> you can override the default 60
-    days.
+``` 
+[
+   {
+      "created":"2016-06-25T07:52:26.466+0000",
+      "expiryDate":"2017-06-25T07:52:26.466+0000",
+      "value":"43327401",
+      "trackedEntityAttribute":{  }
+   },
+   {
+      "created":"2016-06-25T07:52:26.468+0000",
+      "expiryDate":"2017-06-25T07:52:26.468+0000",
+      "value":"82676084",
+      "trackedEntityAttribute":{  }
+   },
+   {
+      "created":"2016-06-25T07:52:26.471+0000",
+      "expiryDate":"2017-06-25T07:52:26.471+0000",
+      "value":"91700776",
+      "trackedEntityAttribute":{  }
+   }
+]
+        
+```
 
-    GET /api/trackedEntityAttributes/Gs1ICEQTPlG/generateAndReserve?numberToReserve=3&ORG_UNIT_CODE=OSLO
-
-    [
-        {
-            "ownerObject": "TRACKEDENTITYATTRIBUTE",
-            "ownerUid": "Gs1ICEQTPlG",
-            "key": "RANDOM(X)-OSL",
-            "value": "B-OSL",
-            "created": "2018-03-02T13:22:35.175",
-            "expiryDate": "2018-05-01T13:22:35.174"
-        },
-        {
-            "ownerObject": "TRACKEDENTITYATTRIBUTE",
-            "ownerUid": "Gs1ICEQTPlG",
-            "key": "RANDOM(X)-OSL",
-            "value": "Q-OSL",
-            "created": "2018-03-02T13:22:35.175",
-            "expiryDate": "2018-05-01T13:22:35.174"
-        },
-        {
-            "ownerObject": "TRACKEDENTITYATTRIBUTE",
-            "ownerUid": "Gs1ICEQTPlG",
-            "key": "RANDOM(X)-OSL",
-            "value": "S-OSL",
-            "created": "2018-03-02T13:22:35.175",
-            "expiryDate": "2018-05-01T13:22:35.174"
-        }
-    ]
-
-##### Reserved values
-
-Reserved values is currently not accessible trough the api, however they
-are returned by the *generate* and *generateAndReserve*endpoints. The
-following table explains the properties of the reserved value object:
-
-#####
+The generate and reserve endpoint returns an array of reserved values:
 
 <table style="width:100%;">
-<caption>Reserved values</caption>
+<caption>Tracked entity reserved values</caption>
 <colgroup>
-<col style="width: 15%" />
-<col style="width: 84%" />
+<col width="15%" />
+<col width="84%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -14281,68 +13522,42 @@ following table explains the properties of the reserved value object:
 </thead>
 <tbody>
 <tr class="odd">
-<td>ownerObject</td>
-<td>The metadata type referenced when generating and reserving the value. Currently only TRACKEDENTITYATTRIBUTE is supported.</td>
-</tr>
-<tr class="even">
-<td>ownerUid</td>
-<td>The uid of the metadata object referenced when generating and reserving the value.</td>
-</tr>
-<tr class="odd">
-<td>key</td>
-<td>A partially generated value where generated segments are not yet added.</td>
-</tr>
-<tr class="even">
-<td>value</td>
-<td>The fully resolved value reserved. This is the value you send to the server when storing data.</td>
-</tr>
-<tr class="odd">
 <td>created</td>
-<td>The timestamp when the reservation was made</td>
+<td>The date the reserved value was created.</td>
 </tr>
 <tr class="even">
 <td>expiryDate</td>
-<td>The timestamp when the reservation will no longer be reserved</td>
+<td>After this date the value can be deleted/unreserved by the server if no tracked entity has been registered with the value. The deletion does not happen automatically at the exact time of the expiration, but can/will be done with scripts or mechanisms implemneted later.</td>
+</tr>
+<tr class="odd">
+<td>value</td>
+<td>The actual generated value that is reserved.</td>
+</tr>
+<tr class="even">
+<td>trackedEntityAttribute</td>
+<td>The tracked entity attribute that the value was generated for.</td>
 </tr>
 </tbody>
 </table>
 
-Expired reservations are removed daily. If a pattern changes, values
-that was already reserved will be accepted when storing data, even if
-they don't match the new pattern, as long as the reservation has not
-expired.
-
-#### Image attributes
-
-Working with image attributes is a lot like working with file data
-values. The value of an attribute with the image value type is the id of
-the associated file resource. A GET request to the
-*/api/trackedEntityInstances/\<entityId\>/\<attributeId\>/image*
-endpoint will return the actual image. The optional height and width
-parameters can be used to specify the dimensions of the
-    image.
-
-    curl http://server/api/29/trackedEntityInstances/ZRyCnJ1qUXS/zDhUuAYrxNC/image?height=200&width=200
-      > image.jpg
-
-#### Tracked entity instance query
+## Tracked entity instance query
 
 <!--DHIS2-SECTION-ID:webapi_tracked_entity_instance_query-->
 
 To query for tracked entity instances you can interact with the
 */api/trackedEntityInstances* resource.
 
-    /api/29/trackedEntityInstances
+    /api/26/trackedEntityInstances
 
-##### Request syntax
+### Request syntax
 
 <!--DHIS2-SECTION-ID:webapi_tei_query_request_syntax-->
 
 <table style="width:100%;">
 <caption>Tracked entity instances query parameters</caption>
 <colgroup>
-<col style="width: 15%" />
-<col style="width: 84%" />
+<col width="15%" />
+<col width="84%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -14357,11 +13572,11 @@ To query for tracked entity instances you can interact with the
 </tr>
 <tr class="even">
 <td>ou</td>
-<td>Organisation unit identifiers, separated by &quot;;&quot;.</td>
+<td>Organisation unit idenfiers, separated by &quot;;&quot;.</td>
 </tr>
 <tr class="odd">
 <td>ouMode</td>
-<td>The mode of selecting organisation units, can be SELECTED | CHILDREN | DESCENDANTS | ACCESSIBLE | CAPTURE | ALL. Default is SELECTED, which refers to the selected organisation units only. See table below for explanations.</td>
+<td>The mode of selecting organisation units, can be SELECTED | CHILDREN | DESCENDANTS | ACCESSIBLE | ALL. Default is SELECTED, which refers to the selected organisation units only. See table below for explanations.</td>
 </tr>
 <tr class="even">
 <td>program</td>
@@ -14385,7 +13600,7 @@ To query for tracked entity instances you can interact with the
 </tr>
 <tr class="odd">
 <td>trackedEntity</td>
-<td>Tracked entity identifier. Restricts instances to the given tracked instance type.</td>
+<td>Tracked entity identifer. Restricts instances to the given tracked instance type.</td>
 </tr>
 <tr class="even">
 <td>page</td>
@@ -14440,17 +13655,13 @@ following table.
 </tr>
 <tr class="odd">
 <td>DESCENDANTS</td>
-<td>The selected organisation units and and all children, i.e. all organisation units in the sub-hierarchy.</td>
+<td>The selected organisation units and and all children, i.e. all organisation units in the subhierarchy.</td>
 </tr>
 <tr class="even">
 <td>ACCESSIBLE</td>
-<td>The data view organisation units associated with the current user and all children, i.e. all organisation units in the sub-hierarchy. Will fall back to data capture organisation units associated with the current user if the former is not defined.</td>
+<td>The data view organisation units associated with the current user and all children, i.e. all organisation units in the subhierarchy. Will fall back to data capture organisation units associated with the current user if the former is not defined.</td>
 </tr>
 <tr class="odd">
-<td>CAPTURE</td>
-<td>The data capture organisation units associated with the current user and all children, i.e. all organisation units in the sub-hierarchy.</td>
-</tr>
-<tr class="even">
 <td>ALL</td>
 <td>All organisation units in the system. Requires the ALL authority.</td>
 </tr>
@@ -14756,17 +13967,17 @@ parameters are defined, and one where *attribute* and *filter*
 parameters are defined. This endpoint uses a more compact "grid" format,
 and is an alternative to the query in the previous section.
 
-    api/29/trackedEntityInstances/query
+    api/24/trackedEntityInstances/query
 
-##### Request syntax
+### Request syntax
 
 <!--DHIS2-SECTION-ID:webapi_tei_grid_query_request_syntax-->
 
 <table style="width:100%;">
 <caption>Tracked entity instances query parameters</caption>
 <colgroup>
-<col style="width: 15%" />
-<col style="width: 84%" />
+<col width="15%" />
+<col width="84%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -15139,158 +14350,6 @@ instance.
         ]
     }
 
-#### Tracked entity instance filters
-
-<!--DHIS2-SECTION-ID:webapi_tei_filters-->
-
-To create, read, update and delete tracked entity instance filters you
-can interact with the */api/trackedEntityInstanceFilters* resource.
-
-    /api/29/trackedEntityInstanceFilters
-
-##### Create and update a tracked entity instance filter definiton
-
-For creating and updating a tracked entity instance filter in the
-system, you will be working with the *trackedEntityInstanceFilters*
-resource. The tracked entity instance filter defintions are used in the
-Tracker Capture app to display relevant predefined "Working lists" in
-the tracker user interface.
-
-<table>
-<caption>Payload</caption>
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Payload values</th>
-<th>Description</th>
-<th>Example</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>name</td>
-<td>Name of the filter. Required.</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>description</td>
-<td>A description of the filter.</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>sortOrder</td>
-<td>The sort order of the filter. Used in Tracker Capture to order the filters in the program dashboard.</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>style</td>
-<td>Object containing css style.</td>
-<td>( &quot;color&quot;: &quot;blue&quot;, &quot;icon&quot;: &quot;fa fa-calendar&quot;}</td>
-</tr>
-<tr class="odd">
-<td>program</td>
-<td>Object containing the id of the program. Required.</td>
-<td>{ &quot;id&quot; : &quot;uy2gU8kTjF&quot;}</td>
-</tr>
-<tr class="even">
-<td>enrollmentStatus</td>
-<td>The TEIs enrollment status. Can be none(any enrollmentstatus) or ACTIVE|COMPLETED|CANCELED</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>followup</td>
-<td>When this parameter is true, the filter only returns TEIs that has an enrollment with status followup.</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>enrollmentCreatedPeriod</td>
-<td>Period object containing a period which the enrollment must be created. See <em>Period</em> definition table below.</td>
-<td>{ &quot;periodFrom&quot;: -15, &quot;periodTo&quot;: 15}</td>
-</tr>
-<tr class="odd">
-<td>eventFilters</td>
-<td>A list of eventFilters. See <em>Event filters</em> definition table below.</td>
-<td>[{&quot;programStage&quot;: &quot;eaDH9089uMp&quot;, &quot;eventStatus&quot;: &quot;OVERDUE&quot;, &quot;eventCreatedPeriod&quot;: {&quot;periodFrom&quot;: -15, &quot;periodTo&quot;: 15}}]</td>
-</tr>
-</tbody>
-</table>
-
-<table>
-<caption>Event filters definition</caption>
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
-<tbody>
-<tr class="odd">
-<td>programStage</td>
-<td>Which programStage the TEI needs an event in to be returned.</td>
-<td>&quot;eaDH9089uMp&quot;</td>
-</tr>
-<tr class="even">
-<td>eventStatus</td>
-<td>The events status. Can be none(any event status) or ACTIVE|COMPLETED|SCHEDULED|OVERDUE</td>
-<td>ACTIVE</td>
-</tr>
-<tr class="odd">
-<td>eventCreatedPeriod</td>
-<td>Period object containing a period in which the event must be created. See <em>Period</em> definition delow.</td>
-<td>{ &quot;periodFrom&quot;: -15, &quot;periodTo&quot;: 15}</td>
-</tr>
-</tbody>
-</table>
-
-<table>
-<caption>Period definition</caption>
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
-<tbody>
-<tr class="odd">
-<td>periodFrom</td>
-<td>Number of days from current day. Can be positive or negative integer.</td>
-<td>-15</td>
-</tr>
-<tr class="even">
-<td>periodTo</td>
-<td>Number of days from current day. Must be bigger than periodFrom. Can be positive or negative integer.</td>
-<td>15</td>
-</tr>
-</tbody>
-</table>
-
-##### Tracked entity instance filters query
-
-To query for tracked entity instance filters in the system, you can
-interact with the */api/trackedEntityInstanceFilters* resource.
-
-<table>
-<caption>Tracked entity instance filters query paramateres</caption>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Query parameter</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>program</td>
-<td>Program identifier. Restricts filters to the given program.</td>
-</tr>
-</tbody>
-</table>
-
 ## Enrollment instance query
 
 <!--DHIS2-SECTION-ID:webapi_enrollment_instance_query-->
@@ -15559,7 +14618,7 @@ sent it is required that the SMTP configuration has been properly set up
 and that a system notification email address for the DHIS2 instance has
 been defined. You can set SMTP settings from the email settings screen
 and system notification email address from the general settings screen
-in DHIS2.
+in DHIS 2.
 
     /api/26/email
 
@@ -15682,264 +14741,66 @@ one user group and read-only access to another user group. You can
 submit this to the sharing resource using
     curl:
 
-    curl -d @sharing.json "localhost/api/26/sharing?type=dataElement&id=fbfJHSPpUQD"
+    curl -d @sharing.json "localhost/api/26/sharing?type=dataElement&id=fbfJHSPpUQD" 
       -H "Content-Type:application/json" -u admin:district -v
 
-## Scheduling (Experimental)
+## Scheduling
 
 <!--DHIS2-SECTION-ID:webapi_scheduling-->
 
-In 2.29 we introduced a new way of scheduling jobs on the server. Each
-type of job has different properties for configuration, giving you more
-control over how jobs are run. In addition, you can configure the same
-job to run with different configurations and at different intervals if
-required.
+To schedule tasks to run at fixed intervals you can interact with the
+scheduling resource. To configure tasks you can do a POST request to the
+following resource:
+
+    /api/26/scheduling
+
+The payload in JSON format is described below.
+
+    {
+        "resourceTableStrategy": "allDaily",
+        "analyticsStrategy": "allDaily",
+        "monitoringStrategy": "allDaily",
+        "dataSynchStrategy": "enabled"
+    }
+
+An example using curl:
+
+    curl "localhost/dhis/api/26/scheduling" -d @scheduling.json -X POST 
+      -H "Content-Type:application/json" -u admin:district -v
+
+The table below lists available task strategies.
 
 <table>
-<caption>Main properties</caption>
+<caption>Task strategies</caption>
+<colgroup>
+<col width="44%" />
+<col width="55%" />
+</colgroup>
 <thead>
 <tr class="header">
-<th>Property</th>
-<th>Description</th>
-<th>Type</th>
+<th>Task</th>
+<th>Strategies</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>name</td>
-<td>Name of the job</td>
-<td>String</td>
+<td>Resource table task</td>
+<td>allDaily | allEvery15Min</td>
 </tr>
 <tr class="even">
-<td>cronExpression</td>
-<td>The cron expression resembles a time interval. It must follow a specific pattern, see <a href="https://docs.oracle.com/cd/E12058_01/doc/doc.1014/e12030/cron_expressions.htm" class="uri">https://docs.oracle.com/cd/E12058_01/doc/doc.1014/e12030/cron_expressions.htm</a> for guidelines</td>
-<td>String (Cron expression)</td>
+<td>Analytics task</td>
+<td>allDaily | last3YearsDaily</td>
 </tr>
 <tr class="odd">
-<td>jobType</td>
-<td>The job type represent which task is run. In the next table, you can get an overview of existing job types. Each job type can have a a specific set of parameters for job configuration https://play.dhis2.org/dev/api/jobConfigurations/jobTypesExtended for an overview of the parameters designed for a job type. A JobConfiguration has a &quot;configurable&quot; property which is adopted by the job type. Some jobs are system jobs which only allows for altering of the cron expression.</td>
-<td>String (Enum)</td>
+<td>Monitoring</td>
+<td>allDaily</td>
 </tr>
 <tr class="even">
-<td>jobParameters</td>
-<td>Parameters of job if applicable for job type</td>
-<td>(See list of job types)</td>
-</tr>
-<tr class="odd">
-<td>continuousExecution</td>
-<td>A job may be added as a continuous job which means, as soon as the job finished, it will be scheduled to run again right away. Set &quot;continuouseExecution&quot; to true in the payload if continuous execution is desired</td>
-<td>Boolean</td>
-</tr>
-<tr class="even">
+<td>Data synch task</td>
 <td>enabled</td>
-<td>A job can be added to the system without it being scheduled by setting &quot;enabled&quot; to false in the JSON payload. Use this if you want to temporarily stop scheduling for a job, or if a job configuration is not complete yet.</td>
-<td>Boolean</td>
 </tr>
 </tbody>
 </table>
-
-<table>
-<caption>Available job types</caption>
-<thead>
-<tr class="header">
-<th>Job type</th>
-<th>Parameters</th>
-<th>Param(Type:Default)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>DATA_INTEGRITY</td>
-<td>NONE</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>ANALYTICS_TABLE</td>
-<td><ul>
-<li><p>lastYears: Number of years back to include</p></li>
-<li><p>skipTableTypes: Skip generation of tables</p>
-<ul>
-<li><p>Possible values: DATA_VALUE, COMPLETENESS, COMPLETENESS_TARGET, ORG_UNIT_TARGET, EVENT, ENROLLMENT, VALIDATION_RESULT</p></li>
-</ul></li>
-<li><p>skipResourceTables: Skip generation of resource tables</p></li>
-</ul></td>
-<td><ul>
-<li><p>lastYears (int:0)</p></li>
-<li><p>skipTableTypes (Array of String (Enum):None )</p></li>
-<li><p>skipResourceTables (Boolean)</p></li>
-</ul></td>
-</tr>
-<tr class="odd">
-<td>DATA_SYNC</td>
-<td>NONE</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>META_DATA_SYNC</td>
-<td>NONE</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>SEND_SCHEDULED_MESSAGE</td>
-<td>NONE</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>PROGRAM_NOTIFICATIONS</td>
-<td>NONE</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>MONITORING (Validation rule analysis)</td>
-<td><ul>
-<li><p>relativeStart: A number related to date of execution which resembles the start of the period to monitor</p></li>
-<li><p>relativeEnd: A number related to date of execution which resembles the end of the period to monitor</p></li>
-<li><p>validationRuleGroups: Validation rule groups(UIDs) to include in job</p></li>
-<li><p>sendNotification: Set &quot;true&quot; if job should send notifications based on validation rule groups</p></li>
-<li><p>persistsResults: Set &quot;true&quot; if job should persist validation results</p></li>
-</ul></td>
-<td><ul>
-<li><p>relativeStart (int:0)</p></li>
-<li><p>relativeEnd (int:0)</p></li>
-<li><p>validationRuleGroups (Array of String (UIDs):None )</p></li>
-<li><p>sendNotification (Boolean:false)</p></li>
-<li><p>persistsResults (Boolean:false)</p></li>
-</ul></td>
-</tr>
-<tr class="even">
-<td>PUSH_ANALYSIS</td>
-<td><ul>
-<li><p>pushAnalysis: The uid of the push analysis you want to run</p></li>
-</ul></td>
-<td><ul>
-<li><p>pushAnalysis (String:None)</p></li>
-</ul></td>
-</tr>
-<tr class="odd">
-<td>PREDICTOR</td>
-<td><ul>
-<li><p>relativeStart: A number related to date of execution which resembles the start of the period to monitor</p></li>
-<li><p>relativeEnd: A number related to date of execution which resembles the start of the period to monitor</p></li>
-<li><p>predictors: Predictors(UIDs) to include in job</p></li>
-</ul></td>
-<td><ul>
-<li><p>relativeStart (int:0)</p></li>
-<li><p>relativeEnd (int:0)</p></li>
-<li><p>predictors (Array of String (UIDs):None )</p></li>
-</ul></td>
-</tr>
-</tbody>
-</table>
-
-To configure jobs you can do a POST request to the following resource:
-
-    /api/jobConfigurations
-
-Adding job without parameters in JSON format:
-
-```
-        {
-          "name": "",
-          "jobType": "JOBTYPE",
-          "cronExpression": "0 * * ? * *",
-        }
-
-```
-
-Adding job with parameters in JSON format (ANALYTICS\_TABLE example):
-
-```
-        {
-          "name": "Analytics last two years",
-          "jobType": "ANALYTICS_TABLE",
-          "cronExpression": "0 * * ? * *",
-          "jobParameters":
-          {
-              "lastYears": "2",
-              "skipTableTypes": [],
-              "skipResourceTables": false
-          }
-        }
-
-```
-
-List all jobConfigurations:
-
-    GET /api/jobConfigurations
-
-Retrieve a job: (ANALYTICS\_TABLE example):
-
-    GET /api/jobConfigurations/KBcP6Qw37gT
-
-```
-        {
-          "lastUpdated": "2018-02-22T15:15:34.067",
-          "id": "KBcP6Qw37gT",
-          "href": "http://localhost:8080/api/jobConfigurations/KBcP6Qw37gT",
-          "created": "2018-02-22T15:15:34.067",
-          "name": "analytics last two years",
-          "jobStatus": "SCHEDULED",
-          "displayName": "analytics last two years",
-          "enabled": true,
-          "externalAccess": false,
-          "continuousExecution": false,
-          "jobType": "ANALYTICS_TABLE",
-          "nextExecutionTime": "2018-02-26T03:00:00.000",
-          "cronExpression": "0 0 3 ? * MON",
-          "jobParameters": {
-            "lastYears": 2,
-            "skipTableTypes": [],
-            "skipResourceTables": false
-          },
-          "favorite": false,
-          "configurable": true,
-          "access": {
-            "read": true,
-            "update": true,
-            "externalize": true,
-            "delete": true,
-            "write": true,
-            "manage": true
-          },
-          "lastUpdatedBy": {
-            "id": "GOLswS44mh8"
-          },
-          "favorites": [],
-          "translations": [],
-          "userGroupAccesses": [],
-          "attributeValues": [],
-          "userAccesses": []
-        }
-
-```
-
-Updating job with parameters in JSON format (ANALYTICS\_TABLE example):
-
-    PUT /api/jobConfiguration/KBcP6Qw37gT
-
-```
-        {
-          "name": "analytics last two years",
-          "enabled": true,
-          "cronExpression": "0 0 3 ? * MON",
-          "continuousExecution": false,
-          "jobType": "ANALYTICS_TABLE",
-          "jobParameters": {
-            "lastYears": "3",
-            "skipTableTypes": [],
-            "skipResourceTables": false
-          }
-        }
-
-```
-
-Deleting a job:
-
-    DELETE /api/jobConfiguration/KBcP6Qw37gT
-
-Some jobs with custom configuration parameters may not be added if the
-required system settings are not configured. An example of this is data
-synchronization, which requires remote server configuration.
 
 ## Schema
 
@@ -15966,7 +14827,7 @@ To get JSON schema for a specific class:
 <!--DHIS2-SECTION-ID:webapi_ui_customization-->
 
 To customize the UI of the DHIS2 application you can insert custom
-JavaScript and CSS styles through the *files* resource. The JavaScript
+Javascript and CSS styles through the *files* resource. The Javascript
 and CSS content inserted through this resource will be loaded by the
 DHIS2 web application. This can be particularly useful in certain
 situations:
@@ -15974,7 +14835,7 @@ situations:
   - Overriding the CSS styles of the DHIS2 application, such as the
     login page or main page.
 
-  - Defining JavaScript functions which are common to several custom
+  - Defining Javascript functions which are common to several custom
     data entry forms and HTML-based reports.
 
   - Including CSS styles which are used in custom data entry forms and
@@ -15987,15 +14848,15 @@ situations:
 To insert Javascript from a file called *script.js* you can interact
 with the *files/script* resource with a POST-request:
 
-    curl --data-binary @script.js "localhost/api/26/files/script"
+    curl --data-binary @script.js "localhost/api/26/files/script" 
       -H "Content-Type:application/javascript" -u admin:district -v
 
 Note that we use the --data-binary option to preserve formatting of the
-file content. You can fetch the JavaScript content with a GET-request:
+file content. You can fetch the Javascript content with a GET-request:
 
     /api/26/files/script
 
-To remove the JavaScript content you can use a DELETE-request.
+To remove the Javascript content you can use a DELETE-request.
 
 ### CSS
 
@@ -16004,14 +14865,14 @@ To remove the JavaScript content you can use a DELETE-request.
 To insert CSS from a file called *style.css* you can interact with the
 *files/style* resource with a POST-request:
 
-    curl --data-binary @style.css "localhost/api/26/files/style"
+    curl --data-binary @style.css "localhost/api/26/files/style" 
       -H "Content-Type:text/css" -u admin:district -v
 
 You can fetch the CSS content with a GET-request:
 
     /api/26/files/style
 
-To remove the JavaScript content you can use a DELETE-e "request.
+To remove the Javascript content you can use a DELETE-e "request.
 
 ## Synchronization
 
@@ -16057,7 +14918,7 @@ non-alphanumerical characters removed, and spaces replaced with a dash.
 *My app\!* will return the key *My-app*.
 
 > **Note**
->
+> 
 > Previous to 2.28, the app key was derived from the name of the ZIP
 > archive, excluding the file extension. URLs using the old format
 > should still return the correct app in the api.
@@ -16069,7 +14930,7 @@ non-alphanumerical characters removed, and spaces replaced with a dash.
 <!--DHIS2-SECTION-ID:webapi_get_apps-->
 
 > **Note**
->
+> 
 > Previous to 2.28 the app property folderName referred to the actual
 > path of the installed app. With the ability to store apps on cloud
 > services, folderName's purpose changed, and will now refer to the app
@@ -16127,7 +14988,7 @@ interface.
 <!--DHIS2-SECTION-ID:webapi_share_apps_between_instances-->
 
 > **Note**
->
+> 
 > Previous to 2.28, installed apps would only be stored on the instace's
 > local filesystem.
 
@@ -16137,7 +14998,7 @@ multiple instances share the same versions on installed apps, instead of
 installing the same apps on each individual instance.
 
 > **Note**
->
+> 
 > Apps installed previously to 2.28 will still be available on the
 > instance it was installed, but it will not be shared with other
 > instances, as it's still located on the instances local filesystem.
@@ -16215,7 +15076,9 @@ request with the version id to the following resource:
 <!--DHIS2-SECTION-ID:webapi_data_store-->
 
 Using the *dataStore* resource, developers can store arbitrary data for
-their apps. Access to a datastore's key is based on its sharing settings. By default all keys created are publicly accessible (read and write). Additionally,  access to a datastore's namespace is limited to the user's access to the corresponding app, if the app has reserved the namespace. For example a user with access to the "sampleApp" application will also
+their apps. Access to a datastore's namespace is limited to the user's
+access to the corresponding app, if the app has reserved the namespace.
+For example a user with access to the "sampleApp" application will also
 be able to use the sampleApp namespace in the datastore. If a namespace
 is not reserved, no specific access is required to use it.
 
@@ -16250,7 +15113,7 @@ combination of namespace and key is unique. The value data type is JSON.
 </tr>
 <tr class="even">
 <td>Key</td>
-<td>Key for identification of values.</td>
+<td>Key for identifiaction of values.</td>
 <td>String</td>
 </tr>
 <tr class="odd">
@@ -16346,7 +15209,7 @@ To create a new key and value for a namespace:
 Example curl request for create, assuming a valid json
     payload:
 
-    curl "https://play.dhis2.org/demo/api/26/dataStore/foo/key_1" -X POST
+    curl "https://play.dhis2.org/demo/api/26/dataStore/foo/key_1" -X POST 
       -H "Content-Type: application/json" -d "{\"foo\":\"bar\"}" -u admin:district -v
 
 Example response:
@@ -16374,7 +15237,7 @@ To update a key that exists in a namespace:
 Example curl request for update, assuming valid JSON
     payload:
 
-    curl "https://play.dhis2.org/demo/api/26/dataStore/foo/key_1" -X PUT -d "[1, 2, 3]"
+    curl "https://play.dhis2.org/demo/api/26/dataStore/foo/key_1" -X PUT -d "[1, 2, 3]" 
       -H "Content-Type: application/json" -u admin:district -v
 
 Example response:
@@ -16425,43 +15288,6 @@ Example response:
         "status": "OK",
         "message": "Namespace 'foo' deleted."
     }
-
-### Sharing datastore keys
-
-<!--DHIS2-SECTION-ID:webapi_data_store_sharing-->
-
-Sharing of datastore keys follows the same principle as for other metadata sharing (see
-[Sharing](#webapi_sharing)).
-
-To get sharing settings for a specific datastore key:
-
-    GET /api/31/sharing?type=dataStore&id=<uid>
-
-To modify sharing settings for a specific datastore key:
-
-    POST /api/31/sharing?type=dataStore&id=<uid>
-
-with the following request:
-
-    {
-    "object": {
-        "publicAccess": "rw------",
-        "externalAccess": false,
-        "user": {},
-        "userAccesses": [],
-        "userGroupAccesses": [
-            {
-                "id": "hj0nnsVsPLU",
-                "access": "rw------"
-            },
-            {
-                "id": "qMjBflJMOfB",
-                "access": "r-------"
-            }
-        ]
-    }
-    }
-
 
 ## User data store
 
@@ -16712,7 +15538,7 @@ A sample payload looks like this:
     }
 
 The output element refers to the identifier of the data element for
-which to saved predicted data values. The generator element refers to the
+which to saved predited data values. The generator element refers to the
 expression to use when calculating the predicted values.
 
 ### Generating predicted values
@@ -16819,18 +15645,18 @@ with below format:
       "min": 1,
       "generated": false,
       "max": 100,
-      "dataElement": {
-        "id": "UOlfIjgN8X6"
+      "dataElement": { 
+        "id": "UOlfIjgN8X6" 
        },
-      "source": {
-        "id": "DiszpKrYNg8"
+      "source": { 
+        "id": "DiszpKrYNg8" 
       },
       "optionCombo": {
-        "id": "psbwp3CQEhs"
+        "id": "psbwp3CQEhs" 
       }
     }
 
-If the combination of data element, organisation unit and category
+If the combination of data element, organisation unit and cateogory
 option combo exists, the min-max value will be updated.
 
 ### Delete min-max data element
@@ -16846,14 +15672,14 @@ JSON content with same format as above:
       "min": 1,
       "generated": false,
       "max": 100,
-      "dataElement": {
-        "id": "UOlfIjgN8X6"
+      "dataElement": { 
+        "id": "UOlfIjgN8X6" 
        },
-      "source": {
-        "id": "DiszpKrYNg8"
+      "source": { 
+        "id": "DiszpKrYNg8" 
       },
       "optionCombo": {
-        "id": "psbwp3CQEhs"
+        "id": "psbwp3CQEhs" 
       }
     }
 
@@ -16929,216 +15755,6 @@ This assumes that a Google service account has been set up and
 configured for DHIS2. Please consult the installation guide for more
 info.
 
-## Analytics table hooks
-
-<!--DHIS2-SECTION-ID:webapi_analytics_table_hooks-->
-
-Analytics table hooks provides a mechanism for invoking SQL scripts
-during different phases of the analytics table generation process. This
-is useful for customizing data in resource and analytics tables, e.g. in
-order to achieve specific logic for calculations and aggregation.
-Analytics table hooks can be manipulated at the following API endpoint:
-
-    /api/analyticsTableHooks
-
-The analytics table hooks API supports the standard HTTP CRUD operations
-for creating (POST), updating (PUT), retrieving (GET) and deleting
-(DELETE) entities.
-
-### Hook fields
-
-<!--DHIS2-SECTION-ID:webapi_analytics_table_hook_fields-->
-
-Analytics table hooks have the following fields:
-
-<table style="width:100%;">
-<caption>Analytics table hook fields</caption>
-<colgroup>
-<col style="width: 22%" />
-<col style="width: 30%" />
-<col style="width: 46%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Field</th>
-<th>Options</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>name</td>
-<td>Text</td>
-<td>Name of the hook.</td>
-</tr>
-<tr class="even">
-<td>phase</td>
-<td>RESOURCE_TABLE_POPULATED, ANALYTICS_TABLE_POPULATED</td>
-<td>The phase for when the SQL script should be invoked.</td>
-</tr>
-<tr class="odd">
-<td>resourceTableType</td>
-<td><p>See &quot;Table type&quot; in &quot;Overview of phases, table types and temporary tables&quot;</p></td>
-<td>The type of resource table for which to invoke the SQL script. Applies only for hooks defined with the RESOURCE_TABLE_POPULATED phase.</td>
-</tr>
-<tr class="even">
-<td>analyticsTableType</td>
-<td>DATA_VALUE, COMPLETENESS, COMPLETENESS_TARGET, ORG_UNIT_TARGET, EVENT, ENROLLMENT, VALIDATION_RESULT</td>
-<td>The type of analytics table for which to invoke the SQL script. Applies only for hooks defined with the ANALYTICS_TABLE_POPULATED phase.</td>
-</tr>
-<tr class="odd">
-<td>sql</td>
-<td>Text</td>
-<td>The SQL script to invoke.</td>
-</tr>
-</tbody>
-</table>
-
-The *ANALYTICS\_TABLE\_POPULATED* phase takes place after the analytics
-table has been populated, but before indexes have been created and the
-temp table has been swapped with the main table. As a result, the SQL
-script should refer to the analytics temp table, e.g. *analytics\_temp*,
-*analytics\_completeness\_temp*, *analytics\_completenesstarget\_temp*,
-*analytics\_orgunittarget\_temp*,
-*analytics\_event\_temp\_\<program-uid\>*.
-
-This applies also to the *RESOURCE\_TABLE\_POPULATED* phase, which takes
-place after the resource table has been populated, but before indexes
-have been created and the temp table has been swapped with the main
-table. As a result, the SQL script should refer to the resource temp
-table, e.g. *\_orgunitstructure\_temp*, *\_categorystructure\_temp*.
-
-You should define only one of the *resourceTableType* and
-*analyticsTableType* fields, depending on which *phase* is defined.
-
-Only the table type you select will have it's temporary table available
-when the hook is run. The following table shows the valid combinations
-of phase, table types and temporary tables.
-
-<table>
-<caption>Overview of phases, table types and temporary tables</caption>
-<colgroup>
-<col width="27%" />
-<col width="39%" />
-<col width="33%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Phase</th>
-<th>Table type</th>
-<th>Temporary table</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>RESOURCE_TABLE_POPULATED</td>
-<td>ORG_UNIT_STRUCTURE</td>
-<td>_orgunitstructure_temp</td>
-</tr>
-<tr class="even">
-<td>DATA_SET_ORG_UNIT_CATEGORY</td>
-<td>_datasetorgunitcategory_temp</td>
-</tr>
-<tr class="odd">
-<td>CATEGORY_OPTION_COMBO_NAME</td>
-<td>_categoryoptioncomboname_temp</td>
-</tr>
-<tr class="even">
-<td>DATA_ELEMENT_GROUP_SET_STRUCTURE</td>
-<td>_dataelementgroupsetstructure_temp</td>
-</tr>
-<tr class="odd">
-<td>INDICATOR_GROUP_SET_STRUCTURE</td>
-<td>_indicatorgroupsetstructure_temp</td>
-</tr>
-<tr class="even">
-<td>ORG_UNIT_GROUP_SET_STRUCTURE</td>
-<td>_organisationunitgroupsetstructure_temp</td>
-</tr>
-<tr class="odd">
-<td>CATEGORY_STRUCTURE</td>
-<td>_categorystructure_temp</td>
-</tr>
-<tr class="even">
-<td>DATA_ELEMENT_STRUCTURE</td>
-<td>_dataelementstructure_temp</td>
-</tr>
-<tr class="odd">
-<td>PERIOD_STRUCTURE</td>
-<td>_periodstructure_temp</td>
-</tr>
-<tr class="even">
-<td>DATE_PERIOD_STRUCTURE</td>
-<td>_dateperiodstructure_temp</td>
-</tr>
-<tr class="odd">
-<td>DATA_ELEMENT_CATEGORY_OPTION_COMBO</td>
-<td>_dataelementcategoryoptioncombo_temp</td>
-</tr>
-<tr class="even">
-<td>DATA_APPROVAL_MIN_LEVEL</td>
-<td>_dataapprovalminlevel_temp</td>
-</tr>
-<tr class="odd">
-<td>ANALYTICS_TABLE_POPULATED</td>
-<td>DATA_VALUE, COMPLETENESS</td>
-<td>analytics_temp</td>
-</tr>
-<tr class="even">
-<td>COMPLETENESS</td>
-<td>analytics_completeness_temp</td>
-</tr>
-<tr class="odd">
-<td>COMPLETENESS_TARGET</td>
-<td>analytics_completenesstarget_temp</td>
-</tr>
-<tr class="even">
-<td>ORG_UNIT_TARGET</td>
-<td>analytics_orgunittarget_temp</td>
-</tr>
-<tr class="odd">
-<td>EVENT</td>
-<td>analytics_event_temp_&lt;program-uid&gt;</td>
-</tr>
-<tr class="even">
-<td>ENROLLMENT</td>
-<td>analytics_enrollment_temp_&lt;program-uid&gt;</td>
-</tr>
-<tr class="odd">
-<td>VALIDATION_RESULT</td>
-<td>analytics_validationresult_temp</td>
-</tr>
-</tbody>
-</table>
-
-### Creating hooks
-
-<!--DHIS2-SECTION-ID:webapi_create_analytics_table_hook-->
-
-To create a hook which should run after the resource tables have been
-populated you can do a *POST* request like this using *JSON*
-    format:
-
-    curl -d @hooks.json "localhost/api/analyticsTableHooks" -H "Content-Type:application/json" -u admin:district -v
-
-    {
-      "name": "Update 'Area' in org unit group set resource table",
-      "phase": "RESOURCE_TABLE_POPULATED",
-      "resourceTableType": "ORG_UNIT_GROUP_SET_STRUCTURE",
-      "sql": "update _organisationunitgroupsetstructure_temp set \"uIuxlbV1vRT\" = 'b0EsAxm8Nge'"
-    }
-
-To create a hook which should run after the data value analytics table
-has been populated you can do a *POST* request like this using *JSON*
-format:
-
-    {
-      "name": "Update 'Currently on treatment' data in analytics table",
-      "phase": "ANALYTICS_TABLE_POPULATED",
-      "analyticsTableType": "DATA_VALUE",
-      "sql": "update analytics_temp set monthly = '200212' where \"monthly\" in ('200210', '200211')"
-    }
-
 ## Metadata repository
 
 <!--DHIS2-SECTION-ID:webapi_metadata_repository-->
@@ -17184,3 +15800,4 @@ An example curl command looks like this:
     curl "localhost:8080/api/synchronization/metadataPull" -X POST
       -d "https://dhis2.org/metadata-repo/221/trainingland-org-units/metadata.json"
       -H "Content-Type:text/plain" -u admin:district -v
+

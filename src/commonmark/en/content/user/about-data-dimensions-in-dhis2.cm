@@ -402,29 +402,26 @@ type.
     weekly data to the month which contains four days or more of the
     week.
 
-3.  Bi-weekly: Two week periods beginning with the first week of the
-    year.
+3.  Monthly: Refers to standard calendar months.
 
-4.  Monthly: Refers to standard calendar months.
+4.  BiMonthly: Two-month periods beginning in January.
 
-5.  BiMonthly: Two-month periods beginning in January.
+5.  Quarterly: Standard ISO quarters, beginning in January.
 
-6.  Quarterly: Standard ISO quarters, beginning in January.
+6.  SixMonthly: Six-month periods beginning in January
 
-7.  SixMonthly: Six-month periods beginning in January
+7.  Yearly: This refers to a calendar year.
 
-8.  Yearly: This refers to a calendar year.
-
-9.  Financial April: Financial year period beginning on April 1st and
+8.  Financial April: Financial year period beginning on April 1st and
     ending on March 31st of the calendar next year
 
-10. Financial July: Financial year period beginning on July 1st and
+9.  Financial July: Financial year period beginning on July 1st and
     ending on June 31st of the calendar next year
 
-11. Financial Oct: Financial year period beginning on October 1st and
+10. Financial Oct: Financial year period beginning on October 1st and
     ending on September 31st of the calendar next year
 
-12. Six-monthly April: Six-month periods beginning on April 1st with a
+11. Six-monthly April: Six-month periods beginning on April 1st with a
     duration of six calendar months.
 
 As a general rule, all organisation units should collect the same data

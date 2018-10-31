@@ -393,10 +393,6 @@ example organisation units and tracked entity attributes. These sharing
 settings control which users and users groups that can view or edit a
 metadata object.
 
-Some metadata objects also allows you to change the sharing setting of
-data entry for the object. These additional settings control who can
-view or enter data in form fields using the metadata.
-
 > **Note**
 > 
 > The default setting is that everyone (**Public access**) can find,
@@ -405,35 +401,23 @@ view or enter data in form fields using the metadata.
 1.  Open the **Maintenance** app and find the type of metadata object
     you want to modify.
 
-2.  In the object list, click the context menu and select **Sharing
+2.  In the object list, click the options menu and select **Sharing
     settings**.
 
 3.  (Optional) Add users or user groups: search for a user or a user
-    group and select it. The user or user group is added to the list.
+    group and select it. The user group is added to the list.
 
-4.  Change sharing settings for the access groups you want to modify.
-    
-      - **Can edit and view**: The access group can view and edit the
-        object.
-    
-      - **Can view only**: The access group can view the object.
-    
-      - **No access** (only applicable to **Public access**): The public
-        won't have access to the object.
-
-5.  Change data sharing settings for the access groups you want to
+4.  Change sharing settings for the users and user groups you want to
     modify.
     
-      - **Can capture data**: The access group can view and capture data
-        for the object.
+      - **Can edit and view**: Everyone can view and edit the object.
     
-      - **Can view data**: The access group can view data for the
-        object.
+      - **Can view only**: Everyone can view the object.
     
-      - **No access**: The access group won't have access to data for
-        the object.
+      - **No access**: The public won't have access to the object. This
+        setting is only applicable to **Public access**.
 
-6.  Click **Close**.
+5.  Click **Close**.
 
 ### Delete metadata objects
 
@@ -622,7 +606,7 @@ objects:
     </tr>
     <tr class="even">
     <td><p>Date &amp; time</p></td>
-    <td><p>Is a combination of the <strong>DATE</strong> and <strong>TIME</strong> data elements.</p></td>
+    <td><p>-</p></td>
     </tr>
     <tr class="odd">
     <td><p>Email</p></td>
@@ -633,78 +617,72 @@ objects:
     <td><p>A file resource where you can store external files, for example documents and photos.</p></td>
     </tr>
     <tr class="odd">
-    <td><p>Image</p></td>
-    <td><p>A file resource where you can store photos.</p>
-    <p>Unlike the <strong>FILE</strong> data element, the <strong>IMAGE</strong> data element can display the uploaded image directly in forms.</p></td>
-    </tr>
-    <tr class="even">
     <td><p>Integer</p></td>
     <td><p>Any whole number (positive and negative), including zero.</p></td>
     </tr>
-    <tr class="odd">
+    <tr class="even">
     <td><p>Letter</p></td>
     <td><p>A single letter.</p></td>
     </tr>
-    <tr class="even">
+    <tr class="odd">
     <td><p>Long text</p></td>
     <td><p>Textual value. Renders as text area with no length constraint in forms.</p></td>
     </tr>
-    <tr class="odd">
+    <tr class="even">
     <td><p>Negative integer</p></td>
     <td><p>Any whole number less than (but not including) zero.</p></td>
     </tr>
-    <tr class="even">
+    <tr class="odd">
     <td><p>Number</p></td>
     <td><p>Any real numeric value with a single decimal point. Thousands separators and scientific notation is not supported.</p></td>
     </tr>
-    <tr class="odd">
+    <tr class="even">
     <td><p>Percentage</p></td>
     <td><p>Whole numbers inclusive between 0 and 100.</p></td>
     </tr>
-    <tr class="even">
+    <tr class="odd">
     <td><p>Phone number</p></td>
     <td><p>Phone number.</p></td>
     </tr>
-    <tr class="odd">
+    <tr class="even">
     <td><p>Positive integer</p></td>
     <td><p>Any whole number greater than (but not including) zero.</p></td>
     </tr>
-    <tr class="even">
+    <tr class="odd">
     <td><p>Positive of zero integer</p></td>
     <td><p>Any positive whole number, including zero.</p></td>
     </tr>
-    <tr class="odd">
-    <td><p>Organisation unit</p></td>
-    <td><p>Organisation units rendered as a hierarchy tree widget.</p>
-    <p>If the user has assigned &quot;search organisation units&quot;, these will be displayed instead of the assigned organisation units.</p></td>
-    </tr>
     <tr class="even">
+    <td><p>Organisation unit</p></td>
+    <td><p>Organisation units rendered as a hierarchy tree widget.</p></td>
+    </tr>
+    <tr class="odd">
     <td><p>Unit interval</p></td>
     <td><p>Any real number greater than or equal to 0 and less than or equal to 1.</p></td>
     </tr>
-    <tr class="odd">
+    <tr class="even">
     <td><p>Text</p></td>
     <td><p>Textual value. The maximum number of allowed characters per value is 50,000.</p></td>
     </tr>
-    <tr class="even">
+    <tr class="odd">
     <td><p>Time</p></td>
     <td><p>Time is stored in HH:mm format.</p>
     <p>HH is a number between 0 and 23</p>
     <p>mm is a number between 00 and 59</p></td>
     </tr>
-    <tr class="odd">
+    <tr class="even">
     <td><p>Tracker associate</p></td>
     <td><p>Tracked entity instance. Rendered as dialog with a list of tracked entity instances and a search field.</p></td>
     </tr>
-    <tr class="even">
+    <tr class="odd">
     <td><p>Username</p></td>
     <td><p>DHIS 2 user. Rendered as a dialog with a list of users and a search field.</p></td>
     </tr>
-    <tr class="odd">
+    <tr class="even">
     <td><p>Yes/No</p></td>
     <td><p>Boolean values, renders as drop-down lists in data entry.</p></td>
     </tr>
-    <tr class="even">
+    <tr class="odd">
     <td><p>Yes only</p></td>
     <td><p>True values, renders as check-boxes in data entry.</p></td>
     </tr>
@@ -930,10 +908,6 @@ example organisation units and tracked entity attributes. These sharing
 settings control which users and users groups that can view or edit a
 metadata object.
 
-Some metadata objects also allows you to change the sharing setting of
-data entry for the object. These additional settings control who can
-view or enter data in form fields using the metadata.
-
 > **Note**
 > 
 > The default setting is that everyone (**Public access**) can find,
@@ -942,35 +916,23 @@ view or enter data in form fields using the metadata.
 1.  Open the **Maintenance** app and find the type of metadata object
     you want to modify.
 
-2.  In the object list, click the context menu and select **Sharing
+2.  In the object list, click the options menu and select **Sharing
     settings**.
 
 3.  (Optional) Add users or user groups: search for a user or a user
-    group and select it. The user or user group is added to the list.
+    group and select it. The user group is added to the list.
 
-4.  Change sharing settings for the access groups you want to modify.
-    
-      - **Can edit and view**: The access group can view and edit the
-        object.
-    
-      - **Can view only**: The access group can view the object.
-    
-      - **No access** (only applicable to **Public access**): The public
-        won't have access to the object.
-
-5.  Change data sharing settings for the access groups you want to
+4.  Change sharing settings for the users and user groups you want to
     modify.
     
-      - **Can capture data**: The access group can view and capture data
-        for the object.
+      - **Can edit and view**: Everyone can view and edit the object.
     
-      - **Can view data**: The access group can view data for the
-        object.
+      - **Can view only**: Everyone can view the object.
     
-      - **No access**: The access group won't have access to data for
-        the object.
+      - **No access**: The public won't have access to the object. This
+        setting is only applicable to **Public access**.
 
-6.  Click **Close**.
+5.  Click **Close**.
 
 ### Delete metadata objects
 
@@ -1351,98 +1313,6 @@ data entry forms.
 You can now use the data set in the **Data Entry** app for the
 organisation units that you have assigned to and for periods according
 to the selected frequency (period type).
-
-### Create or edit Data set Notification
-
-<!--DHIS2-SECTION-ID:create_data_set_notification-->
-
-1.  Open the **Maintenance** app and click **Data set** \> **Data set
-    notification**.
-
-2.  Click the add button.
-
-#### What to send?
-
-![](resources/images/datasets/dataset_notification_create.png)
-
-1.  In the **Name** field, type the precise name of the data set
-    notification.
-
-2.  (Optional) In the **Code** field, assign a code.
-
-3.  Enter **Data sets**.
-    
-    These data sets will be associated to this notification. Incase any
-    of them is completed for a certain period and organisation unit,
-    notification will be generated by the system.
-    
-    > **Note**
-    > 
-    > Nothing will happen if no data set is selected
-
-4.  In **Message template** section there are two parameters.
-    
-      - **Subject template** subject of the notification sent in
-        notification. It can have values from the list of variables
-        avaiable on the right side.
-    
-      - **Message template** actual message sent in notification. It can
-        have values from the list of variables avaiable on the right
-        side.
-    
-    > **Note**
-    > 
-    > Subject is only relevant in case of Email and internal DHIS-2
-    > messages. It is ignored in case of SMS.
-
-#### When to send?
-
-![](resources/images/datasets/when_to_send.png)
-
-1.  **Data set notification trigger** field determine when to send
-    notification.
-    
-      - **Data Set Completion** will trigger notification as soon as
-        data set is completed.
-    
-      - **Schedule Days** will schedule notificaton based on number days
-        relative to scheduled date. Schedule date will be decided by
-        Period associated with Data set.
-        
-          - **Send notification as** provides two different types of
-            notifications
-            
-              - **Collective summary** send notification in summary mood
-            
-              - **Single notification** sends notification in sinlge
-                mood
-    
-    > **Note**
-    > 
-    > **Send notification as** option is only available in case of
-    > scheduled notification. This option is set to default which is
-    > **Single notification** in case of completion notification
-
-#### Who to send?
-
-![](resources/images/datasets/who_to_send.png)
-
-1.  **Notification recipient** field determine recipients of the
-    notification.
-    
-      - **Organisation Unit contact** will send notification to contact
-        assigned to organisation unit which the data has been collected
-        from.
-    
-      - **UserGroup** will send notification to all the member of the
-        selected UserGroup.
-    
-    > **Note**
-    > 
-    > An internal DHIS-2 message will be sent in case if recipient is
-    > UserGroup. Moreover user will also receive SMS/EMAIL if phone
-    > number and email address exist for that user and SMS/EMAIL
-    > notifications are enabled in SystemSettings
 
 ### Override data elements' category combinations in a data set
 
@@ -1872,10 +1742,6 @@ example organisation units and tracked entity attributes. These sharing
 settings control which users and users groups that can view or edit a
 metadata object.
 
-Some metadata objects also allows you to change the sharing setting of
-data entry for the object. These additional settings control who can
-view or enter data in form fields using the metadata.
-
 > **Note**
 > 
 > The default setting is that everyone (**Public access**) can find,
@@ -1884,35 +1750,23 @@ view or enter data in form fields using the metadata.
 1.  Open the **Maintenance** app and find the type of metadata object
     you want to modify.
 
-2.  In the object list, click the context menu and select **Sharing
+2.  In the object list, click the options menu and select **Sharing
     settings**.
 
 3.  (Optional) Add users or user groups: search for a user or a user
-    group and select it. The user or user group is added to the list.
+    group and select it. The user group is added to the list.
 
-4.  Change sharing settings for the access groups you want to modify.
-    
-      - **Can edit and view**: The access group can view and edit the
-        object.
-    
-      - **Can view only**: The access group can view the object.
-    
-      - **No access** (only applicable to **Public access**): The public
-        won't have access to the object.
-
-5.  Change data sharing settings for the access groups you want to
+4.  Change sharing settings for the users and user groups you want to
     modify.
     
-      - **Can capture data**: The access group can view and capture data
-        for the object.
+      - **Can edit and view**: Everyone can view and edit the object.
     
-      - **Can view data**: The access group can view data for the
-        object.
+      - **Can view only**: Everyone can view the object.
     
-      - **No access**: The access group won't have access to data for
-        the object.
+      - **No access**: The public won't have access to the object. This
+        setting is only applicable to **Public access**.
 
-6.  Click **Close**.
+5.  Click **Close**.
 
 ### Delete metadata objects
 
@@ -2320,10 +2174,6 @@ example organisation units and tracked entity attributes. These sharing
 settings control which users and users groups that can view or edit a
 metadata object.
 
-Some metadata objects also allows you to change the sharing setting of
-data entry for the object. These additional settings control who can
-view or enter data in form fields using the metadata.
-
 > **Note**
 > 
 > The default setting is that everyone (**Public access**) can find,
@@ -2332,35 +2182,23 @@ view or enter data in form fields using the metadata.
 1.  Open the **Maintenance** app and find the type of metadata object
     you want to modify.
 
-2.  In the object list, click the context menu and select **Sharing
+2.  In the object list, click the options menu and select **Sharing
     settings**.
 
 3.  (Optional) Add users or user groups: search for a user or a user
-    group and select it. The user or user group is added to the list.
+    group and select it. The user group is added to the list.
 
-4.  Change sharing settings for the access groups you want to modify.
-    
-      - **Can edit and view**: The access group can view and edit the
-        object.
-    
-      - **Can view only**: The access group can view the object.
-    
-      - **No access** (only applicable to **Public access**): The public
-        won't have access to the object.
-
-5.  Change data sharing settings for the access groups you want to
+4.  Change sharing settings for the users and user groups you want to
     modify.
     
-      - **Can capture data**: The access group can view and capture data
-        for the object.
+      - **Can edit and view**: Everyone can view and edit the object.
     
-      - **Can view data**: The access group can view data for the
-        object.
+      - **Can view only**: Everyone can view the object.
     
-      - **No access**: The access group won't have access to data for
-        the object.
+      - **No access**: The public won't have access to the object. This
+        setting is only applicable to **Public access**.
 
-6.  Click **Close**.
+5.  Click **Close**.
 
 ### Delete metadata objects
 
@@ -2914,10 +2752,6 @@ example organisation units and tracked entity attributes. These sharing
 settings control which users and users groups that can view or edit a
 metadata object.
 
-Some metadata objects also allows you to change the sharing setting of
-data entry for the object. These additional settings control who can
-view or enter data in form fields using the metadata.
-
 > **Note**
 > 
 > The default setting is that everyone (**Public access**) can find,
@@ -2926,35 +2760,23 @@ view or enter data in form fields using the metadata.
 1.  Open the **Maintenance** app and find the type of metadata object
     you want to modify.
 
-2.  In the object list, click the context menu and select **Sharing
+2.  In the object list, click the options menu and select **Sharing
     settings**.
 
 3.  (Optional) Add users or user groups: search for a user or a user
-    group and select it. The user or user group is added to the list.
+    group and select it. The user group is added to the list.
 
-4.  Change sharing settings for the access groups you want to modify.
-    
-      - **Can edit and view**: The access group can view and edit the
-        object.
-    
-      - **Can view only**: The access group can view the object.
-    
-      - **No access** (only applicable to **Public access**): The public
-        won't have access to the object.
-
-5.  Change data sharing settings for the access groups you want to
+4.  Change sharing settings for the users and user groups you want to
     modify.
     
-      - **Can capture data**: The access group can view and capture data
-        for the object.
+      - **Can edit and view**: Everyone can view and edit the object.
     
-      - **Can view data**: The access group can view data for the
-        object.
+      - **Can view only**: Everyone can view the object.
     
-      - **No access**: The access group won't have access to data for
-        the object.
+      - **No access**: The public won't have access to the object. This
+        setting is only applicable to **Public access**.
 
-6.  Click **Close**.
+5.  Click **Close**.
 
 ### Delete metadata objects
 
@@ -3375,10 +3197,6 @@ example organisation units and tracked entity attributes. These sharing
 settings control which users and users groups that can view or edit a
 metadata object.
 
-Some metadata objects also allows you to change the sharing setting of
-data entry for the object. These additional settings control who can
-view or enter data in form fields using the metadata.
-
 > **Note**
 > 
 > The default setting is that everyone (**Public access**) can find,
@@ -3387,35 +3205,23 @@ view or enter data in form fields using the metadata.
 1.  Open the **Maintenance** app and find the type of metadata object
     you want to modify.
 
-2.  In the object list, click the context menu and select **Sharing
+2.  In the object list, click the options menu and select **Sharing
     settings**.
 
 3.  (Optional) Add users or user groups: search for a user or a user
-    group and select it. The user or user group is added to the list.
+    group and select it. The user group is added to the list.
 
-4.  Change sharing settings for the access groups you want to modify.
-    
-      - **Can edit and view**: The access group can view and edit the
-        object.
-    
-      - **Can view only**: The access group can view the object.
-    
-      - **No access** (only applicable to **Public access**): The public
-        won't have access to the object.
-
-5.  Change data sharing settings for the access groups you want to
+4.  Change sharing settings for the users and user groups you want to
     modify.
     
-      - **Can capture data**: The access group can view and capture data
-        for the object.
+      - **Can edit and view**: Everyone can view and edit the object.
     
-      - **Can view data**: The access group can view data for the
-        object.
+      - **Can view only**: Everyone can view the object.
     
-      - **No access**: The access group won't have access to data for
-        the object.
+      - **No access**: The public won't have access to the object. This
+        setting is only applicable to **Public access**.
 
-6.  Click **Close**.
+5.  Click **Close**.
 
 ### Delete metadata objects
 
@@ -3706,10 +3512,6 @@ example organisation units and tracked entity attributes. These sharing
 settings control which users and users groups that can view or edit a
 metadata object.
 
-Some metadata objects also allows you to change the sharing setting of
-data entry for the object. These additional settings control who can
-view or enter data in form fields using the metadata.
-
 > **Note**
 > 
 > The default setting is that everyone (**Public access**) can find,
@@ -3718,35 +3520,23 @@ view or enter data in form fields using the metadata.
 1.  Open the **Maintenance** app and find the type of metadata object
     you want to modify.
 
-2.  In the object list, click the context menu and select **Sharing
+2.  In the object list, click the options menu and select **Sharing
     settings**.
 
 3.  (Optional) Add users or user groups: search for a user or a user
-    group and select it. The user or user group is added to the list.
+    group and select it. The user group is added to the list.
 
-4.  Change sharing settings for the access groups you want to modify.
-    
-      - **Can edit and view**: The access group can view and edit the
-        object.
-    
-      - **Can view only**: The access group can view the object.
-    
-      - **No access** (only applicable to **Public access**): The public
-        won't have access to the object.
-
-5.  Change data sharing settings for the access groups you want to
+4.  Change sharing settings for the users and user groups you want to
     modify.
     
-      - **Can capture data**: The access group can view and capture data
-        for the object.
+      - **Can edit and view**: Everyone can view and edit the object.
     
-      - **Can view data**: The access group can view data for the
-        object.
+      - **Can view only**: Everyone can view the object.
     
-      - **No access**: The access group won't have access to data for
-        the object.
+      - **No access**: The public won't have access to the object. This
+        setting is only applicable to **Public access**.
 
-6.  Click **Close**.
+5.  Click **Close**.
 
 ### Delete metadata objects
 
@@ -3903,10 +3693,6 @@ example organisation units and tracked entity attributes. These sharing
 settings control which users and users groups that can view or edit a
 metadata object.
 
-Some metadata objects also allows you to change the sharing setting of
-data entry for the object. These additional settings control who can
-view or enter data in form fields using the metadata.
-
 > **Note**
 > 
 > The default setting is that everyone (**Public access**) can find,
@@ -3915,35 +3701,23 @@ view or enter data in form fields using the metadata.
 1.  Open the **Maintenance** app and find the type of metadata object
     you want to modify.
 
-2.  In the object list, click the context menu and select **Sharing
+2.  In the object list, click the options menu and select **Sharing
     settings**.
 
 3.  (Optional) Add users or user groups: search for a user or a user
-    group and select it. The user or user group is added to the list.
+    group and select it. The user group is added to the list.
 
-4.  Change sharing settings for the access groups you want to modify.
-    
-      - **Can edit and view**: The access group can view and edit the
-        object.
-    
-      - **Can view only**: The access group can view the object.
-    
-      - **No access** (only applicable to **Public access**): The public
-        won't have access to the object.
-
-5.  Change data sharing settings for the access groups you want to
+4.  Change sharing settings for the users and user groups you want to
     modify.
     
-      - **Can capture data**: The access group can view and capture data
-        for the object.
+      - **Can edit and view**: Everyone can view and edit the object.
     
-      - **Can view data**: The access group can view data for the
-        object.
+      - **Can view only**: Everyone can view the object.
     
-      - **No access**: The access group won't have access to data for
-        the object.
+      - **No access**: The public won't have access to the object. This
+        setting is only applicable to **Public access**.
 
-6.  Click **Close**.
+5.  Click **Close**.
 
 ### Delete metadata objects
 
@@ -4133,10 +3907,6 @@ example organisation units and tracked entity attributes. These sharing
 settings control which users and users groups that can view or edit a
 metadata object.
 
-Some metadata objects also allows you to change the sharing setting of
-data entry for the object. These additional settings control who can
-view or enter data in form fields using the metadata.
-
 > **Note**
 > 
 > The default setting is that everyone (**Public access**) can find,
@@ -4145,35 +3915,23 @@ view or enter data in form fields using the metadata.
 1.  Open the **Maintenance** app and find the type of metadata object
     you want to modify.
 
-2.  In the object list, click the context menu and select **Sharing
+2.  In the object list, click the options menu and select **Sharing
     settings**.
 
 3.  (Optional) Add users or user groups: search for a user or a user
-    group and select it. The user or user group is added to the list.
+    group and select it. The user group is added to the list.
 
-4.  Change sharing settings for the access groups you want to modify.
-    
-      - **Can edit and view**: The access group can view and edit the
-        object.
-    
-      - **Can view only**: The access group can view the object.
-    
-      - **No access** (only applicable to **Public access**): The public
-        won't have access to the object.
-
-5.  Change data sharing settings for the access groups you want to
+4.  Change sharing settings for the users and user groups you want to
     modify.
     
-      - **Can capture data**: The access group can view and capture data
-        for the object.
+      - **Can edit and view**: Everyone can view and edit the object.
     
-      - **Can view data**: The access group can view data for the
-        object.
+      - **Can view only**: Everyone can view the object.
     
-      - **No access**: The access group won't have access to data for
-        the object.
+      - **No access**: The public won't have access to the object. This
+        setting is only applicable to **Public access**.
 
-6.  Click **Close**.
+5.  Click **Close**.
 
 ### Delete metadata objects
 
@@ -4255,11 +4013,11 @@ system automatically selects the assigned legend.
 ### About predictors
 
 A predictor tells DHIS2 how to generate a data value based on data
-values from past periods and/or the period of the data value. It defines
-which past periods to sample, and how to combine the data to produce a
-predicted value. A predictor always generates an aggregate data value,
-but the past data values used to calculate the predicted value may come
-from aggregate data, event data, or both.
+values from past periods. It defines which past periods to sample, and
+how to combine the sampled data to produce a predicted value. A
+predictor always generates an aggregate data value, but the past data
+values used to calculate the predicted value may come from aggregate
+data, event data, or both.
 
 A simple use of predictors would be to copy a past period data value
 into a new period, for example into the next month, or into the same
@@ -4307,12 +4065,10 @@ In the **Maintenance** app, you manage the following predictor objects:
 
 ### Sampling past periods
 
-Predictors can generate data values for periods that are in the past,
-present, or future. These values are based on data sampled from periods
-before the predicted period, and/or data from the predicted period. When
-you use data sampled from past periods (periods before the predicted
-period), several parameters determine the choice of which past periods
-to sample from:
+Predicted values are based on sampled values from past periods (prior to
+the period of the predicted value, which may itself be in the past,
+present or future). Several parameters determine the choice of which
+past periods to sample from:
 
 #### Sequential sample count
 
@@ -4483,18 +4239,18 @@ sampled. For example:
         elements, attributes or indicators. Organisation unit counts are
         not yet supported.
         
-        To use sampled, past period data, you should enclose any items
-        you select in one of the following aggregate functions:
+        You should enclose any items you select in one of the following
+        aggregate functions:
         
         <table>
         <colgroup>
-        <col style="width: 50%" />
-        <col style="width: 50%" />
+        <col width="50%" />
+        <col width="50%" />
         </colgroup>
         <thead>
         <tr class="header">
-        <th><p>Aggregate function</p></th>
-        <th><p>Means</p></th>
+        <th><p>Aggregate Function</p></th>
+        <th><p>Meaning</p></th>
         </tr>
         </thead>
         <tbody>
@@ -4529,63 +4285,22 @@ sampled. For example:
         </tbody>
         </table>
         
-        Any items inside an aggregate function will be evaluated for all
-        sampled past periods, and then combined according to the formula
-        inside the aggregate function. Any items outside an aggregate
-        function will be evaluated for the period in which the
-        prediction is being made.
-        
         You can build more complex expressions by clicking on (or
         typing) any of the elements below the expression field: ( ) \* /
         + - Days. Constant numbers may be added by typing them. The Days
         option inserts \[days\] into the expression which resolves to
         the number of days in the period from which the data came.
         
-        You can also use the following functions in your expression,
-        either inside or containing aggregate functions, or independent
-        of them:
+        Examples:
         
         <table>
         <colgroup>
-        <col style="width: 50%" />
-        <col style="width: 50%" />
+        <col width="50%" />
+        <col width="50%" />
         </colgroup>
         <thead>
         <tr class="header">
-        <th><p>Function</p></th>
-        <th><p>Means</p></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr class="odd">
-        <td><p>IF(test, valueIfTrue, valueIfFalse)</p></td>
-        <td><p>Evaluates <strong>test</strong> which is an expression that evaluates to a boolean value -- see <strong>Boolean expression notes</strong> below. If the test is <strong>true</strong>, returns the <strong>valueIfTrue</strong> expression. If it is <strong>false</strong>, returns the <strong>valueIfFalse</strong> expression.</p></td>
-        </tr>
-        <tr class="even">
-        <td><p>ISNULL(item)</p></td>
-        <td><p>Returns the boolean value <strong>true</strong> if the <strong>item</strong> is null (missing), otherwise returns <strong>false</strong>. The <strong>item</strong> can be any selected item from the right (data element, program data element, etc.).</p></td>
-        </tr>
-        </tbody>
-        </table>
-        
-        **Boolean expression notes:** A boolean expression must evaluate
-        to **true** or **false**. The following operators may be used to
-        compare two values resulting in a boolean expression: \<, \>,
-        \!=, ==, \>=, and \<=. The following operators may be used to
-        combine two boolean expressions: && (logical and), and ||
-        (logical or). The unary operator \! may be used to negate a
-        boolean expression.
-        
-        Generator expression examples:
-        
-        <table>
-        <colgroup>
-        <col style="width: 50%" />
-        <col style="width: 50%" />
-        </colgroup>
-        <thead>
-        <tr class="header">
-        <th><p>Generator expression</p></th>
+        <th><p>Generator Expression</p></th>
         <th><p>Means</p></th>
         </tr>
         </thead>
@@ -4602,18 +4317,6 @@ sampled. For example:
         <td><p>SUM(#{FTRrcoaog83}) / SUM([days])</p></td>
         <td><p>Sum of all sampled values of data element FTRrcoaog83 (sum of all disaggregations) divided by the number of days in all sample periods (resulting in the overall average daily value)</p></td>
         </tr>
-        <tr class="even">
-        <td><p>SUM(#{FTRrcoaog83}) + #{T7OyqQpUpNd}</p></td>
-        <td><p>Sum of all sampled values of data element FTRrcoaog83 plus the value of data element T7OyqQpUpNd in the period being predicted for</p></td>
-        </tr>
-        <tr class="odd">
-        <td><p>1.2 * #{T7OyqQpUpNd}</p></td>
-        <td><p>1.2 times the value of data element T7OyqQpUpNd in the period being predicted for</p></td>
-        </tr>
-        <tr class="even">
-        <td><p>IF(ISNULL(#{T7OyqQpUpNd}), 10, 20)</p></td>
-        <td><p>If the data element T7OyqQpUpNd is null, then 10, otherwise 20.</p></td>
-        </tr>
         </tbody>
         </table>
 
@@ -4627,22 +4330,25 @@ sampled. For example:
         program data elements, attributes or indicators. Organisation
         unit counts are not yet supported. As with the generator
         function, you may click on (or type) any of the elements below
-        the expression field: ( ) \* / + - Days. The functions IF() and
-        ISNULL() as described above may also be used.
+        the expression field: ( ) \* / + - Days.
         
-        The expression must evaluate to a boolean value of **true** or
-        **false**. See **Boolean expression notes** above.
+        The expression should evaluate to true or false. The following
+        operators may be used to compare two values resulting in a
+        boolean expression: \<, \>, \!=, ==, \>=, and \<=. The following
+        operators may be used to combine two boolean expressions: &&
+        (logical and), and || (logical or). The unary operator \! may be
+        used to negate a boolean expression.
         
-        Skip test expression examples:
+        Examples:
         
         <table>
         <colgroup>
-        <col style="width: 50%" />
-        <col style="width: 50%" />
+        <col width="50%" />
+        <col width="50%" />
         </colgroup>
         <thead>
         <tr class="header">
-        <th><p>Skip test expression</p></th>
+        <th><p>Skip test Expression</p></th>
         <th><p>Means</p></th>
         </tr>
         </thead>
@@ -5060,17 +4766,11 @@ and XYZ tiles.
 
 8.  Select a **Placement**:
     
-      - **Bottom - basemap**: For the GIS app, this places the external
-        map layer above other DHIS2 base maps but below the thematic map
-        layers. For the Maps app, this makes the external map layer
-        selectable as the base map (i.e. as an alternative to the DHIS2
-        base maps).
+      - **Bottom - basemap**: places the external map layer above other
+        DHIS2 base maps but below the thematic map layers.
     
-      - **Top - overlay**: For the GIS app, this places the external map
-        layer above the thematic map layers but below facility and event
-        data layers. For the Maps app, this allows the external map to
-        be added from the Add Layer selection and placed anywhere above
-        the base map.
+      - **Top - overlay**: places the external map layer above the
+        thematic map layers but below facility and event data layers.
 
 9.  (Optional) Add a legend.
     

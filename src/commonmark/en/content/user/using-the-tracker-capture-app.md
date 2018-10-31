@@ -95,6 +95,45 @@ program
 
 5.  Use information about the individual cases to create reports.
 
+## Create a TEI
+
+<!--DHIS2-SECTION-ID:create_tracked_entity_instance-->
+
+1.  Open the **Tracker Capture** app.
+
+2.  In the organisation unit tree in the left hand pane, select an
+    organisation unit.
+
+3.  Verify that the **Program** field is empty.
+
+4.  Click **Register**.
+
+5.  Select an entity type.
+
+6.  Fill in the required information.
+
+7.  Click **Save and continue** or **Save and add new**.
+    
+      - **Save and continue**: completes the registration and opens the
+        registered TEI's dashboard
+    
+      - **Save and add new**: completes the registration but stays on
+        the same page. Use this option when you want to register one TEI
+        after another without enrollment to a program.
+
+> **Note**
+> 
+> For unique tracked entity attributes the system can automatically
+> generate and assign numeric IDs. When registering tracked entity
+> instances on web, the registration form will then automatically be
+> populated with a number in the given pattern. On Android, the ID
+> generation is used to reserve a series of IDs for each Android device.
+> This allows offline registration of tracked entity instances without
+> risking duplicate IDs when syncing with the server.
+> 
+> You configure automated IDs in the **Maintenance** app: **Tracker** \>
+> **Tracked entity attribute**.
+
 ## Create a TEI and enroll it in a program
 
 <!--DHIS2-SECTION-ID:create_and_enroll_tracked_entity_instance-->
@@ -112,155 +151,152 @@ You can create a TEI and enroll that TEI to a program in one operation:
 
 5.  Fill in the required information.
 
-6.  If searching for program is configured, a background search will be
-    performed on searchable fields to help you prevent registering
-    duplicates. If there is any matching TEIs, a blue box will be
-    displayed on the right side of the form with the possibility to view
-    these matching
-TEIs.
-
-![](resources/images/tracker_capture/tracker_capture_register_integrated_search.png)
-
-If there is any matching TEIs, click **Continue** to review possible
-duplicates before registering a new one.
-
-If there is no matching TEIs, click **Save and continue** or **Save and
-add new**
-
-  - **Save and continue**: completes the registration and opens the
-    registered TEI's dashboard
-
-  - **Save and add new**: completes the registration but stays on the
-    same page. Use this option when you want to register and enroll one
-    TEI after another without enter data.
-
-(img integrated search)
+6.  Click **Save and continue** or **Save and add new**.
+    
+      - **Save and continue**: completes the registration and opens the
+        registered TEI's dashboard
+    
+      - **Save and add new**: completes the registration but stays on
+        the same page. Use this option when you want to register and
+        enroll one TEI after another without enter data.
 
 ## Open an existing TEI dashboard
 
 <!--DHIS2-SECTION-ID:open_existing_tracked_entity_instance_dashboard-->
 
-There are multiple ways to find a TEI: Using the "Lists" which is
-predefined lists in the current selection, or "Search" for global
-lookup.
+There are two ways to find a TEI: simple and advanced search. You can
+also modify the search results list's layout and download the search
+results list in several formats.
 
-### Lists
+![](resources/images/tracker_capture/search_register.png)
+
+### Simple TEI search
 
 <!--DHIS2-SECTION-ID:simple_tracked_entity_instance_search-->
 
-Lists is used to find and display TEIs in the selected organisation unit
-and program.
+1.  Open the **Tracker Capture** app.
 
-1.  Open Tracked Capture app
+2.  (Optional) In the organisation unit tree in the left hand pane,
+    select an organisation unit, then a program.
 
-2.  In the organisation unit tree in the left hand pane, select an
-    organisation unit
+3.  In the right hand search field, type your search criteria.
+    
+    The search criteria could for example be a last name. You can search
+    on all TEI attributes.
 
-3.  Select a program
+4.  Click the **Search** icon.
+    
+    A list of TEIs that match your search criteria displays.
 
-4.  Click the "Lists" button if not already selected
+5.  If you have selected a program, you can filter the search results
+    based on enrollment status:
+    
+      - **Only those with active enrollment**
+    
+      - **Only those with completed enrollment**
+    
+      - **Only those with cancelled enrollment**
 
-If not configured, a set of predefined lists will be available:
+6.  Click a TEI.
+    
+    The TEI dashboard opens.
 
-1.  Any TEI with any enrollment status
-
-2.  TEIs with an active enrollment of the current program
-
-3.  TEIs with a completed enrollment of the current program
-
-4.  TEIs with a cancelled enrollment of the current program
-
-![](resources/images/tracker_capture/tracker_capture_lists.png)
-
-You can select which columns to show or hide in the lists for each
-program. This will be saved in your user settings.
-
-1.  Click the **grid** icon button
-
-2.  Check the columns you want to include
-
-3.  Click **Save**
-
-There is also an option to create a custom working list with own
-filters. This can be used to create custom lists on the fly.
-
-![](resources/images/tracker_capture/tracker_capture_lists_custom.png)
-
-Lists can also be downloaded or printed.
-
-![](resources/images/tracker_capture/tracker_capture_lists_download.png)
-
-### Search
+### Advanced TEI search
 
 <!--DHIS2-SECTION-ID:advanced_tracked_entity_instance_search-->
 
-Search is used to search for TEIs in the organisation units the user has
-search access to. This can be used if you want to find a TEI, but you
-dont know which organisation unit or program the TEI was enrolled in.
-There are two ways of doing this: With and without a program context.
-Searchable fields needs to be configured. For configuring searching with
-program context, this is done individually for each program in the
-program maintenance app. For configuring searching without a program
-context, this is done individually for each tracked entity type in the
-tracked entity type maintenance app.
+Advanced search is conducted for the organisation units you select in
+the organisation tree inside the **Advanced search** window. The
+left-hand side organisation tree is generated based on your assigned
+organisation units. So in the **Advanced search** window you can select
+organisation units outside your own organisation unit.
 
-**Searching without a program context:**
+1.  Open the **Tracker Capture** app.
 
-1.  Open **Tracker Capture app**
+2.  (Optional) In the organisation unit tree in the left hand pane,
+    select an organisation unit, then a program.
+    
+    If a program is selected, advanced search allows you to search on
+    the incident date if the program has one.
 
-2.  Click the **Search** button
+3.  In the right hand search field, click the **Advanced search** arrow.
+    
+    An expanded search form opens.
 
-3.  Searchable fields will be displayed in groups. Unique attributes is
-    only individually searchable. Non-unique attributes can be combined.
+4.  Enter your search criteria(s).
+    
+      - **Organisation unit**: The tree displayed here depends on your
+        user role. If the you have role "Search Tracked Entity Instance
+        in All Org Units" or "ALL", a tree with all available
+        organisation units is provided. Otherwise the tree displayed in
+        advanced search is the same as the one on the left-hand side.
+    
+      - You can select the scope of the organisation unit search. In the
+        **Organisation unit scope** section select **Selected**,
+        **Immediate children** or **All children**.
+    
+      - **Date or enrollment**: appears if you have selected a program
 
-4.  Fill in search criteria and click the **search** icon button.
+5.  Click **Search**.
+    
+    A list of TEIs that match your search criteria(s) displays.
 
-**Searching with a program context:**
+6.  If you have selected a program, you can filter the search results
+    based on enrollment status:
+    
+      - **Only those with active enrollment**
+    
+      - **Only those with completed enrollment**
+    
+      - **Only those with cancelled enrollment**
 
-1.  Open **Tracker Capture app**
+7.  Click a TEI.
+    
+    The TEI dashboard
+opens.
 
-2.  Select an organisation unit which has the program you wish to search
-    in
+### Find a TEI outside your organisation unit
 
-3.  Select the program
+<!--DHIS2-SECTION-ID:find_tracked_entity_instance_outside_your_organisation_unit-->
 
-4.  Click the **Search** button
+You can search for a TEI from another organisation unit, outside your
+assigned organisation units. To do this:
 
-5.  Searchable fields will be displayed in groups. Unique attributes is
-    only individually searchable. Non-unique attributes can be combined.
+  - Your user role must have "Search Tracked Entity Instance in All Org
+    Units" or "ALL" assigned to it.
 
-6.  Fill in search criteria and click the **search** icon button
+  - You must select another organisation unit than your own in the
+    organisation unit tree in the **Advanced search** window.
 
-![](resources/images/tracker_capture/tracker_capture_search_screen.png)
+### Download TEI search results list
 
-After the search has been done, you will be presented with the search
-result. Whats displayed depends on the outcome of the search.
+<!--DHIS2-SECTION-ID:download_tracked_entity_instance_search_result-->
 
-For unique attribute search:
+1.  Create a TEI search results list.
 
-  - If no matching TEI found, you will get the possibility to open the
-    registration form.
+2.  Click **Download as** and select a
+format:
+    
+      - XML
+    
+      - JSON
+    
+      - CSV
 
-  - If the TEI was found in the selected organisation unit, the TEI
-    dashboard will automatically open.
+### Modify TEI search results list's layout
 
-  - If the TEI was found in outside the selected organisation unit, you
-    will get the possibility to open the TEI.
+<!--DHIS2-SECTION-ID:modify_tracked_entity_instance_search_result_layout-->
 
-For non-unique attributes search:
+You can select which columns to show or hide in a TEI search result
+list. Once you've modified the layout, it's saved on your user profile.
+You can have different layouts for different programs.
 
-  - If no matching TEI's found, you will get the possibility to open the
-    registration form.
+1.  Create a TEI search results list.
 
-  - If matching TEI's found, you can either click on any TEI in the
-    result list, or open the registration form.
+2.  Click **Show/hide columns**.
 
-  - If a too large number of matches was found, you will be prompted to
-    refine your search criteria
-
-When choosing to open the registration form, the search values will
-automatically be filled into the registration
-form.
+3.  Select the columns you want to display and click
+**Close**.
 
 ## Enroll an existing TEI in a program
 
@@ -280,18 +316,14 @@ form.
 
 <!--DHIS2-SECTION-ID:enter_event_data_for_tracked_entity_instance-->
 
-### Widgets for data entry
-
-#### 
-
 In a TEI dashboard, you enter event data in the **Timeline Data entry**
 or **Tabular data entry** widgets.
 
 <table>
 <caption>Data entry widgets in the Tracker Capture app</caption>
 <colgroup>
-<col style="width: 31%" />
-<col style="width: 68%" />
+<col width="31%" />
+<col width="68%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -314,73 +346,6 @@ or **Tabular data entry** widgets.
 </tr>
 </tbody>
 </table>
-
-### Creating an event
-
-You can create an event for a TEI by:
-
-1.  Open the **Tracker Capture** app.
-
-2.  Open an existing TEI dashboard.
-
-3.  In the **Timeline Data entry** or **Tabular data entry** widget,
-    click the **+**-button.
-
-4.  Select a **Programstage** and set a **Report date**.
-
-5.  Click **Save**.
-
-### Schedule an event
-
-You can shedule an event for a future date by:
-
-1.  Open the **Tracker Capture** app.
-
-2.  Open an existing TEI dashboard.
-
-3.  In the **Timeline Data entry** or **Tabular data entry** widget,
-    click the **Calendar** icon.
-
-4.  Select a **Programstage** and set a **Schedule date**.
-
-5.  Click **Save**.
-
-### Refer an event
-
-Sometimes it might be nessascary to refer a patient to a different
-**Organisation unit**. To refer a TEI:
-
-1.  Open the **Tracker Capture** app.
-
-2.  Open an existing TEI dashboard.
-
-3.  In the **Timeline Data entry** or **Tabular data entry** widget,
-    click the **Arrow** icon.
-
-4.  Select a **Programstage**, **Organisation unit** and set a
-    ****Report date****.
-
-5.  Click either **One-time referral** which will only refer TEI for one
-    single event or **Move permanently** which will move TEI and all its
-    future events permantly to the selected **Organisation Unit**.
-
-### Compare events
-
-Sometimes it can be helpful to see data from previous events when
-entering data for a new event. This can be achived by:
-
-1.  Open the **Tracker Capture** app.
-
-2.  Open an existing TEI dashboard.
-
-3.  In the **Timeline Data entry** widget, click the **two pages** icon
-    (as seen in the image below).
-
-> **Note**
-> 
-> *Note that this will only work for events that are repeatable.*
-
-![](resources/images/tracker_capture/compareForm.png)
 
 ## Manage a TEI's enrollments
 
@@ -644,42 +609,6 @@ You can save the dashboard's layout as default for a program.
 3.  Click the **Settings** icon, and select **Save dashboard layout as
     default**.
 
-### Lock dashboard's layout
-
-If you are the **administrator** you have the option of locking the
-layout of the dashboard for all users.
-
-1.  Open the **Tracker Capture** app.
-
-2.  Open an existing TEI dashboard.
-
-3.  Organize the widgets to the desired layout and save it as default
-    (see section above).
-
-4.  Click the **Settings** icon, and select **Lock layout for all
-    users**.
-
-Users will still be able to reorganize the widgets temporarily, but the
-layout will be reset to the admin's saved layout after page refresh. The
-remove widget buttons will be hidden when the dashboard layout is
-locked.
-
-### Top bar
-
-The top bar can be a helpful tool to see important data in a quick and
-easy way. To start using the top bar:
-
-1.  Open the **Tracker Capture** app.
-
-2.  Open an existing TEI dashboard.
-
-3.  Click the **Settings** icon, and select **Top bar settings**.
-
-4.  Click **Activate top bar** and click the data you would like to
-    display in the top bar.
-
-![](resources/images/tracker_capture/top_bar.png)
-
 ## Create reports
 
 <!--DHIS2-SECTION-ID:create_report_tracker_capture-->
@@ -693,8 +622,8 @@ easy way. To start using the top bar:
     <table>
     <caption>Report types in the Tracker Capture app</caption>
     <colgroup>
-    <col style="width: 50%" />
-    <col style="width: 50%" />
+    <col width="50%" />
+    <col width="50%" />
     </colgroup>
     <thead>
     <tr class="header">

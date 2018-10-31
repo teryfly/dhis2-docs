@@ -729,45 +729,52 @@ avoid becoming stale.
 A DHIS 2 cluster setup is based on manual configuration of each
 instance. For each DHIS 2 instance one must specify the public
 *hostname* as well as the hostnames of the other instances participating
-in the cluster.
+in the cluster. You can optionally specify the *port numbers* for which
+each instance should listen for cache updates.
 
-The hostname of the server is specified using the *cluster.hostname*
-configuration property. Additional servers which participate in the
-cluster are specified using the *cluster.members* configuration
-property. The property expects a list of comma separated values where
-each value is of the format *host:port*.
+The hostname of the server is specified using the
+*cluster.instance0.hostname* configuration property. Additional servers
+which participate in the cluster are specified using properties on the
+format *cluster.instanceN.hostname*, where N refers to the cluster
+instance number. You can specify up to 4 cluster instances in a
+configuration file, giving a maximum cluster size of 5 instances. N is a
+number between 1 and 4.
 
 The hostname must be visible to the participating servers on the network
 for the clustering to work. You might have to allow incoming and
 outgoing connections on the configured port numbers in the firewall.
 
-The port number of the server is specified using the*cluster.cache.port*
-configuration property. The remote object port used for registry receive
-calls is specified using *cluster.cache.remote.object.port*. Specifying
-the port numbers is typically only useful when you have multiple cluster
-instances on the same server / virtual machine or if you need to
-explicitly specify the ports to be used so as to have them configured in
-firewall. When running cluster instances on separate servers / virtual
-machines it is often appropriate to use the default port number and omit
-the ports configuration properties. If omitted, 4001 will be assigned as
-the listener port and a random free port will be assigned as the remote
+The port number of the server is specified using
+the*cluster.instance0.cache.port* configuration property. The remote
+object port used for registry receive calls is specified using
+*cluster.instance0.cache.remote.object.port*. Specifying the port
+numbers is typically useful when you have multiple cluster instances on
+the same server / virtual machine or if you need to explicitly specify
+the ports to be used so as to have them configured in firewall. When
+running cluster instances on separate servers / virtual machines it is
+often appropriate to use the default port numbers and omit the ports
+configuration properties. If omitted, 4001 will be assigned as the
+listener port and a random free port will be assigned as the remote
 object port.
 
 An example setup for a cluster of two web servers is described below.
-For *server A* available at hostname *193.157.199.131* the following can
+For *server A* availabe at hostname *193.157.199.131* the following can
 be specified in *dhis.conf*:
 
     # Cluster configuration for server A
     
     # Hostname for this web server
-    cluster.hostname = 193.157.199.131
+    cluster.instance0.hostname = 193.157.199.131
     
     # Ports for cache listener, can be omitted
-    cluster.cache.port = 4001
-    cluster.cache.remote.object.port = 5001
+    cluster.instance0.cache.port = 4001
+    cluster.instance0.cache.remote.object.port = 5001
     
-    # List of Host:port participating in the cluster
-    cluster.members = 193.157.199.132:4001
+    # Hostname for web server B participating in cluster
+    cluster.instance1.hostname = 193.157.199.132
+    
+    # Port for cache listener on web server B, can be omitted
+    cluster.instance1.cache.port = 4001
 
 For *server B* available at hostname *193.157.199.132* the following can
 be specified in *dhis.conf* (notice how port configuration is omitted):
@@ -775,10 +782,10 @@ be specified in *dhis.conf* (notice how port configuration is omitted):
     # Cluster configuration for server B
     
     # Hostname for this web server
-    cluster.hostname = 193.157.199.132
+    cluster.instance0.hostname = 193.157.199.132
     
-    # List of servers participating in cluster
-    cluster.members = 193.157.199.131:4001
+    # Hostname for web server A participating in cluster
+    cluster.instance1.hostname = 193.157.199.131
 
 You must restart each Tomcat instance to make the changes take effect.
 The two instances have now been made aware of each other and DHIS 2 will
@@ -1492,19 +1499,6 @@ viable starting point for your own configuration
     
     # Node identifier, optional, useful in clusters
     # node.id = 'node-1'
-    
-    # ----------------------------------------------------------------------
-    # System monitoring
-    # ----------------------------------------------------------------------
-    
-    # System monitoring URL
-    # system.monitoring.url = 
-    
-    # System monitoring username
-    # system.monitoring.username = 
-    
-    # System monitoring password
-    # system.monitoring.password =
 
 ## Application logging
 

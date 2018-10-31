@@ -20,10 +20,7 @@ reports:
     numbers of events. An event report is always based on a program. You
     can do analysis based on a range of dimensions. Each dimension can
     have a corresponding filter. Dimensions can be selected from the
-    left-side menu. Similar to the pivot tables app, aggregated event
-    reports may be limited by the amount of RAM accessible by the
-    browser. If your requested table exceeds a set size, you will
-    recieve a warning prompt asking whether or not you want to continue.
+    left-side menu.
 
   - Individual event reports: Lists of events
     

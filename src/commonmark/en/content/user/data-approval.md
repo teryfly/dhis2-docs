@@ -68,10 +68,7 @@ have to worry that the data could be changing from below while it is
 being reviewed. It can also be used by the higher-level user to keep
 track of which lower-level data has already been reviewed.
 
-Two-step process can be activated by checking **Acceptance required
-before approval** in SystemSettings app under General section.
-
-
+\</section\>
 
 ## Authorities for approving data
 
@@ -107,7 +104,7 @@ authorities:
 
 <!--DHIS2-SECTION-ID:data_approvals_configuration-->
 
-In the *Maintenance app* section under *Data approval level* you can
+In the *Settings* section under *System Approval Settings* you can
 specify the levels at which you want to approve data in the system.
 Click the Add new button on this page and select the organisation unit
 level at which you want approvals. It will be added to the list of
@@ -119,11 +116,11 @@ Note that when you add a new approval level, you may optionally choose a
 Category option group set. This feature is discussed later in this
 chapter.
 
-Also in maintenance under *Data approval workflow*, you can define the
-workflows that will be used for approving data. Each workflow can be
-associated with one or more approval levels. Any two workflows may
-operate at all the same approval levels as each other, some of the same
-and some different levels, or completely different levels.
+Also under *System Approval Settings*, you can define the workflows that
+will be used for approving data. Each workflow can be associated with
+one or more approval levels. Any two workflows may operate at all the
+same approval levels as each other, some of the same and some different
+levels, or completely different levels.
 
 If you want data for a data set to be approved according to a workflow,
 then assign the workflow to the data set when you add or edit the data
@@ -191,7 +188,7 @@ Using this example, lets consider some scenarios:
     to User A, as data is now approved at the level immediately below
     herself.
 
-
+\</section\>
 
 ## Approving data
 
@@ -339,7 +336,7 @@ or all of the following approval levels:
 </tbody>
 </table>
 
-
+\</section\>
 
 ## Approving by multiple category option group sets
 
@@ -443,5 +440,5 @@ or *Move down*. If you have an approval level with no category option
 groups set, it must be the highest approval level for that organisation
 unit level.
 
-
+\</section\>
 
