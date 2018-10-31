@@ -688,21 +688,6 @@ expression and filter. The order of evaluation is:
 </ul></td>
 </tr>
 <tr class="odd">
-<td><p>Analytics period boundaries</p></td>
-<td><p>Defines the boundaries for the program indicator calculation. The boundaries determine which events or enrollments gets included in aggregations, always relative to the aggregate reporting period start and end. When creating the program indicator, the default boundaries will get preselected based on analytics type.</p>
-<ul>
-<li><p>For analytics type <em>event</em>, the default boundaries will be configured to encapsulate any events with an event date after the reporting period starts and before the reporting period ends.</p></li>
-<li><p>For analytics type <em>enrollment</em>, the default boundaries will encapsulate all enrollments with an enrollment date after the reporting date starts and before the reporting period ends. In addition, the default enrollment program indicator evaluates the newest event for all program stages regardless of date.</p></li>
-</ul>
-<p>It is possible to change the upper and lower boundaries to include a longer or shorter period relative to the reporting period, or delete one of the boundaries - in effect returing all data before or after a certiain period. It is also possible to add more constraints, for example to make an enrollment program indicator only include event data up to a given point in time.</p>
-<ul>
-<li><p>Boundary target: Can be <em>incident date</em>, <em>event date</em> or <em>enrollment date</em>. Designates what is being constrained by the boundary.</p></li>
-<li><p>Analytics period boundary type: Defines wether the boundary is a end boundary - starting with &quot;before...&quot;, or a start boundary - &quot;after...&quot;. Also defines whether the boundary relates to the end of the aggregate reporting period or the start of the aggregate reporting period.</p></li>
-<li><p>Offset period by amount: In some cases, for example cohort analytics, the boundary should be offset relative to the aggregate reporting period when running pivots and reports. The offset period by amount is used to move the current boundary either back(negative) or forward(positive) in time. The amount and period type together will determine how big the offset will be. An example can be when making a simple enrollment cohort porgram indicator for a 1 year cohort, it might be enough to offset each boundary of the program indicator with &quot;-1&quot; and &quot;Years&quot;</p></li>
-<li><p>Period type: See above. Can be any period, e.g. <em>Weekly</em> or <em>Quarterly</em>.</p></li>
-</ul></td>
-</tr>
-<tr class="even">
 <td><p>Expression</p></td>
 <td><p>The expression defines how the indicator is being calculated. The expression can contain references to various entities which will be substituted with a related values when the indicator is calculated:</p>
 <ul>
@@ -715,7 +700,7 @@ expression and filter. The order of evaluation is:
 <p>For single event programs and tracker programs with analytics type <em>event</em>, the expression will be evaluated <em>per event</em>, then aggregated according to its aggregation type.</p>
 <p>For tracker programs with analytics type <em>enrollment</em>, the expression will be evaluated <em>per enrollment</em>, then aggregated according to its aggregation type.</p></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><p>Filter</p></td>
 <td><p>The filter is applied to events and filters the data source used for the calculation of the indicator. I.e. the filter is applied to the set of events before the indicator expression is being evaluated. The filter must evaluate to either true or false. It filter is applied to each individual event. If the filter evaluates to true then the event is included later in the expression evaluation, if not it is ignored. The filter can, in a similar way as expressions, contain references to data elements, attributes and constants.</p>
 <p>The program indicator filter can in addition use logical operators. These operators can be used to form logical expressions which ultimately evaluate to either true or false. For example you can assert that multiple data elements must be a specific value, or that specific attributes must have numerical values less or greater than a constant.</p></td>
@@ -921,46 +906,41 @@ functions. The functions can be applied to data elements and attributes:
 <td><p>Returns true if the data element/attribute has a value. Can be used in filters to distinguish between the number 0 and no value, and to distinguish between exlicit &quot;No&quot; and no selection for a Yes/No field.</p></td>
 </tr>
 <tr class="even">
-<td><p>d2:minutesBetween</p></td>
-<td><p>(datetime, datetime)</p></td>
-<td><p>Produces the number of minutes between two data elements/attributes of type &quot;date and time&quot;. The static datetime format is 'yyyy-MM-dd hh:mm'.</p></td>
-</tr>
-<tr class="odd">
 <td><p>d2:daysBetween</p></td>
 <td><p>(date, date)</p></td>
 <td><p>Produces the number of days between two data elements/attributes of type date. The static date format is 'yyyy-MM-dd'.</p></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><p>d2:weeksBetween</p></td>
 <td><p>(date, date)</p></td>
 <td><p>Produces the number of full weeks between two data elements/attributes of type date. The static date format is 'yyyy-MM-dd'.</p></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><p>d2:monthsBetween</p></td>
 <td><p>(date, date)</p></td>
 <td><p>Produces the number of full months between two data elements/attributes of type date. The static date format is 'yyyy-MM-dd'.</p></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><p>d2:yearsBetween</p></td>
 <td><p>(date, date)</p></td>
 <td><p>Produces the number of full years between two data elements/attributes of type date. The static date format is 'yyyy-MM-dd'.</p></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><p>d2:condition</p></td>
 <td><p>(boolean-expr, true-val, false-val)</p></td>
 <td><p>Evaluates the conditional expression and if true returns the true value, if false returns the false value. The conditional expression must be quoted.</p></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><p>d2:zing</p></td>
 <td><p>(number)</p></td>
 <td><p>Evaluates the data element/attribute of type number to zero if the value is negative, otherwise to the value itself.</p></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><p>d2:oizp</p></td>
 <td><p>(number)</p></td>
 <td><p>Evaluates the data element/attribute of type number to one if the value is zero or positive, otherwise to zero.</p></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><p>d2:zpvc</p></td>
 <td><p>(object, [,object, object,...])</p></td>
 <td><p>Returns the number of numeric zero and positive values among the given object arguments. Can be provided any number of arguments.</p></td>
@@ -1485,12 +1465,6 @@ objects:
         <p>You can select which data element or tracked entity attribute to link the error to. This will help the user to fix the error.</p>
         <p>If you don't select a data element or a tracked entity attribute to display the error next to, make sure you write a comprehensive error message that helps the user to fix the error.</p></td>
         </tr>
-        <tr class="odd">
-        <td><p><strong>Send Message</strong></p></td>
-        <td><p><strong>Message template to send</strong></p></td>
-        <td><p>Send Message triggers a notification based on provided message template. This action will be taken at event/enrollment <strong>completion.</strong></p>
-        <p>Message template will be parsed and variables will be substituted with actual values.</p></td>
-        </tr>
         </tbody>
         </table>
     
@@ -1861,73 +1835,6 @@ If the #{variableWithText} in the above example was 'ABCD', then the result of t
 </tbody>
 </table>
 
-<table>
-<caption>Standard variables to use in program rule expressions</caption>
-<colgroup>
-<col width="15%" />
-<col width="30%" />
-<col width="54%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Variable</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>V{current_date}</td>
-<td>(date)</td>
-<td>Contains the current date whenever the rule is executed.
-<p>Example expression:</p>
-<pre><code>d2:daysBetween(#{symptomDate},V{current_date}) &lt; 0 </code></pre></td>
-</tr>
-<tr class="even">
-<td>V{event_date}</td>
-<td>(date)</td>
-<td>Contains the event date of the current event execution. Will not have a value at the moment the rule is executed as part of the registration form.</td>
-</tr>
-<tr class="odd">
-<td>V{due_date}</td>
-<td>(date)</td>
-<td>This variable will contain the current date when the rule is executed. Note: This means that the rule might produce different results at different times, even if nothing else has changed.</td>
-</tr>
-<tr class="even">
-<td>V{event_count}</td>
-<td>(number)</td>
-<td>Contains the total number of events in the enrollment.</td>
-</tr>
-<tr class="odd">
-<td>V{enrollment_date}</td>
-<td>(date)</td>
-<td>Contains the enrollment date of the current enrollment. Will not have a value for single event programs.</td>
-</tr>
-<tr class="even">
-<td>V{incident_date}</td>
-<td>(date)</td>
-<td>Contains the incident date of the current enrollment. Will not have a value for single event programs.</td>
-</tr>
-<tr class="odd">
-<td>V{enrollment_id}</td>
-<td>(string)</td>
-<td>Universial identifier string(UID) of the current enrollment. Will not have a value for single event programs.</td>
-</tr>
-<tr class="even">
-<td>V{event_id}</td>
-<td>(string)</td>
-<td>Universial identifier string(UID) of the current event context. Will not have a value at the moment the rule is executed as part of the registration form.</td>
-</tr>
-<tr class="odd">
-<td>V{orgunit_code}</td>
-<td>(string)</td>
-<td>Contains the code of the orgunit that is linked to the current enrollment. For single event programs the code from the current event orgunit will be used instead.
-<p>Example expression to check wether orgunit code starts with WB_:</p>
-<pre><code>d2:left(V{orgunit_code},3) == &#39;WB_&#39;</code></pre></td>
-</tr>
-</tbody>
-</table>
-
 ## Configure relationship types
 
 <!--DHIS2-SECTION-ID:configure_relationship_type-->
@@ -2042,76 +1949,72 @@ programs.
     <td><p>A file resource where you can store external files, for example documents and photos.</p></td>
     </tr>
     <tr class="odd">
-    <td>Image</td>
-    <td>Similar to File, but restricted to images.</td>
-    </tr>
-    <tr class="even">
     <td><p>Integer</p></td>
     <td><p>Any whole number (positive and negative), including zero.</p></td>
     </tr>
-    <tr class="odd">
+    <tr class="even">
     <td><p>Letter</p></td>
     <td><p>-</p></td>
     </tr>
-    <tr class="even">
+    <tr class="odd">
     <td><p>Long text</p></td>
     <td><p>Textual value. Renders as text area in forms.</p></td>
     </tr>
-    <tr class="odd">
+    <tr class="even">
     <td><p>Negative integer</p></td>
     <td><p>Any whole number less than (but not including) zero.</p></td>
     </tr>
-    <tr class="even">
+    <tr class="odd">
     <td><p>Number</p></td>
     <td><p>Any real numeric value with a single decimal point. Thousands separators and scientific notation is not supported.</p></td>
     </tr>
-    <tr class="odd">
+    <tr class="even">
     <td><p>Percentage</p></td>
     <td><p>Whole numbers inclusive between 0 and 100.</p></td>
     </tr>
-    <tr class="even">
+    <tr class="odd">
     <td><p>Phone number</p></td>
     <td></td>
     </tr>
-    <tr class="odd">
+    <tr class="even">
     <td><p>Positive integer</p></td>
     <td><p>Any whole number greater than (but not including) zero.</p></td>
     </tr>
-    <tr class="even">
+    <tr class="odd">
     <td><p>Positive of zero integer</p></td>
     <td><p>Any positive whole number, including zero.</p></td>
     </tr>
-    <tr class="odd">
+    <tr class="even">
     <td><p>Organisation unit</p></td>
     <td><p>-</p></td>
     </tr>
-    <tr class="even">
+    <tr class="odd">
     <td><p>Unit interval</p></td>
     <td><p>Any real number greater than or equal to 0 and less than or equal to 1.</p></td>
     </tr>
-    <tr class="odd">
+    <tr class="even">
     <td><p>Text</p></td>
     <td><p>Textual value. The maximum number of allowed characters per value is 50,000.</p></td>
     </tr>
-    <tr class="even">
+    <tr class="odd">
     <td><p>Time</p></td>
     <td><p>Time is stored in HH:mm format.</p>
     <p>HH is a number between 0 and 23</p>
     <p>mm is a number between 00 and 59</p></td>
     </tr>
-    <tr class="odd">
+    <tr class="even">
     <td><p>Tracker associate</p></td>
     <td><p>-</p></td>
     </tr>
-    <tr class="even">
+    <tr class="odd">
     <td><p>Username</p></td>
     <td><p>This will be populated with the username of the user which performs data entry automatically during the data entry process.</p></td>
     </tr>
-    <tr class="odd">
+    <tr class="even">
     <td><p>Yes/No</p></td>
     <td><p>Boolean values, renders as drop-down lists in data entry.</p></td>
     </tr>
-    <tr class="even">
+    <tr class="odd">
     <td><p>Yes only</p></td>
     <td><p>True values, renders as check-boxes in data entry.</p></td>
     </tr>
@@ -2185,10 +2088,11 @@ programs.
         Select **Automatically generated** to allow automatic generation
         of the tracked entity attribute value. When the generate setting
         is selected on, an optional field for specifying pattern also
-        displays. This field should contain a pattern based on the
-        TextPattern syntax. When the value is automatically generated,
-        it will be unique for this attribute for the entire system. See
-        the TextPattern section for more information on how it works.
+        displays. Enter an amount of numbers into this field equal to
+        the ciphers you want in the generated value. A pattern of 0000
+        would result in a generated value above 1000 and below 9999. The
+        number of ciphers should at least allow 20 % more values than
+        you expect is needed for keeping the ID unique.
     
       - **Organisation unit**: The values of the tracked entity
         attribute must not duplicate in the same organisation unit.
@@ -2208,152 +2112,22 @@ programs.
 
 15. Click **Save**.
 
-### Create or edit a tracked entity type
+### Create or edit a tracked entity
 
 <!--DHIS2-SECTION-ID:create_tracked_entity-->
 
 1.  Open the **Maintenance** app and click **Program** \> **Tracked
-    entity type**.
+    entity**.
 
-2.  Click the add button or an already exsisting **tracked entity
-    type**.
+2.  Click the add button.
 
 3.  Type a **Name** of the tracked entity.
 
 4.  (Optional) Enter a **Description** of the tracked entity.
 
-5.  (Optional) Enter a **Minimum number of attributes required to
-    search**. This specifies the amount of attributes that need to be
-    filled out in order to be able to search for this **tracked entity
-    type** in a *global search*. See [Configure
-    Search](../search/search.xml#configure_search) for more information.
+5.  (Optional) Enter an **Alternative name** of the tracked entity.
 
-6.  (Optional) Enter a **Maximum number of tracked entity instances to
-    return in search**. This specifies the amount of tracked entity
-    instances that will be returned in a *global search*. See [Configure
-    Search](../search/search.xml#configure_search) for more information.
-
-7.  (Optional) Add **Tracked entity type attributes**. This is used to
-    configure search, see [Configure
-    Search](../search/search.xml#configure_search) for more information.
-
-8.  (Optional) Enter an **Alternative name** of the tracked entity.
-
-9.  Click **Save**.
-
-## Configure search
-
-<!--DHIS2-SECTION-ID:configure_search-->
-
-Users can be given search organisation units, which makes it possible to
-search for tracked entity instances outside their data capture
-organisation units.
-
-Searching can be done either in the context of a program, or in the
-context of a tracked entity type. To be give users the option of
-searching in the context of a program, it is necessary to configure
-which of the programs tracked entity attributes is searchable. To give
-users the option of searching in the context of a tracked entity type,
-you will have to configure which of the tracked entity type attributes
-is searchable.
-
-### Configure search for tracker program
-
-To be able to search with a program, you will have to make some of the
-program attributes searchable. Unique program attributes will always be
-searchable.
-
-1.  Open **Program app**
-
-2.  Open or create a tracker program
-
-3.  Go to **Attributes**
-
-4.  If you have no attributes, add one
-
-5.  Set the attribute searchable
-
-Searchable program attributes will assigned to a search group.
-
-  - Unique group. One group per unique program attribute. Unique
-    attributes cannot be combined with other program attributes in a
-    search. The result from the search can only be 0 or 1 tracked entity
-    instance.
-
-  - Non-unique group. This group contains all non-unique program
-    attributes and makes it possible to combine multiple attributes in a
-    search.
-
-There are two limits that can be set for a program search, as part of
-the **Program** configuration.
-
-  - Minimum number of attributes required to search: This property
-    defines how many of the non-unique attributes that must be entered
-    before a search can be performed.
-
-<!-- end list -->
-
-  - Maximum number of tracked entity instances to return: This property
-    defines the maximum number of results a user will get in her search.
-    If a too large number of tracked entity instances is found, the user
-    must provide a more specific search.
-
-### Configure search for tracked entity type
-
-> **Note**
-> 
-> TET = Tracked entity type
-
-To be able to search without a program, you will have to make some of
-the TET attributes searchable. Unique TET attributes will always be
-searchable.
-
-1.  Open **Tracked entity type app**
-
-2.  Open a Tracked entity type
-
-3.  If the TET has no attributes, add one
-
-4.  Set the attribute searchable
-
-Searchable TET attributes will assigned to a search group.
-
-  - Unique group. One group per unique TET attribute. Unique attributes
-    cannot be combined with other TET attributes in a search. The result
-    from the search can only be 0 or 1 tracked entity instance.
-
-  - Non-unique group. This group contains all non-unique TET attributes
-    and makes it possible to combine multiple attributes in a search.
-
-There are two limits that can be set for a TET search
-
-  - Minimum number of attributes required to search: This property
-    defines how many of the non-unique attributes that must be entered
-    before a search can be performed.
-
-<!-- end list -->
-
-  - Maximum number of tracked entity instances to return: This property
-    defines the maximum number of results a user will get in her search.
-    If a too large number of tracked entity instances is found, the user
-    must provide a more specific search.
-
-### Configure search organisation units for a user
-
-To be able to search in other organisation units than the users data
-capture organisation units, the user must be assigned with search
-organisation units. Giving a user a search organisation unit will also
-give it access to search in all children of that organisation unit.
-
-1.  Open **Users app**
-
-2.  Click on a user
-
-3.  Open **Assign search organisation units**
-
-4.  Select organisation units
-
-5.  Click **Save**
+6.  Click **Save**.
 
 ## Clone metadata objects
 
@@ -2400,10 +2174,6 @@ example organisation units and tracked entity attributes. These sharing
 settings control which users and users groups that can view or edit a
 metadata object.
 
-Some metadata objects also allows you to change the sharing setting of
-data entry for the object. These additional settings control who can
-view or enter data in form fields using the metadata.
-
 > **Note**
 > 
 > The default setting is that everyone (**Public access**) can find,
@@ -2412,35 +2182,23 @@ view or enter data in form fields using the metadata.
 1.  Open the **Maintenance** app and find the type of metadata object
     you want to modify.
 
-2.  In the object list, click the context menu and select **Sharing
+2.  In the object list, click the options menu and select **Sharing
     settings**.
 
 3.  (Optional) Add users or user groups: search for a user or a user
-    group and select it. The user or user group is added to the list.
+    group and select it. The user group is added to the list.
 
-4.  Change sharing settings for the access groups you want to modify.
-    
-      - **Can edit and view**: The access group can view and edit the
-        object.
-    
-      - **Can view only**: The access group can view the object.
-    
-      - **No access** (only applicable to **Public access**): The public
-        won't have access to the object.
-
-5.  Change data sharing settings for the access groups you want to
+4.  Change sharing settings for the users and user groups you want to
     modify.
     
-      - **Can capture data**: The access group can view and capture data
-        for the object.
+      - **Can edit and view**: Everyone can view and edit the object.
     
-      - **Can view data**: The access group can view data for the
-        object.
+      - **Can view only**: Everyone can view the object.
     
-      - **No access**: The access group won't have access to data for
-        the object.
+      - **No access**: The public won't have access to the object. This
+        setting is only applicable to **Public access**.
 
-6.  Click **Close**.
+5.  Click **Close**.
 
 ## Display details of metadata objects
 

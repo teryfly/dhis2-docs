@@ -58,11 +58,6 @@ example of the *manifest.webapp* is shown below:
                 "href": "*",
                 "namespace": "my-namespace"
             }
-        },
-        "authorities": [
-             "MY_APP_ADD_NEW",
-             "MY_APP_UPDATE",
-             "MY_APP_DELETE"
         }
     }
 
@@ -75,12 +70,6 @@ Among the properties are:
   - The *activities* property is an dhis-specific extension meant to
     differentiate between a standard Open Web App and an app that can be
     installed in DHIS2.
-
-  - The *authorities* property contains a list of DHIS2 authorities
-    which can be used to restrict users from certain actions on the
-    current app. This list will be loaded into DHIS2 during app
-    installation process and available for selecting in User Role
-    management form.
 
   - The *\** value for *href* is converted to the appropriate URL when
     the app is uploaded and installed in DHIS2. This value can then be

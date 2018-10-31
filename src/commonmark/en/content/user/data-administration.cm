@@ -500,96 +500,53 @@ it to take effect.
 
 <!--DHIS2-SECTION-ID:dataAdmin_scheduling-->
 
-The Scheduler is an application for managing background jobs in DHIS2.
-Background jobs can do a number of tasks, such as running analytics,
-synchronizing data and meta data, or sending a push analysis report. The
-application provides the ability to create, modify and delete such jobs.
+The analytics, resource tables, data sync, metadata sync and data mart
+can be automatically scheduled to run on regular intervals. Simply
+select the aggregation period types, organisation unit group set
+aggregation level, and strategy to configure how the scheduled job
+should run. If you are using surveillance rules, you can choose to run
+them "All daily" by selecting this option.
 
-The Scheduler comes bundled with DHIS2 and is accessed through the App
-Menu.
+Pressing "Start" will enable the scheduled job to run at a
+pre-determined time (always at midnight based on the server time).
 
-![](resources/images/scheduler/overview.png)
 
-The start page of the Scheduler app shows an overview of existing jobs.
-By default, pre-defined system jobs are hidden. To view these, toggle
-**Show system jobs** in the top right corner.
+![](resources/images/maintainence/scheduling_management.png)
 
-When you create or modify a job, it will be rescheduled according to
-selected preferences. To run a job on demand, press the green triangle
-labeled "Run now". This action is only available for enabled jobs.
+Starting 2.24 you can also schedule metadata synchronization on regular
+intervals. Simply select "Enabled" from the drop-down, select the
+time-period during which you want to run the task. Pressing "Start" will
+enable the scheduled job to run at that specific time selected.
 
-### Creating a job
+![](resources/images/maintainence/metadata_synchronization.png)
 
-<!--DHIS2-SECTION-ID:dataAdmin_scheduling_config-->
+As depicted in the screenshot, you can select the time period as daily,
+weekly, monthly or yearly.
 
-1.  Open the **Scheduler** app and click the add button in the bottom
-    right corner.
+  - Daily: On selecting this checkbox, you will need to select the time
+    at which it needs to run daily.
 
-2.  Choose a suitable **Name** for the new job.
+  - Weekly: On selecting this checkbox, you need to select the day of
+    the week and time on that day on which it needs to run.
 
-3.  Select a running frequency for the job, i.e. when and how often the
-    job should run.
-    
-    1.  You can either select a pre-defined frequency from the
-        dropdown-menu, or ...
-    
-    2.  You can give the job a custom **Cron expresssion** if you want a
-        specific schedule.
-    
-    3.  Enabling the **Continuous execution** option will make the job
-        run constantly. In other words, as soon as the job finishes, it
-        will be scheduled to run again right away. Selecting this option
-        will disable the other fields.
+  - Monthly: On selecting this checkbox, you need to select a day of the
+    week, say Every 1st Sunday, Every 2nd Saturday, etc. and time on
+    that day on which it needs to run.
 
-4.  Select the **Job type** you want to schedule using the
-    dropdown-menu.
+  - Yearly: On Selecting this check box, you need to select the month,
+    specific day of the month and time on that day on which it needs to
+    run.
 
-5.  If the job type is customizable, a **Parameters** section will
-    appear below. These additional options specify the details of the
-    scheduled job, and will vary greatly depending on the job type.
+There is also the capability for running the meta data synchronization
+immediately. Using "**Sync Now**" button you can run the meta data
+synchronization task immediately even if the scheduler is scheduled to
+run at specific time or not.
 
-6.  Press the **Add job** button to confirm the job creation. The newly
-    created job should now be listed in the job overview, given that the
-    **Show system jobs** setting is not enabled.
+  - If the scheduler is already enabled, you will see the "Sync Now"
+    button on the page itself.
 
-![](resources/images/scheduler/add_new_job.png)
-
-Jobs are enabled by default.
-
-### Configuring a job
-
-<!--DHIS2-SECTION-ID:dataAdmin_scheduler_config-->
-
-With the proper permissions, you can modify the details of user-created
-jobs. Note that for system jobs, only the schedule (cron expression) can
-be changed.
-
-To quickly enable or disable a user created job from running, use the
-**Enabled** column on the landing page of the Scheduler app. System jobs
-are always enabled.
-
-Further configuring a job:
-
-1.  Select a job from the landing page to unveil the **Attributes** and
-    change them to accordingly. See the previous section for scheduling
-    details.
-
-2.  If the job type supports extra options, the **Parameters** section
-    will also be available.
-
-3.  When done, press the **Save changes** button to persist the changes.
-
-### Deleting a job
-
-<!--DHIS2-SECTION-ID:dataAdmin_scheduler_delete-->
-
-1.  Select the job you want to delete.
-
-2.  Press the **Delete** button in the bottom right corner.
-
-3.  Confirm by pressing **Delete** again in the popup window.
-
-![](resources/images/scheduler/delete_job.png)
+  - If the scheduler is not enabled, simply select "Enabled" from the
+    drop-down for Metadata Synchronization and click "Sync Now" button.
 
 ## Data synchronization
 

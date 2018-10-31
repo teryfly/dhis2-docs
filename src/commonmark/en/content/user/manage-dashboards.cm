@@ -1,0 +1,268 @@
+# Manage dashboards
+
+<!--DHIS2-SECTION-ID:dashboard-->
+
+## About dashboards
+
+Dashboards are intended to provide quick access to different analytical
+objects (maps, charts, reports, tables, etc) to an individual user.
+Dashboards can also be shared with user groups.
+
+A user or administrator could create a dashboard called "Malaria" which
+might contain all relevant information on malaria. This dashboard could
+then be shared with the user group called "Malaria control", which might
+consist of all users of the malaria control program. All users within
+this group would then be able to view the same dashboard.
+
+## Set up the dashboard
+
+<!--DHIS2-SECTION-ID:dashboards_setup-->
+
+The dashboard can contain any number of objects (charts, maps, reports,
+tables, resources, etc). These can be freely arranged on the dashboard
+as you wish. Dashboard items can be located and added by searching for
+favourites, resources, users or messages in the available search box and
+clicking on the "Add" button.
+
+
+![](resources/images/dashboard/dashboard_overview.png)
+
+In this screen shot, the dashboard has already been populated with a
+number of objects, such as charts, map views, tables and messages. There
+are several hyperlink options available on each item:
+
+  - Remove
+    
+    Allows you to remove the item from the dashboard when you have the
+    appropriate user rights.
+
+  - Get as Image
+    
+    Opens up a pop-up window and allows you to download the image to
+    your computer.
+
+  - Share interpretation
+    
+    Allows you to share an interpretation of the dashboard item. Your
+    interpretation will be shared publicly with other users of the DHIS2
+    system, in the "Interpretation" section of the dashboard.
+
+  - Explore
+    
+    Loads the favorite in its corresponding app (ie. a map will open
+    full-sized in the GIS app).
+
+  - Resize
+    
+    Resizes the dashboard item. There are 3 sizes in which to choose
+    from.
+
+Maps, charts and tables can be viewed as full size as images (in the
+case of charts and map views) or as HTML resources (in the case of
+reports, tables and messages).
+
+To reorder how the dashboard appears, simply drag-and-drop any of the
+objects to a new position. In order to change between the various
+dashboards which are available, simply select the listed items that are
+available to review. The list can be scrolled though by using the \<, \>
+symbols to the left of the dashboard names.
+
+## Change dashboards name
+
+1.  Open a DHIS2 dashboard.
+
+2.  Click **Manage**.
+
+3.  In the **Name** field, type the new name of the dashboard.
+
+4.  Click **Rename**.
+
+## Add message widget to dashboards
+
+1.  Open a DHIS2 dashboard.
+
+2.  Click **Manage** and click **Messages**.
+
+## Delete dashboards
+
+1.  Open a DHIS2 dashboard.
+
+2.  Click **Manage** and click **Delete**.
+
+## Translate dashboard names
+
+1.  Open a DHIS2 dashboard.
+
+2.  Click **Manage** and click **Translate**.
+
+3.  Select a locale and enter the dashboard name's translation.
+
+4.  Click **Save**.
+
+## Dashboard sharing
+
+<!--DHIS2-SECTION-ID:dashboard_sharing-->
+
+In order to share a dashboard with user groups, first select "Share"
+from the dashboard page. This will bring up the dashboard sharing
+settings options. To share the dashboard with specific user groups, type
+in their name in the sharing settings dialogue box and click on the "+"
+sign to add them to the dashboard sharing settings
+
+
+![](resources/images/dashboard/dashboard_sharing%20settings.png)
+
+All dashboards have two sharing groups set by default.
+
+  - External access (without login)
+    
+    This option, when selected, provides access to the dashboard as an
+    external resource. This is useful for when you are creating an
+    external web portal but would like to call information from a
+    dashboard you have made internally within DHIS2. By default, this
+    option is not selected.
+
+  - Public access (with login)
+    
+    This option allows the selected dashboard to be pushed to all users
+    within your DHIS2 instance. This can also be hidden from public view
+    by selecting the "None" option, which is the default option for new
+    dashboards.
+
+User groups which have been added manually can be assigned two types of
+permissions within the dashboard
+
+  - Can view
+    
+    Provides the user group with view only rights to the dashboard.
+
+  - Can edit and view
+    
+    Allows the user groups to edit the dashboard in addition to viewing
+    it. Editing allows for altering the layout, resizing and removing
+    items, renaming/deleting the dashboard
+etc.
+
+## <!--DHIS2-SECTION-ID:dashboard_messages-->Manage messages and feedback messages
+
+<!--DHIS2-SECTION-ID:dashboards_messages-->
+
+### About messages and feedback messages
+
+![](resources/images/dashboard/dashboard_messages_queue.png)
+
+Within DHIS2 you can send messages and feedback messages to users, user
+groups and organisation units. When you send a feedback message, it is
+routed to a particular user group. If you're a member of this user
+group, you've access to feedback handling tools. You can for example set
+the status of an incoming feedback to "Pending" while you're waiting for
+information.
+
+> **Note**
+> 
+> Messages and feedback messages are not sent to users' e-mail
+> addresses, the messages only appear within DHIS2.
+
+### Create a message
+
+![](resources/images/dashboard/dashboard_message.png)
+
+1.  From the **Dashboard**, click **Messages**.
+
+2.  Click **Write message**.
+
+3.  Define who you want to receive the message. You can send a message
+    to organisation units, users and user groups.
+    
+      - In the **To org unit** field, select the organisation units or
+        group of organisation units you want to send the message to.
+    
+      - In the **To user** field, select the users or user groups you
+        want to send the message to.
+
+4.  Type a subject and a message.
+
+5.  Click **Send**.
+
+### Read a message
+
+1.  From the **Dashboard**, click **Messages**.
+
+2.  Click a message.
+    
+    If the message is part of a conversation, you'll see all messages in
+    this conversation.
+
+### Create a feedback message
+
+1.  From the **Dashboard**, click **Write feedback**.
+
+2.  Type a subject and a feedback message.
+
+3.  Click **Send**.
+    
+    The feedback message will appear in all of the specified users'
+    inboxes.
+
+### Manage feedback messages
+
+> **Note**
+> 
+> You'll only see feedback messages and have access to the feedback
+> handling tools if you are a member of the user group that is set up to
+> handle feedback messages.
+
+![](resources/images/dashboard/dashboard_messages_manage.png)
+
+You'll receive feedback messages to your **Messages** inbox. For
+feedback messages you've the following options in addition to the
+messages options:
+
+<table>
+<caption>Feedback handling tools</caption>
+<colgroup>
+<col width="69%" />
+<col width="30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><p><strong>Priority</strong></p></td>
+<td><p>You can mark a feedback message with different priorities: <strong>None</strong>, <strong>Low</strong>, <strong>Medium</strong> or <strong>High</strong>.</p>
+<p>Setting the priority makes it easier to keep track of which feedback message you need resolved first, and which feedback messages that can wait.</p></td>
+</tr>
+<tr class="even">
+<td><p><strong>Status</strong></p></td>
+<td><p>All feedback messages get the status <strong>Open</strong> when created.</p>
+<p>To keep track of existing feedback messages, you can change the status to <strong>Pending</strong>, <strong>Invalid</strong> or <strong>Solved</strong>.</p>
+<p>You can filter feedback messages in your inbox based on their status. This makes it easier to switch between feedback messages and normal messages.</p></td>
+</tr>
+<tr class="odd">
+<td><p><strong>Assigned to</strong></p></td>
+<td><p>You can assign a feedback message to any member of the user group that is set up to handle feedback messages.</p>
+<p><strong>None</strong> means that you haven't assigned a user to the feedback message.</p></td>
+</tr>
+<tr class="even">
+<td><p><strong>Internal reply</strong></p></td>
+<td><p>When you work in a feedback handling team you might want to discuss the feedback before sending an answer to the sender. You can keep this discussion in the same message conversation as the feedback itself.</p>
+<p>To send a reply that within the feedback handling user group, click <strong>Internal reply</strong>.</p></td>
+</tr>
+</tbody>
+</table>
+
+### Configure feedback message function
+
+To configure the feedback message function, you must:
+
+1.  Create a user group (for example "Feedback message recipients") that
+    contains all the users who should receive feedback messages.
+
+2.  Open the **System Settings** app and click **General** \> **Feedback
+    recipients** and select the user group you created in the previous
+    step.
+
