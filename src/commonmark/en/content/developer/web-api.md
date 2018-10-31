@@ -128,7 +128,7 @@ send a payload like this:
     }
 
     SERVER="https://play.dhis2.org/dev"
-    curl -X POST -H "Content-Type: application/json" -d @client.json 
+    curl -X POST -H "Content-Type: application/json" -d @client.json
       -u admin:district $SERVER/api/oAuth2Clients
 
 We will use this client as the basis for our next grant type examples.
@@ -144,7 +144,7 @@ example we can use our demo server:
 
     SERVER="https://play.dhis2.org/dev"
     SECRET="1e6db50c-0fee-11e5-98d0-3c15c2c6caf6"
-    
+
     curl -X POST -H "Accept: application/json" -u demo:$SECRET $SERVER/uaa/oauth/token
     -d grant_type=password -d username=admin -d password=district
 
@@ -179,7 +179,7 @@ user credentials one more time.
     SERVER="https://play.dhis2.org/dev"
     SECRET="1e6db50c-0fee-11e5-98d0-3c15c2c6caf6"
     REFRESH_TOKEN="a4e4de45-4743-481d-9345-2cfe34732fcc"
-    
+
     curl -X POST -H "Accept: application/json" -u demo:$SECRET $SERVER/uaa/oauth/token
     -d grant_type=refresh_token -d refresh_token=$REFRESH_TOKEN
 
@@ -202,7 +202,7 @@ redirect URIs, you might want to add
 \&redirect\_uri=http://www.example.org) :
 
     SERVER="https://play.dhis2.org/dev"
-    
+
     $SERVER/uaa/oauth/authorize?client_xml:id=demo&response_type=code
 
 Step 2: After the user have successfully logged in and accepted your
@@ -215,8 +215,8 @@ using the given code, we will now ask for a access token:
 
     SERVER="https://play.dhis2.org/dev"
     SECRET="1e6db50c-0fee-11e5-98d0-3c15c2c6caf6"
-    
-    curl -X POST -u demo:$SECRET -H "Accept: application/json" $SERVER/token 
+
+    curl -X POST -u demo:$SECRET -H "Accept: application/json" $SERVER/token
       -d grant_type=authorization_code -d code=XYZ
 
 ## Error and info messages
@@ -1263,13 +1263,13 @@ The same content as an XML payload:
 We are now ready create the new *constant* by sending a POST request to
 the *constants*endpoint with the JSON payload using curl:
 
-    curl -d @constant.json "http://server/api/26/constants" -X POST 
+    curl -d @constant.json "http://server/api/26/constants" -X POST
     -H "Content-Type: application/json" -u user:password
 
 A specific example of posting the constant to the demo
     server:
 
-    curl -d @constant.json "https://play.dhis2.org/api/26/constants" -X POST 
+    curl -d @constant.json "https://play.dhis2.org/api/26/constants" -X POST
     -H "Content-Type: application/json" -u admin:district
 
 If everything went well, you should see an output similar to:
@@ -1287,7 +1287,7 @@ to the JSON/XML payload, find out the *ID* of the constant, and then
 send a PUT request to the endpoint including ID:
 
 ``` bash
-curl -X PUT -d @pi.json -H "Content-Type: application/json" 
+curl -X PUT -d @pi.json -H "Content-Type: application/json"
 -u user:password http://server/api/26/constants/ID
 ```
 
@@ -1427,7 +1427,7 @@ section before, you would send it like this:
 A simple (non-validating) example would
     be:
 
-    curl -X POST -d "{\"name\": \"some name\"}" -H "Content-Type: application/json" 
+    curl -X POST -d "{\"name\": \"some name\"}" -H "Content-Type: application/json"
     -u admin:district https://play.dhis2.org/dev/api/schemas/dataElement
 
 Which would yield the result:
@@ -1465,7 +1465,7 @@ updating a complete object, just with only 1 property in the JSON/XML
 file,
     i.e.:
 
-    curl -X PATCH -d "{\"name\": \"New Name\"}" -H "Content-Type: application/json" 
+    curl -X PATCH -d "{\"name\": \"New Name\"}" -H "Content-Type: application/json"
     -u admin:district https://play.dhis2.org/dev/api/26/dataElements/fbfJHSPpUQD/name
 
 Please note that we are including the property name two times, one time
@@ -1481,7 +1481,7 @@ don't include the property names in the url, i.e.:
       "zeroIsSignificant": true
     }
 
-    curl -X PATCH -d @file.json -H "Content-Type: application/json" 
+    curl -X PATCH -d @file.json -H "Content-Type: application/json"
     -u admin:district https://play.dhis2.org/dev/api/26/dataElements/fbfJHSPpUQD
 
 ## Metadata export
@@ -1712,7 +1712,7 @@ keys are available (defaults values are shown):
 
     rabbitmq.host =
     rabbitmq.port = 5672
-    rabbitmq.addresses = 
+    rabbitmq.addresses =
     rabbitmq.virtual-host = /
     rabbitmq.exchange = dhis2
     rabbitmq.username = guest
@@ -2631,7 +2631,7 @@ two types of metadata.
     exist.
 
 > **Note**
-> 
+>
 > It's recommended to have ATOMIC type of versions to ensure that all
 > systems (central and local) have the same metadata. Any missing
 > reference is caught in the validation phase itself. Please see the
@@ -2696,7 +2696,7 @@ two types of metadata.
 <tr class="odd">
 <td><p>versionName</p></td>
 <td><p>true</p></td>
-<td><p>Path parameter of the form &quot;Version_&lt;id&gt;&quot; so that the api  downloads the specific version</p></td>
+<td><p>Path parameter of the form &quot;Version_&lt;id&gt;&quot; so that the api downloads the specific version</p></td>
 </tr>
 </tbody>
 </table>
@@ -2714,7 +2714,7 @@ two types of metadata.
 
 **Sample response:**
 
-``` 
+```
 {
     "date": "2016-06-30T06:10:23.120+0000",
     "dataElements": [{
@@ -2933,13 +2933,13 @@ directory where this file resides we invoke the following from the
 command
     line:
 
-    curl -d @datavalueset.xml "https://play.dhis2.org/demo/api/26/dataValueSets" 
+    curl -d @datavalueset.xml "https://play.dhis2.org/demo/api/26/dataValueSets"
       -H "Content-Type:application/xml" -u admin:district -v
 
 For sending JSON content you must set the content-type header
 accordingly:
 
-    curl -d @datavalueset.json "https://play.dhis2.org/demo/api/26/dataValueSets" 
+    curl -d @datavalueset.json "https://play.dhis2.org/demo/api/26/dataValueSets"
       -H "Content-Type:application/json" -u admin:district -v
 
 The command will dispatch a request to the demo Web API, set
@@ -3002,14 +3002,14 @@ In CSV
 We test by using cURL to send the data values in XML
     format:
 
-    curl -d @datavalueset.xml "https://play.dhis2.org/demo/api/26/dataValueSets" 
+    curl -d @datavalueset.xml "https://play.dhis2.org/demo/api/26/dataValueSets"
       -H "Content-Type:application/xml" -u admin:district -v
 
 Note that when using CSV format you must use the binary data option to
 preserve the line-breaks in the CSV
     file:
 
-    curl --data-binary @datavalueset.csv "https://play.dhis2.org/demo/24/api/dataValueSets" 
+    curl --data-binary @datavalueset.csv "https://play.dhis2.org/demo/24/api/dataValueSets"
       -H "Content-Type:application/csv" -u admin:district -v
 
 The data value set resource provides an XML response which is useful
@@ -3159,7 +3159,7 @@ objects. Identifier schemes can be specified in the XML message as well
 as in the request as query parameters. To specify it in the XML payload
 you can do this:
 
-    <dataValueSet xmlns="http://dhis2.org/schema/dxf/2.0" 
+    <dataValueSet xmlns="http://dhis2.org/schema/dxf/2.0"
       dataElementIdScheme="CODE" orgUnitIdScheme="UID" idScheme="CODE">
       ..
     </dataValueSet>
@@ -3450,7 +3450,7 @@ presedence over the start and end date parameters. An exampe looks like
 this:
 
     curl "https://play.dhis2.org/demo/api/26/dataValueSets?dataSet=pBOMPrpg1QX&dataSet=BfMAe6Itzgt
-      &startDate=2013-01-01&endDate=2013-01-31&orgUnit=YuQRtpLP10I&orgUnit=vWbkYPRmKyS&children=true" 
+      &startDate=2013-01-01&endDate=2013-01-31&orgUnit=YuQRtpLP10I&orgUnit=vWbkYPRmKyS&children=true"
       -H "Accept:application/xml" -u admin:district -v
 
 To retrieve data values which have been created or updated within the
@@ -3703,33 +3703,33 @@ reference to a small
 
     <adx xmlns="urn:ihe:qrph:adx:2015" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="urn:ihe:qrph:adx:2015 ../schema/adx_loose.xsd" exported="2015-02-08T19:30:00Z">
-    
+
       <group orgUnit="OU_559" period="2015-06-01/P1M" completeDate="2015-07-01" dataSet="(TB/HIV)VCCT">
-    
+
         <dataValue dataElement="VCCT_0" GENDER="FMLE" HIV_AGE="AGE0-14" value="32"/>
         <dataValue dataElement="VCCT_1" GENDER="FMLE" HIV_AGE="AGE0-14" value="20"/>
         <dataValue dataElement="VCCT_2" GENDER="FMLE" HIV_AGE="AGE0-14" value="10"/>
         <dataValue dataElement="PLHIV_TB_0" GENDER="FMLE" HIV_AGE="AGE0-14" value="10"/>
         <dataValue dataElement="PLHIV_TB_1" GENDER="FMLE" HIV_AGE="AGE0-14" value="10"/>
-    
+
         <dataValue dataElement="VCCT_0" GENDER="MLE" HIV_AGE="AGE0-14" value="32"/>
         <dataValue dataElement="VCCT_1" GENDER="MLE" HIV_AGE="AGE0-14" value="20"/>
         <dataValue dataElement="VCCT_2" GENDER="MLE" HIV_AGE="AGE0-14" value="10"/>
         <dataValue dataElement="PLHIV_TB_0" GENDER="MLE" HIV_AGE="AGE0-14" value="10"/>
         <dataValue dataElement="PLHIV_TB_1" GENDER="MLE" HIV_AGE="AGE0-14" value="10"/>
-    
+
         <dataValue dataElement="VCCT_0" GENDER="FMLE" HIV_AGE="AGE15-24" value="32"/>
         <dataValue dataElement="VCCT_1" GENDER="FMLE" HIV_AGE="AGE15-24" value="20"/>
         <dataValue dataElement="VCCT_2" GENDER="FMLE" HIV_AGE="AGE15-24" value="10"/>
         <dataValue dataElement="PLHIV_TB_0" GENDER="FMLE" HIV_AGE="AGE15-24" value="10"/>
         <dataValue dataElement="PLHIV_TB_1" GENDER="FMLE" HIV_AGE="AGE15-24" value="10"/>
-    
+
         <dataValue dataElement="VCCT_0" GENDER="MLE" HIV_AGE="AGE15-24" value="32"/>
         <dataValue dataElement="VCCT_1" GENDER="MLE" HIV_AGE="AGE15-24" value="20"/>
         <dataValue dataElement="VCCT_2" GENDER="MLE" HIV_AGE="AGE15-24" value="10"/>
         <dataValue dataElement="PLHIV_TB_0" GENDER="MLE" HIV_AGE="AGE15-24" value="10"/>
         <dataValue dataElement="PLHIV_TB_1" GENDER="MLE" HIV_AGE="AGE15-24" value="10"/>
-    
+
       </group>
     </adx>
 
@@ -3881,7 +3881,7 @@ program for the "Ngelehun CHC" facility in the demo database can be seen
 below:
 
     <?xml version="1.0" encoding="utf-8"?>
-    <event program="eBAyeGv0exc" orgUnit="DiszpKrYNg8" 
+    <event program="eBAyeGv0exc" orgUnit="DiszpKrYNg8"
       eventDate="2013-05-17" status="COMPLETED" storedBy="admin">
       <coordinate latitude="59.8" longitude="10.9" />
       <dataValues>
@@ -3895,7 +3895,7 @@ To perform some testing we can save the XML payload as a file
 called*event.xml* and send it as a POST request to the events resource
 in the API using curl with the following command:
 
-    curl -d @event.xml "https://play.dhis2.org/demo/api/26/events" 
+    curl -d @event.xml "https://play.dhis2.org/demo/api/26/events"
       -H "Content-Type:application/xml" -u admin:district -v
 
 The same payload in JSON format looks like this:
@@ -3928,7 +3928,7 @@ XML format might look like this:
 
     <?xml version="1.0" encoding="utf-8"?>
     <events>
-        <event program="eBAyeGv0exc" orgUnit="DiszpKrYNg8" 
+        <event program="eBAyeGv0exc" orgUnit="DiszpKrYNg8"
           eventDate="2013-05-17" status="COMPLETED" storedBy="admin">
           <coordinate latitude="59.8" longitude="10.9" />
           <dataValues>
@@ -3936,7 +3936,7 @@ XML format might look like this:
             <dataValue dataElement="oZg33kd9taw" value="Male" />
           </dataValues>
         </event>
-        <event program="eBAyeGv0exc" orgUnit="DiszpKrYNg8" 
+        <event program="eBAyeGv0exc" orgUnit="DiszpKrYNg8"
           eventDate="2013-05-17" status="COMPLETED" storedBy="admin">
           <coordinate latitude="59.8" longitude="10.9" />
           <dataValues>
@@ -4077,10 +4077,10 @@ matches on a *unique* metadata attribute value.
 the same, but the URL you are posting to must add the identifier to the
 end of the URL string and the request must be PUT.
 
-    curl -X PUT -d @updated_event.xml "localhost/api/26/events/ID" 
+    curl -X PUT -d @updated_event.xml "localhost/api/26/events/ID"
       -H "Content-Type: application/xml" -u admin:district
 
-    curl -X PUT -d @updated_event.json "localhost/api/26/events/ID" 
+    curl -X PUT -d @updated_event.json "localhost/api/26/events/ID"
       -H "Content-Type: application/json" -u admin:district
 
 **Delete**: To delete an existing event, all you need is to send a
@@ -4839,7 +4839,7 @@ creating such forms directly for a data set. This can be done through a
 POST or PUT request with content type text/html where the payload is the
 custom form markup such as:
 
-    curl -d @form.html "localhost/api/26/dataSets/BfMAe6Itzgt/form" 
+    curl -d @form.html "localhost/api/26/dataSets/BfMAe6Itzgt/form"
       -H "Content-Type:text/html" -u admin:district -X PUT -v
 
 ## Validation
@@ -6139,12 +6139,12 @@ We use cURL to dispatch the message the the DHIS2 demo instance where we
 indicate that the content-type is XML and authenticate as the *admin*
 user:
 
-    curl -d @message.xml "https://play.dhis2.org/demo/api/26/messageConversations" 
+    curl -d @message.xml "https://play.dhis2.org/demo/api/26/messageConversations"
       -H "Content-Type:application/xml" -u admin:district -X POST -v
 
 A corresponding payload in JSON and POST command look like this:
 
-``` 
+```
 {
   "subject": "Hey",
   "text": "How are you?",
@@ -6183,7 +6183,7 @@ resource. We supply an *Accept* header with *application/xml* as the
 value to indicate that we are interested in the XML resource
 representation and we authenticate as the *mobile* user:
 
-    curl "https://play.dhis2.org/demo/api/26/messageConversations" 
+    curl "https://play.dhis2.org/demo/api/26/messageConversations"
       -H "Accept:application/xml" -u mobile:district -X GET -v
 
 In response we get the following XML:
@@ -6205,8 +6205,8 @@ we can reply directly to an existing message conversation once we know
 the URL by including the message text as the request payload (body). We
 are now able to construct a URL for sending our reply:
 
-    curl -d "Yes the Mortality data set has been reported" 
-      "https://play.dhis2.org/demo/api/26/messageConversations/ZjHHSjyyeJ2" 
+    curl -d "Yes the Mortality data set has been reported"
+      "https://play.dhis2.org/demo/api/26/messageConversations/ZjHHSjyyeJ2"
       -H "Content-Type:text/plain" -u mobile:district -X POST -v
 
 If all went according to plan you will receive a *200 OK* status code.
@@ -6259,14 +6259,14 @@ are given as query string parameters. The following example removes two
 separate message conversations for the current
     user:
 
-    curl "https://play.dhis2.org/demo/api/26/messageConversations?mc=WzMRrCosqc0&mc=lxCjiigqrJm" 
+    curl "https://play.dhis2.org/demo/api/26/messageConversations?mc=WzMRrCosqc0&mc=lxCjiigqrJm"
       -X DELETE -u admin:district
 
 If you have sufficient permissions, conversations can be removed on
 behalf of another user by giving an optional user id
     parameter.
 
-    curl "https://play.dhis2.org/demo/api/26/messageConversations?mc=WzMRrCosqc0&mc=lxCjiigqrJm&user=PhzytPW3g2J" 
+    curl "https://play.dhis2.org/demo/api/26/messageConversations?mc=WzMRrCosqc0&mc=lxCjiigqrJm&user=PhzytPW3g2J"
       -X DELETE -u admin:district
 
 As indicated, batch removals will return the same message format as for
@@ -6291,8 +6291,8 @@ optional *user* request parameter can be given.
 
 Let's mark a couple of messages as read by the current user:
 
-    curl "https://play.dhis2.org/dev/api/messageConversations/read" 
-    -d '["ZrKML5WiyFm","Gc03smoTm6q"]'  -X POST 
+    curl "https://play.dhis2.org/dev/api/messageConversations/read"
+    -d '["ZrKML5WiyFm","Gc03smoTm6q"]'  -X POST
     -H "Content-Type: application/json" -u admin:district -v
 
 The response is a *200 OK* with the following JSON body:
@@ -6349,7 +6349,7 @@ by users who have "Manage tickets" permissions. To create an internal
 reply, include the "internal" parameter, and set it to
 
     curl -d "This is an internal message"
-      "https://play.dhis2.org/demo/api/26/messageConversations/ZjHHSjyyeJ2?internal=true" 
+      "https://play.dhis2.org/demo/api/26/messageConversations/ZjHHSjyyeJ2?internal=true"
       -H "Content-Type:text/plain" -u admin:district -X POST -v
 
 ## Interpretations
@@ -6746,15 +6746,15 @@ representations are listed below.
 
     /api/26/charts/R0DVGvXDUNP/data
     /api/26/charts/R0DVGvXDUNP/data?date=2013-06-01
-    
+
     /api/26/reportTables/jIISuEWxmoI/data.html
     /api/26/reportTables/jIISuEWxmoI/data.html?date=2013-01-01
     /api/26/reportTables/FPmvWs7bn2P/data.xls
     /api/26/reportTables/FPmvWs7bn2P/data.pdf
-    
+
     /api/26/maps/DHE98Gsynpr/data
     /api/26/maps/DHE98Gsynpr/data?date=2013-07-01
-    
+
     /api/26/reports/OeJsA6K1Otx/data.pdf
     /api/26/reports/OeJsA6K1Otx/data.pdf?date=2014-01-01
 
@@ -6804,19 +6804,19 @@ referring to an existing table. The second is configured inline.
     <head>
       <script src="https://dhis2-cdn.org/v227/plugin/jquery-2.2.4.min.js"></script>
       <script src="https://dhis2-cdn.org/v227/plugin/reporttable.js"></script>
-    
+
       <script>
         reportTablePlugin.url = "https://play.dhis2.org/demo";
         reportTablePlugin.username = "admin";
         reportTablePlugin.password = "district";
         reportTablePlugin.loadingIndicator = true;
-    
+
         // Referring to an existing table through the id parameter, render to "report1" div
-        
+
         var r1 = { el: "report1", id: "R0DVGvXDUNP" };
-    
+
         // Table configuration, render to "report2" div
-        
+
         var r2 = {
           el: "report2",
           columns: [
@@ -6828,7 +6828,7 @@ referring to an existing table. The second is configured inline.
           filters: [
             {dimension: "ou", items: [{id: "USER_ORGUNIT"}]}
           ],
-    
+
           // All following properties are optional
           title: "My custom title",
           showColTotals: false,
@@ -6846,11 +6846,11 @@ referring to an existing table. The second is configured inline.
           digitGroupSeparator: "COMMA",
           legendSet: {id: "fqs276KXCXi"}
         };
-    
+
         reportTablePlugin.load([r1, r2]);
       </script>
     </head>
-    
+
     <body>
       <div id="report1"></div>
       <div id="report2"></div>
@@ -7125,19 +7125,19 @@ referring to an existing chart. The second is configured inline.
     <head>
       <script src="https://dhis2-cdn.org/v227/plugin/jquery-2.2.4.min.js"></script>
       <script src="https://dhis2-cdn.org/v227/plugin/chart.js"></script>
-    
+
       <script>
         chartPlugin.url = "https://play.dhis2.org/demo";
         chartPlugin.username = "admin";
         chartPlugin.password = "district";
         chartPlugin.loadingIndicator = true;
-        
+
         // Referring to an existing chart through the id parameter, render to "report1" div
-        
+
         var r1 = { el: "report1", id: "R0DVGvXDUNP" };
-    
+
         // Chart configuration, render to "report2" div
-        
+
         var r2 = {
           el: "report2",
           columns: [
@@ -7149,7 +7149,7 @@ referring to an existing chart. The second is configured inline.
           filters: [
             {dimension: "ou", items: [{id: "USER_ORGUNIT"}]}
           ],
-    
+
           // All following properties are optional
           title: "Custom title",
           type: "line",
@@ -7170,13 +7170,13 @@ referring to an existing chart. The second is configured inline.
           domainAxisTitle: "My domain axis title",
           hideLegend: true
         };
-    
+
         // Render the charts
-    
+
         chartPlugin.load(r1, r2);
       </script>
     </head>
-    
+
     <body>
       <div id="report1"></div>
       <div id="report2"></div>
@@ -7481,12 +7481,12 @@ referring to an existing map. The second is configured inline.
       <script src="https://maps.google.com/maps/api/js?sensor=false"></script>
       <script src="http://dhis2-cdn.org/v215/openlayers/OpenLayers.js"></script>
       <script src="http://dhis2-cdn.org/v215/plugin/map.js"></script>
-    
+
       <script>
         var base = "https://play.dhis2.org/demo";
-    
+
         // Login - if OK, call the setLinks function
-    
+
         Ext.onReady( function() {
           Ext.Ajax.request({
             url: base + "dhis-web-commons-security/login.action",
@@ -7495,10 +7495,10 @@ referring to an existing map. The second is configured inline.
             success: setLinks
           });
         });
-    
+
         function setLinks() {
           DHIS.getMap({ url: base, el: "map1", id: "ytkZY3ChM6J" });
-    
+
           DHIS.getMap({
             url: base,
             el: "map2",
@@ -7517,7 +7517,7 @@ referring to an existing map. The second is configured inline.
         }
       </script>
     </head>
-    
+
     <body>
       <div id="map1"></div>
       <div id="map2"></div>
@@ -7762,7 +7762,7 @@ the Web API here: <http://play.dhis2.org/demo/api/24/maps>.
 
     function setLinks() {
       DHIS.getMap({ url: base, el: "map1", id: "ytkZY3ChM6J" });
-    
+
       DHIS.getMap({
      url: base,
      el: "map2",
@@ -7833,7 +7833,7 @@ which refers to those div elements like this:
     DHIS.getChart({ uid: 'X0CPnV6uLjR', el: 'chartA2', url: base });
     DHIS.getChart({ uid: 'j1gNXBgwKVm', el: 'chartA3', url: base });
     DHIS.getChart({ uid: 'X7PqaXfevnL', el: 'chartA4', url: base });
-    
+
     new Ext.ux.carousel.Carousel( 'chartCarousel', {
       autoPlay: true,
       itemSelector: 'div.chart',
@@ -7850,7 +7850,7 @@ to render a button for the user to start and stop the carousel. Finally
 we need to insert the div elements in the body of the HTML document:
 
     <div id="chartCarousel">
-    
+
     <div id="chartA1"></div>
     <div id="chartA2"></div>
     <div id="chartA3"></div>
@@ -8835,7 +8835,7 @@ combination values:
       &dimension=pe:LAST_12_MONTHS&filter=ou:ImspTQPwCqd
 
 > **Tip**
-> 
+>
 > A great way to learn how to use the analytics API is to use the DHIS2
 > *pivot table* app. You can play around with pivot tables using the
 > various dimensions and items and click Download \> Plain data source
@@ -11257,7 +11257,7 @@ message text in JSON format as shown below.
     /api/26/sms/outbound
 
     { 
-      "message":"Sms Text",  
+      "message":"Sms Text", 
       "recipients": [
         "47XXXXXX1",
         "47XXXXXX2"
@@ -11510,7 +11510,7 @@ case of GenericHttpGateway to send one or more parameter as http header.
 
 *Bulksms*
 
-    { 
+    {
       "name": "bulkSMS",
       "username": "bulkuser",
       "password": "abc123",
@@ -11762,7 +11762,7 @@ The fields are explained in the following table.
 A minimalistic example for sending a message over SMS to a tracked
 entity instance looks like this:
 
-    curl -d @message.json "https://play.dhis2.org/demo/api/26/messages" 
+    curl -d @message.json "https://play.dhis2.org/demo/api/26/messages"
       -H "Content-Type:application/json" -u admin:district -v
 
     {
@@ -12146,7 +12146,7 @@ the identifier of the user to replicate in the URL:
 
 An example of replicating a user using curl looks like this:
 
-    curl -d @replica.json "localhost/api/26/users/N3PZBUlN8vq/replica" 
+    curl -d @replica.json "localhost/api/26/users/N3PZBUlN8vq/replica"
       -H "Content-Type:application/json" -u admin:district -v
 
 ## Current user information and associations
@@ -12242,14 +12242,14 @@ where content type is set to "text/plain". As an example, you can use
 curl like
     this:
 
-    curl "play.dhis2.org/demo/api/26/systemSettings/my-key" -d "My long value" 
+    curl "play.dhis2.org/demo/api/26/systemSettings/my-key" -d "My long value"
       -H "Content-Type: text/plain" -u admin:district -v
 
 To set system settings in bulk you can send a JSON object with a
 property and value for each system setting key-value pair using a POST
 request:
 
-``` 
+```
 {
   "keyApplicationNotification": "Welcome",
   "keyApplicationIntro": "DHIS2",
@@ -12271,7 +12271,7 @@ You can retrieve specific system settings as JSON by repeating the key
 query
     parameter:
 
-    curl "play.dhis2.org/demo/api/26/systemSettings?key=keyApplicationNotification&key=keyApplicationIntro" 
+    curl "play.dhis2.org/demo/api/26/systemSettings?key=keyApplicationNotification&key=keyApplicationIntro"
       -H "Content-Type: application/json" -u admin:district -v
 
 You can retrieve all system settings with a GET request:
@@ -12600,7 +12600,7 @@ where content type is set to "text/plain". As an example, you can use
 curl like
     this:
 
-    curl "https://play.dhis2.org/demo/api/26/userSettings/my-key" -d "My long value" 
+    curl "https://play.dhis2.org/demo/api/26/userSettings/my-key" -d "My long value"
       -H "Content-Type: text/plain" -u admin:district -v
 
 As an example, to set the UI locale of the current user to French you
@@ -12774,7 +12774,7 @@ To get a list of organisation units you can use the following resource.
 To get an organisation unit with related organisation units you can use
 the following resource.
 
-    /api/24/organisationUnits/{id} 
+    /api/24/organisationUnits/{id}
 
 <table>
 <caption>Organisation unit parameters</caption>
@@ -12856,7 +12856,7 @@ To delete data set notification template you can issue a DELETE request:
 
 JSON payload sample is given below
 
-``` 
+```
 {
     "name": "dataSetNotificationTemplate1",
     "notificationTrigger": "COMPLETION",
@@ -12870,7 +12870,7 @@ JSON payload sample is given below
     "messageTemplate": "V{data_name}V{complete_registration_period}",
     "sendStrategy": "SINGLE_NOTIFICATION"
 }
-      
+
 ```
 
 ## Filled organisation unit levels
@@ -13082,7 +13082,7 @@ As an example, to set the feedback recipients user group you can invoke
 the following curl
     command:
 
-    curl "localhost/api/26/configuration/feedbackRecipients" -d "wl5cDMuUhmF" 
+    curl "localhost/api/26/configuration/feedbackRecipients" -d "wl5cDMuUhmF"
       -H "Content-Type:text/plain"-u admin:district -v
 
 ## Read-Only configuration service
@@ -13159,7 +13159,7 @@ The request must be of type *POST* and use *application/json* as
 content-type. An example using curl, assuming the request data is saved
 as a file keys.json:
 
-    curl -d @keys.json "play.dhis2.org/demo/api/26/i18n" -X POST 
+    curl -d @keys.json "play.dhis2.org/demo/api/26/i18n" -X POST
       -H "Content-Type: application/json" -u admin:district -v
 
 The result will look like this:
@@ -13276,7 +13276,7 @@ specify its first name and last name attributes:
 To push this to the server you can use the cURL command like
     this:
 
-    curl -d @tei.json "https://play.dhis2.org/demo/api/trackedEntityInstances" -X POST 
+    curl -d @tei.json "https://play.dhis2.org/demo/api/trackedEntityInstances" -X POST
     -H "Content-Type: application/json" -u admin:district -v
 
 To create multiple instances in one request you can wrap the payload in
@@ -13464,7 +13464,7 @@ endpoint will generate a value that is guaranteed to be unique at the
 time of generation. The value is also guaranteed not to be reserved by
 use of the generateAndReseve endpoint.
 
-    curl -X GET -H "Content-Type: application/json" -u admin:district 
+    curl -X GET -H "Content-Type: application/json" -u admin:district
               https://play.dhis2.org/dev/api/trackedEntityAttributes/lZGmxYbs97q/generate
 
 #### Generate and reserve value endpoint
@@ -13479,10 +13479,10 @@ retreieve a number of tracked entity instance reserved values. An
 optional parameter numberToReserve specifies how many ids to generate
 (default is 1).
 
-    curl -X GET -H "Content-Type: application/json" -u admin:district 
+    curl -X GET -H "Content-Type: application/json" -u admin:district
               https://play.dhis2.org/dev/api/trackedEntityAttributes/lZGmxYbs97q/generateAndReserve?numberToReserve=3
 
-``` 
+```
 [
    {
       "created":"2016-06-25T07:52:26.466+0000",
@@ -13503,7 +13503,7 @@ optional parameter numberToReserve specifies how many ids to generate
       "trackedEntityAttribute":{  }
    }
 ]
-        
+
 ```
 
 The generate and reserve endpoint returns an array of reserved values:
@@ -14741,7 +14741,7 @@ one user group and read-only access to another user group. You can
 submit this to the sharing resource using
     curl:
 
-    curl -d @sharing.json "localhost/api/26/sharing?type=dataElement&id=fbfJHSPpUQD" 
+    curl -d @sharing.json "localhost/api/26/sharing?type=dataElement&id=fbfJHSPpUQD"
       -H "Content-Type:application/json" -u admin:district -v
 
 ## Scheduling
@@ -14765,7 +14765,7 @@ The payload in JSON format is described below.
 
 An example using curl:
 
-    curl "localhost/dhis/api/26/scheduling" -d @scheduling.json -X POST 
+    curl "localhost/dhis/api/26/scheduling" -d @scheduling.json -X POST
       -H "Content-Type:application/json" -u admin:district -v
 
 The table below lists available task strategies.
@@ -14848,7 +14848,7 @@ situations:
 To insert Javascript from a file called *script.js* you can interact
 with the *files/script* resource with a POST-request:
 
-    curl --data-binary @script.js "localhost/api/26/files/script" 
+    curl --data-binary @script.js "localhost/api/26/files/script"
       -H "Content-Type:application/javascript" -u admin:district -v
 
 Note that we use the --data-binary option to preserve formatting of the
@@ -14865,7 +14865,7 @@ To remove the Javascript content you can use a DELETE-request.
 To insert CSS from a file called *style.css* you can interact with the
 *files/style* resource with a POST-request:
 
-    curl --data-binary @style.css "localhost/api/26/files/style" 
+    curl --data-binary @style.css "localhost/api/26/files/style"
       -H "Content-Type:text/css" -u admin:district -v
 
 You can fetch the CSS content with a GET-request:
@@ -14918,7 +14918,7 @@ non-alphanumerical characters removed, and spaces replaced with a dash.
 *My app\!* will return the key *My-app*.
 
 > **Note**
-> 
+>
 > Previous to 2.28, the app key was derived from the name of the ZIP
 > archive, excluding the file extension. URLs using the old format
 > should still return the correct app in the api.
@@ -14930,7 +14930,7 @@ non-alphanumerical characters removed, and spaces replaced with a dash.
 <!--DHIS2-SECTION-ID:webapi_get_apps-->
 
 > **Note**
-> 
+>
 > Previous to 2.28 the app property folderName referred to the actual
 > path of the installed app. With the ability to store apps on cloud
 > services, folderName's purpose changed, and will now refer to the app
@@ -14988,7 +14988,7 @@ interface.
 <!--DHIS2-SECTION-ID:webapi_share_apps_between_instances-->
 
 > **Note**
-> 
+>
 > Previous to 2.28, installed apps would only be stored on the instace's
 > local filesystem.
 
@@ -14998,7 +14998,7 @@ multiple instances share the same versions on installed apps, instead of
 installing the same apps on each individual instance.
 
 > **Note**
-> 
+>
 > Apps installed previously to 2.28 will still be available on the
 > instance it was installed, but it will not be shared with other
 > instances, as it's still located on the instances local filesystem.
@@ -15209,7 +15209,7 @@ To create a new key and value for a namespace:
 Example curl request for create, assuming a valid json
     payload:
 
-    curl "https://play.dhis2.org/demo/api/26/dataStore/foo/key_1" -X POST 
+    curl "https://play.dhis2.org/demo/api/26/dataStore/foo/key_1" -X POST
       -H "Content-Type: application/json" -d "{\"foo\":\"bar\"}" -u admin:district -v
 
 Example response:
@@ -15237,7 +15237,7 @@ To update a key that exists in a namespace:
 Example curl request for update, assuming valid JSON
     payload:
 
-    curl "https://play.dhis2.org/demo/api/26/dataStore/foo/key_1" -X PUT -d "[1, 2, 3]" 
+    curl "https://play.dhis2.org/demo/api/26/dataStore/foo/key_1" -X PUT -d "[1, 2, 3]"
       -H "Content-Type: application/json" -u admin:district -v
 
 Example response:
@@ -15645,14 +15645,14 @@ with below format:
       "min": 1,
       "generated": false,
       "max": 100,
-      "dataElement": { 
-        "id": "UOlfIjgN8X6" 
+      "dataElement": {
+        "id": "UOlfIjgN8X6"
        },
-      "source": { 
-        "id": "DiszpKrYNg8" 
+      "source": {
+        "id": "DiszpKrYNg8"
       },
       "optionCombo": {
-        "id": "psbwp3CQEhs" 
+        "id": "psbwp3CQEhs"
       }
     }
 
@@ -15672,14 +15672,14 @@ JSON content with same format as above:
       "min": 1,
       "generated": false,
       "max": 100,
-      "dataElement": { 
-        "id": "UOlfIjgN8X6" 
+      "dataElement": {
+        "id": "UOlfIjgN8X6"
        },
-      "source": { 
-        "id": "DiszpKrYNg8" 
+      "source": {
+        "id": "DiszpKrYNg8"
       },
       "optionCombo": {
-        "id": "psbwp3CQEhs" 
+        "id": "psbwp3CQEhs"
       }
     }
 
@@ -15800,4 +15800,3 @@ An example curl command looks like this:
     curl "localhost:8080/api/synchronization/metadataPull" -X POST
       -d "https://dhis2.org/metadata-repo/221/trainingland-org-units/metadata.json"
       -H "Content-Type:text/plain" -u admin:district -v
-
