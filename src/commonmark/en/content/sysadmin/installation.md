@@ -354,16 +354,16 @@ connection.password = xxxx
 # Server
 # ----------------------------------------------------------------------
 
-# Enable secure settings if system is deployed on HTTPS, default 'off'
+# Enable secure settings if deployed on HTTPS, default 'off', can be 'on'
 server.https = on
 
 # Server base URL
-server.base.url = http://server.com/
+server.base.url = https://server.com/
 ```
 
-It is strongly recommended to enable the *server.https* setting and deploying DHIS 2 over the encrypted HTTPS protocol. This setting will enable e.g. secure cookies. HTTPS deployment is required when enabled.
+It is strongly recommended to enable the *server.https* setting and deploying DHIS 2 over the encrypted HTTPS protocol. This setting will enable e.g. secure cookies. HTTPS deployment is required when this setting is enabled.
 
-The *server.base.url* setting refers to the URL which the system is accessed by end users on the network.
+The *server.base.url* setting refers to the URL at which the system is accessed by end users over the network.
 
 Note that the configuration file supports environment variables. This
 means that you can set certain properties as environment variables and
@@ -374,11 +374,10 @@ name of the environment variable:
 connection.password = ${DB_PASSWD}
 ```
 
-A common mistake is to have a white-space after the last property value
-so make sure there is no white-space at the end of any line. Also
-remember that this file contains the clear text password for your DHIS2
-database so it needs to be protected from unauthorized access. To do
-this invoke the following command which ensures that only the dhis user
+
+Note that this file contains the password for your DHIS2 database in clear
+text so it needs to be protected from unauthorized access. To do this, 
+invoke the following command which ensures that only the dhis user
 which owns the file is allowed to read it:
 
 ```sh
@@ -389,7 +388,9 @@ chmod 0600 dhis.conf
 
 <!--DHIS2-SECTION-ID:install_java_installation-->
 
-The recommended Java JDK for DHIS 2 is OpenJDK 8. You can issue the following command to install OpenJDK 8:
+The recommended Java JDK for DHIS 2 is OpenJDK 8. OpenJDK is licensed under 
+the GPL license and can be run free of charge. You can install it with the
+following command:
 
 ```
 sudo apt-get install openjdk-8-jdk
@@ -461,7 +462,7 @@ release like this (replace 2.31 with your preferred version if
 necessary):
 
 ```sh
-wget https://releases.dhis2.org/2.31/dhis.war
+wget https://releases.dhis2.org/2.33/dhis.war
 ```
 
 Alternatively, for patch releases, the folder structure is based on the patch
@@ -470,7 +471,7 @@ the DHIS2 version 2.31.1 WAR release like this (replace 2.31 with your
 preferred version, and 2.31.1 with you preferred patch, if necessary):
 
 ```
-wget https://releases.dhis2.org/2.31/2.31.1/dhis.war
+wget https://releases.dhis2.org/2.33/2.33.1/dhis.war
 ```
 
 Move the WAR file into the Tomcat webapps directory. We want to call the
@@ -537,31 +538,31 @@ server.base.url = https://play.dhis2.org/dev
 
 <!--DHIS2-SECTION-ID:install_file_store_configuration-->
 
-DHIS2 is capable of capturing and storing files. By default files will
-be stored on the file system of the server which runs DHIS2 in a *files*
-directory under the *DHIS2\_HOME* external directory location.
+DHIS2 is capable of capturing and storing files. By default, files will
+be stored on the local file system of the server which runs DHIS2 in a *files*
+directory under the *DHIS2\_HOME* external directory location. 
 
 You can also configure DHIS2 to store files on cloud-based storage
-providers. Currently, AWS S3 is the only supported provider. To enable
+providers. AWS S3 is the only supported provider currently. To enable
 cloud-based storage you must define the following addtional properties
 in your *dhis.conf* file:
 
 ```properties
 # File store provider. Currently 'filesystem' and 'aws-s3' are supported.
-filestore.provider = filesystem
+filestore.provider = 'aws-s3'
 
-# Directory in external directory on local file system and bucket on AWS S3.
+# Directory in external directory on local file system and bucket on AWS S3
 filestore.container = files
 
-# The following configuration is applicable only on non-filesystem providers (AWS S3)
+# The following configuration is applicable to cloud storage only (AWS S3)
 
-# Datacenter location. Not required but recommended for performance reasons.
+# Datacenter location. Optional but recommended for performance reasons.
 filestore.location = eu-west-1
 
-# Public identity / username
+# Username / Access key on AWS S3
 filestore.identity = xxxx
 
-# Secret password (sensitive)
+# Password / Secret key on AWS S3 (sensitive)
 filestore.secret = xxxx
 ```
 
@@ -587,10 +588,9 @@ implementation.
 
 > **Note**
 > 
-> AWS S3 is the only supported provider (starting from version 2.27) but
-> more providers are likely to be added, such as Google Cloud Store and
-> Rackspace Cloud Files. Let the developers know if you have inquiries
-> about adding support for more providers.
+> AWS S3 is the only supported provider but more providers are likely to 
+> be added in the future, such as Google Cloud Store and Azure Blob Storage.
+> Let us know if you have a use case for additional providers.
 
 ## Google service account configuration
 
@@ -703,42 +703,6 @@ is not suitable or cannot for some reason be used as a DHIS2 username.
 DHIS2 allows for encryption of data. This however requires some extra
 setup.
 
-### Java Cryptography Extension
-
-<!--DHIS2-SECTION-ID:install_java_cryptography_extension-->
-
-DHIS2 uses an encryption algorithm classified as strong and therefore
-requires the *Java Cryptography Extension (JCE) Unlimited Strength
-Jurisdiction Policy Files* to be installed. These files can be installed
-through these steps:
-
-1.  Download the JCE Unlimited Strength Jurisdiction Policy Files for
-    your java version of Java from the Oracle Web site. Scroll down to
-    the "Java Cryptography Extension (JCE) Unlimited Strength
-    Jurisdiction Policy Files" section. It is important that the version
-    of the files match the version of Java on your
-    server.
-    
-    [http://www.oracle.com/technetwork/java/javase/downloads/index.html](http://www.oracle.com/technetwork/java/javase/downloads/index.htm)
-
-2.  Extract the downloaded ZIP archive. It contains two JAR files:
-    *local\_policy.jar* and *US\_export\_policy.jar*.
-
-3.  Locate the JDK directory of your Java installation. From there,
-    navigate into the *jre/security* directory. On Ubuntu it is often
-    found at */usr/lib/jvm/java-8-oracle/jre/lib/security*.
-
-4.  (Optional) Back up your existing *local\_policy.jar* and
-    *US\_export\_policy.jar* in case you want to revert to them later.
-
-5.  Copy the *local\_policy.jar* and *US\_export\_policy.jar* files into
-    the security folder. You should now have the following files which
-    completes the installation. Remember to restart your servlet
-    container for it to take effect.
-    
-        /usr/lib/jvm/java-8-oracle/jre/lib/security/local_policy.jar
-        /usr/lib/jvm/java-8-oracle/jre/lib/security/US_export_policy.jar
-
 ### Password configuration
 
 <!--DHIS2-SECTION-ID:install_password_configuration-->
@@ -760,14 +724,13 @@ The password must be at least **24 characters long**. A mix of numbers
 and lower- and uppercase letters are recommended. The encryption password 
 must be kept secret.
 
-### Considerations for encryption
-
-<!--DHIS2-SECTION-ID:install_considerations_for_encryption-->
-
-*A word of caution:* It is not possible to recover encrypted data if the
-encryption password is lost or changed. Conversely, the encryption
-provides no security if the password is compromised. Hence, great
-consideration should be given to storing the password in a safe place.
+> ** Important **
+>
+> A word of caution: It is not possible to recover encrypted data if the
+> encryption password is lost or changed. If the password is lost, so is 
+> the encrypted data.Conversely, the encryption provides no security if 
+> the password is compromised. Hence, great consideration should be given 
+> to storing the password in a safe place.
 
 ## Read replica database configuration
 
@@ -874,16 +837,15 @@ The hostname must be visible to the participating servers on the network
 for the clustering to work. You might have to allow incoming and
 outgoing connections on the configured port numbers in the firewall.
 
-The port number of the server is specified using the*cluster.cache.port*
+The port number of the server is specified using the *cluster.cache.port*
 configuration property. The remote object port used for registry receive
 calls is specified using *cluster.cache.remote.object.port*. Specifying
 the port numbers is typically only useful when you have multiple cluster
-instances on the same server / virtual machine or if you need to
-explicitly specify the ports to be used so as to have them configured in
-firewall. When running cluster instances on separate servers / virtual
-machines it is often appropriate to use the default port number and omit
-the ports configuration properties. If omitted, 4001 will be assigned as
-the listener port and a random free port will be assigned as the remote
+instances on the same server or if you need to explicitly specify the ports 
+to match a firewall configuration. When running cluster instances on separate 
+servers it is often appropriate to use the default port number and omit 
+the ports configuration properties. If omitted, 4001 will be assigned as 
+the listener port and a random free port will be assigned as the remote 
 object port.
 
 An example setup for a cluster of two web servers is described below.
@@ -928,7 +890,13 @@ ensure that their caches are kept in sync.
 In a cluster setup, a *Redis* instance is required and will handle
 shared user sessions, application cache and cluster node leadership.
 
-For optimum performance, *Redis Keyspace events* for _generic commands_ and _expired events_ need to be enabled in the Redis Server. If you are using a cloud platform-managed Redis server (like AWS ElastiCache for Redis or Azure Cache for Redis) you will have to enable keyspace event notifications using the respective cloud interfaces. If you are setting up a standalone Redis server, enabling keyspace event notifications can be done in the *redis.conf* file by adding or uncommenting the following line:
+For optimum performance, *Redis Keyspace events* for _generic commands_ 
+and _expired events_ need to be enabled in the Redis Server. If you are 
+using a cloud platform-managed Redis server (like *AWS ElastiCache for Redis* 
+or *Azure Cache for Redis*) you will have to enable keyspace event notifications 
+using the respective cloud console interfaces. If you are setting up a standalone 
+Redis server, enabling keyspace event notifications can be done in the 
+*redis.conf* file by adding or uncommenting the following line:
 
 ```
 notify-keyspace-events Egx
@@ -952,7 +920,7 @@ exclusively by one instance. Optionally you can configure the
 *leader.time.to.live.minutes* property in *dhis.conf* to set up how
 frequently the leader election needs to occur. It also gives an
 indication of how long it would take for another instance to take over
-as the leader after the previous leader has shutdown/crashed. The
+as the leader after the previous leader has become unavailable. The
 default value is 2 minutes. Note that assigning a leader in the cluster
 is only done if Redis is enabled. An example snippet of the *dhis.conf*
 configuration file with Redis enabled and leader election time
@@ -1034,52 +1002,31 @@ DHIS 2 supports a server-side cache for analytics API responses, used by all of 
 analytics.cache.expiration = 3600
 ```
 
-## Starting Tomcat at boot time
+## Monitoring
 
-<!--DHIS2-SECTION-ID:install_starting_tomcat_boot_time-->
+DHIS 2 can export Prometheus compatible metrics for monitoring DHIS2 instances. The DHIS2 monitoring infrastructure is designed to expose metrics related to the application runtime and other application-related information.
 
-In certain situations a server might reboot unexpectedly. It is hence
-preferable to have Tomcat start automatically when the server starts. To
-achieve that the first step is to create init scripts. Create a new file
-called `tomcat` and paste the below content into it (adjust the HOME
-variable to your environment):
+Infrastucture related metrics (such as host metrics, Tomcat or Postgres) are not directly exposed by the application monitoring engine and they have to be collected separately. The metrics currently exposed by the application are:
 
-```sh
-#!/bin/sh
-#Tomcat init script
+- DHIS 2 API (response time, number of calls, etc.)
+- JVM (Heap size, Garbage collection, etc.)
+- Hibernate (Queries, cache, etc)
+- C3P0 Database pool
+- Application uptime
+- CPU
 
-HOME=/home/dhis/tomcat/bin
+Monitoring can be enabled in `dhis.conf` with the following properties (default is `false` for all properties):
 
-case $1 in
-start)
-		sh ${HOME}/startup.sh
-		;;
-stop)
-		sh ${HOME}/shutdown.sh
-		;;
-restart)
-		sh ${HOME}/shutdown.sh
-		sleep 5
-		sh ${HOME}/startup.sh
-		;;
-esac
-exit 0
+```properties
+monitoring.api.enabled = true
+monitoring.jvm.enabled = true
+monitoring.dbpool.enabled = ture
+monitoring.hibernate.enabled = true
+monitoring.uptime.enabled = true
+monitoring.cpu.enabled = true
 ```
 
-Move the script to the init script directory and make them executable by
-invoking:
-
-    sudo mv tomcat /etc/init.d
-    sudo chmod +x /etc/init.d/tomcat
-
-Next make sure the tomcat init script will be invoked during system
-startup and shutdown:
-
-    sudo /usr/sbin/update-rc.d -f tomcat defaults 81
-
-Tomcat will now be started at system startup and stopped at system
-shutdown. If you later need to revert this you can replace `defaults`
-with `remove` and invoke the above commands again.
+The recommended approach for collecting and visualization these metrics are through Prometheus and Grafana. For more information, see the [monitoring infrastructure](https://github.com/dhis2/wow-backend/blob/master/guides/monitoring.md) page and the [Prometheus and Grafana install](https://docs.dhis2.org/master/en/dhis2_system_administration_guide/monitoring.html) chapter.
 
 ## Reverse proxy configuration
 
@@ -1480,123 +1427,6 @@ server {
 }
 ```
 
-### Basic reverse proxy setup with Apache
-
-<!--DHIS2-SECTION-ID:install_basic_reverse_proxy_setup_with_apache-->
-
-The Apache HTTP server is a popular HTTP server. Depending on your exact 
-nature of deployment, you may need to use Apache as a reverse proxy for 
-your DHIS2 server. In this section, we will describe how to implement a 
-simple reverse proxy setup with Apache.
-
-> **Important**
-> 
-> Using nginx is the preferred option as reverse proxy with DHIS2 and
-> you should not attempt to install both nginx and Apache on the same
-> server. If you have installed nginx please ignore this section.
-
-First we need to install a few necessary programs modules for Apache and
-enable the modules.
-
-    sudo apt-get install apache2 libapache2-mod-proxy-html libapache2-mod-jk
-    a2enmod proxy proxy_ajp proxy_connect
-
-Lets define an AJP connector which Apache HTTP server will use to
-connect to Tomcat with. The Tomcat `server.xml` file should be located
-in the /conf/ director of your Tomcat installation. Be sure this line is
-uncommented.You can set the port to anything you like which is unused.
-
-```xml
-<Connector port="8009" protocol="AJP/1.3" redirectPort="8443" />
-```
-
-Now, we need to make the adjustments to the Apache HTTP server which
-will answer requests on port 80 and pass them to the Tomcat server
-through an AJP connector. Edit the file
-`/etc/apache2/mods-enabled/proxy.conf` so that it looks like the example
-below. Be sure that the port defined in the configuration file matches
-the one from Tomcat.
-
-```apache_conf
-<IfModule mod_proxy.c>
-
-ProxyRequests Off
-ProxyPass /dhis  ajp://localhost:8009/dhis
-ProxyPassReverse /dhis  ajp://localhost:8009/dhis
-
-<Location "/dhis">
-  Order allow,deny
-  Allow from all
-</Location>     
-</IfModule>
-```
-
-You now can restart Tomcat and the Apache HTTPD server and your DHIS2
-instance should be available on http://*myserver*/dhis where *myserver*
-is the hostname of your server.
-
-### SSL encryption with Apache
-
-<!--DHIS2-SECTION-ID:install_ssl_encryption_with_apache-->
-
-Using Apache and the reverse proxy setup described in the previous
-section, we can easily implement encrypted transfer of data between
-clients and the server over HTTPS. This section will describe how to use
-self-signed certificates, although the same procedure could be used if
-you have fully-signed certificates as well.
-
-First (as root), generate the necessary private key files and CSR
-(Certificate Signing Request)
-
-    mkdir /etc/apache2/ssl
-    cd /etc/apache2/ssl
-    openssl genrsa -des3 -out server.key 1024
-    openssl req -new -key server.key -out server.csr
-
-We need to remove the password from the key, otherwise Apache will not
-be able to use it.
-
-    cp server.key server.key.org
-    openssl rsa -in server.key.org -out server.key
-
-Next, generate a self-signed certificate which will be valid for one
-year.
-
-    openssl x509 -req -days 365 -in server.csr -signkey \ server.key -out server.crt
-
-Now, lets configure Apache by enabling the SSL modules and creating a
-default site.
-
-    a2enmod ssl
-    a2ensite default-ssl
-
-Now, we need to edit the default-ssl (located at
-`/etc/apache2/sites-enabled/default-ssl`) file in order to enable the
-SSL transfer functionality of Apache.
-
-```apache_conf
-<VirtualHost *:443>
-	ServerAdmin wemaster@mydomain.org
-	SSLEngine On
-	SSLCertificateFile /etc/apache2/ssl/server.crt
-	SSLCertificateKeyFile /etc/apache2/ssl/server.key
-	...
-```
-
-Be sure that the \*:80 section of this file is changed to port \*:443,
-which is the default SSL port. Also, be sure to change the ServerAdmin
-to the webmaster's email. Lastly, we need to be sure that the hostname
-is setup properly in /etc/hosts. Just under the "localhost" line, be
-sure to add the server's IP address and domain name.
-
-    127.0.0.1 localhost
-    XXX.XX.XXX.XXX foo.mydomain.org
-
-Now, just restart Apache and you should be able to view
-https://foo.mydomain.org/dhis.
-
-    /etc/init.d/apache2 restart
-
 ## DHIS2 configuration reference
 
 <!--DHIS2-SECTION-ID:install_dhis2_configuration_reference-->
@@ -1631,7 +1461,7 @@ connection.password = xxxx
 connection.schema = update
 
 # Max size of connection pool (default: 40)
-# connection.pool.max_size = 40
+connection.pool.max_size = 40
 
 # ----------------------------------------------------------------------
 # Server [Mandatory]
@@ -1795,34 +1625,3 @@ to gunzip the copy if you created a compressed version. You can the
 invoke:
 
     psql -d dhis2 -U dhis -f dhis2.sql
-
-## DHIS2 Live setup
-
-<!--DHIS2-SECTION-ID:install_dhis2_live_setup-->
-
-The DHIS2 Live package is extremely convenient to install and run. It is
-intended for demonstrations, for users who want to explore the system
-and for small, offline installations typically at districts or
-facilities. It only requires a Java Runtime Environment and runs on all
-browsers except Internet Explorer 7 and lower.
-
-To install start by downloading DHIS2 Live from *http://dhis2.org* and
-extract the archive to any location. On Windows click the executable
-archive. On Linux invoke the startup.sh script. After the startup
-process is done your default web browser will automtically be pointed to
-*http://localhost:8082* where the application is accessible. A system
-tray menu is accessible on most operating systems where you can start
-and stop the server and start new browser sesssions. Please note that if
-you have the server running there is no need to start it again, simply
-open the application from the tray menu.
-
-DHIS2 Live is running on an embedded Jetty servlet container and an
-embedded H2 database. However it can easily be configured to run on
-other database systems such as PostgreSQL. Please read the section above
-about server installations for an explanation of the database
-configuration. The *dhis.conf* configuration file is located in the
-*conf* folder. Remember to restart the Live package for your changes to
-take effect. The server port is 8082 by default. This can be changed by
-modifying the value in the*jetty.port* configuration file located in the
-*conf* directory.
-

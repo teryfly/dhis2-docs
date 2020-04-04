@@ -2880,9 +2880,7 @@ objects:
         <tr class="odd">
         <td><p><strong>Send Message</strong></p></td>
         <td><p><strong>Message template to send</strong></p></td>
-        <td><p>Send Message triggers a notification based on provided message template. This action will be taken when ever there is a change in <strong>data value</strong>. However this behaviour can be controlled by providing event/enrollment status in program rule expression for example.</p>
-        <pre><code>V{event_status} == &#39;COMPLETED&#39;</code></pre>
-        <p>Message template will be parsed and variables will be substituted with actual values.</p></td>
+        <td><p>Send Message triggers a notification based on provided message template. This action will be taken immediately. The message template will be parsed and variables will be substituted with actual values.</p></td>
         </tr>
         <tr class="even">
         <td><p><strong>Schedule Message</strong></p></td>
@@ -3635,7 +3633,7 @@ programs.
     </tr>
     <tr class="even">
     <td><p>Username</p></td>
-    <td><p>This will be populated with the username of the user which performs data entry automatically during the data entry process.</p></td>
+    <td><p> Rendered as a dialog with a list of users and a search field. The user will need the "View User" authority to be able to utilise this data type</p></td>
     </tr>
     <tr class="odd">
     <td><p>Yes/No</p></td>

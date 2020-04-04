@@ -81,40 +81,42 @@ The DHIS2 Web API supports *Basic authentication*. Basic authentication
 is a technique for clients to send login credentials over HTTP to a web
 server. Technically speaking, the username is appended with a colon and
 the password, Base64-encoded, prefixed Basic and supplied as the value
-of the *Authorization* HTTP header. More formally that is`
-Authorization: Basic
-base64encode(username:password)` Most network-aware development
-frameworks provides support for authentication using Basic, such as
-Apache HttpClient, Spring RestTemplate and C\# WebClient. An important
-note is that this authentication scheme provides no security since the
-username and password is sent in plain text and can be easily decoded.
-Using it is recommended only if the server is using SSL/TLS (HTTPS) to
-encrypt communication between itself and the client. Consider it a hard
-requirement to provide secure interactions with the Web API.
+of the *Authorization* HTTP header. More formally that is:
+
+    Authorization: Basic base64encode(username:password)
+    
+Most network-aware development environments provide support for Basic 
+authentication, such as *Apache HttpClient* and *Spring RestTemplate*. 
+An important note is that this authentication scheme provides no security 
+since the username and password are sent in plain text and can be easily 
+observed by an attacker. Using Basic is recommended only if the server is 
+using SSL/TLS (HTTPS) to encrypt communication with clients. Consider this 
+a hard requirement in order to provide secure interactions with the Web 
+API.
 
 ### Two factor authentication
 
 <!--DHIS2-SECTION-ID:webapi_2fa-->
 
-As of 2.30 DHIS2 supports two factor authentication. This means that you
-can enable 2FA in your user settings which means that you will be
-prompted for a 2FA code at login. You can read more about 2FA 
-[here](https://www.google.com/landing/2step/).
+DHIS2 supports two factor authentication. This can be enabled per user.
+When enabled, users will be asked to enter a 2FA code when logging in. You 
+can read more about 2FA [here](https://www.google.com/landing/2step/).
 
 ### OAuth2
 
 <!--DHIS2-SECTION-ID:webapi_oauth2-->
 
-DHIS2 supports the OAuth2 authentication protocol. OAuth2 is an open
+DHIS2 supports the *OAuth2* authentication protocol. OAuth2 is an open
 standard for authorization which it allows third-party clients to
-connect on behalf of a DHIS2 user and get a reusable bearer token for
+connect on behalf of a DHIS2 user and get a reusable *bearer token* for
 subsequent requests to the Web API. DHIS2 does not support fine-grained
 OAuth2 roles but rather provides applications access based on user roles
 of the DHIS2 user.
 
 Each client for which you want to allow OAuth 2 authentication must be
-registered in DHIS2. To add a new OAuth2 client go to `Apps > Settings > OAuth2 Clients`, 
-click add new and enter the desired client name and the grant types.
+registered in DHIS2. To add a new OAuth2 client go to `Apps > Settings > OAuth2 Clients`
+in the user interface, click *Add new* and enter the desired client name a
+nd the grant types.
 
 #### Adding a client using the Web API
 
@@ -123,9 +125,9 @@ send a payload like this:
 
 ```json
 {
-  "name" : "OAuth2 Demo Client",
-  "cid" : "demo",
-  "secret" : "1e6db50c-0fee-11e5-98d0-3c15c2c6caf6",
+  "name": "OAuth2 Demo Client",
+  "cid": "demo",
+  "secret": "1e6db50c-0fee-11e5-98d0-3c15c2c6caf6",
   "grantTypes": [
     "password",
     "refresh_token",
@@ -218,8 +220,9 @@ collecting them and then authenticating on behalf of the user. Please be
 aware that this approach uses the `redirectUris` part of the client
 payload.
 
-Step 1: Using a browser visit this URL (if you have more than one
-redirect URIs, you might want to add `&redirect_uri=http://www.example.org`:
+Step 1: Visit the following URL using a web browser. If you have more than one
+redirect URIs, you might want to add `&redirect_uri=http://www.example.org` 
+to the URL:
 
 ```bash
 SERVER="https://play.dhis2.org/dev"
@@ -315,7 +318,7 @@ For instance, if you want to express March 20, 2014 you must use
 *2014-03-20*.
 
 The period format is described in the following table (also available on
-API endpoint */api/periodTypes*)
+API endpoint `/api/periodTypes`)
 
 <table style="width:100%;">
 <caption>Period format</caption>
@@ -732,7 +735,7 @@ Example of data element with translations turned off:
 ```
 
 Note that even if you get the unfiltered result, and are using the
-appropriate type endpoint i..e */api/dataElements* we do not allow
+appropriate type endpoint i..e `/api/dataElements` we do not allow
 updates, as it would be too easy to make mistakes and overwrite the
 other available locales.
 
@@ -1539,13 +1542,12 @@ The payload format is:
 
 <!--DHIS2-SECTION-ID:webapi_validating_payloads-->
 
-System wide validation of metadata payloads are enabled from 2.19
-release, this means that create/update operations on the API
-endpoints will be checked for valid payload before allowed changes to be
-made, to find out what validations are in place for a endpoint, please
-have a look at the /api/schemas endpoint, i.e. to figure out which
-constraints a data element have, you would go to
-/api/schemas/dataElement.
+DHIS 2 supports system wide validation of metadata payloads, which means 
+that create and update operations on the API endpoints will be checked for 
+valid payload before allowing changes to be made. To find out what validations 
+are in place for a specific endpoint, have a look at the `/api/schemas` 
+endpoint, i.e. to figure out which constraints a data element have, you 
+would go to `/api/schemas/dataElement`.
 
 You can also validate your payload manually by sending it to the proper
 schema endpoint. If you wanted to validate the constant from the create
@@ -1715,16 +1717,16 @@ When you want to exhchange metadata for a data set, program or category combo
 from one DHIS2 instance to another instance there are three dedicated endpoints available:
 
 ```
-/api/<version>/dataSets/ID/metadata.json
+/api/dataSets/{id}/metadata.json
 
-/api/<version>/programs/ID/metadata.json
+/api/programs/{id}/metadata.json
 
-/api/<version>/categoryCombos/ID/metadata.json
+/api/categoryCombos/{id}/metadata.json
 
-/api/<version>/dashboards/{uid}/metadata.json
+/api/dashboards/{id}/metadata.json
 ```
 
-These exports can then be imported using `/api/<version>/metadata`.
+These exports can then be imported using `/api/metadata`.
 
 These endpoints also support the following parameters:
 
@@ -1760,11 +1762,17 @@ These endpoints also support the following parameters:
 
 <!--DHIS2-SECTION-ID:webapi_metadata_import-->
 
-This section explains the metadata API which is available at 
-`/api/metadata`. XML and JSON resource representations are supported.
+This section explains the metadata import API. XML and JSON resource 
+representations are supported. Metadata can be imported using a *POST* request. 
 
-The importer allows you to import metadata exported with the new
-exporter. The various parameters are listed below.
+    /api/metadata
+
+The importer allows you to import metadata payloads which may include many
+different entities and any number of objects per entity. The metadata export
+generated by the metadata export API can be imported directly.
+
+The metadata import endpoint support a variety of parameters, which are 
+listed below.
 
 <table>
 <caption>Import Parameter</caption>
@@ -1853,6 +1861,100 @@ exporter. The various parameters are listed below.
 </tr>
 </tbody>
 </table>
+
+An example of a metadata payload to be imported looks like this. Note how
+each entity type have their own property with an array of objects:
+
+```json
+{
+  "dataElements": [
+    {
+      "name": "EPI - IPV 3 doses given",
+      "shortName": "EPI - IPV 3 doses given",
+      "aggregationType": "SUM",
+      "domainType": "AGGREGATE",
+      "valueType": "INTEGER_ZERO_OR_POSITIVE"
+    },
+    {
+      "name": "EPI - IPV 4 doses given",
+      "shortName": "EPI - IPV 4 doses given",
+      "aggregationType": "SUM",
+      "domainType": "AGGREGATE",
+      "valueType": "INTEGER_ZERO_OR_POSITIVE"
+    }
+  ],
+  "indicators": [
+    {
+      "name": "EPI - ADS stock used",
+      "shortName": "ADS stock used",
+      "numerator": "#{LTb8XeeqeqI}+#{Fs28ZQJET6V}-#{A3mHIZd2tPg}",
+      "numeratorDescription": "ADS 0.05 ml used",
+      "denominator": "1",
+      "denominatorDescription": "1",
+      "annualized": false,
+      "indicatorType": {
+        "id": "kHy61PbChXr"
+      }
+    }
+  ]
+}
+```
+
+When posting this payload to the metadata endpoint, the response will contain
+information about the parameters used during the import and a summary per
+entity type including how many objects were created, updated, deleted and
+ignored:
+
+```json
+{
+  "importParams": {
+    "userOverrideMode": "NONE",
+    "importMode": "COMMIT",
+    "identifier": "UID",
+    "preheatMode": "REFERENCE",
+    "importStrategy": "CREATE_AND_UPDATE",
+    "atomicMode": "ALL",
+    "mergeMode": "REPLACE",
+    "flushMode": "AUTO",
+    "skipSharing": false,
+    "skipTranslation": false,
+    "skipValidation": false,
+    "metadataSyncImport": false,
+    "firstRowIsHeader": true,
+    "username": "UNICEF_admin"
+  },
+  "status": "OK",
+  "typeReports": [
+    {
+      "klass": "org.hisp.dhis.dataelement.DataElement",
+      "stats": {
+        "created": 2,
+        "updated": 0,
+        "deleted": 0,
+        "ignored": 0,
+        "total": 2
+      }
+    },
+    {
+      "klass": "org.hisp.dhis.indicator.Indicator",
+      "stats": {
+        "created": 1,
+        "updated": 0,
+        "deleted": 0,
+        "ignored": 0,
+        "total": 1
+      }
+    }
+  ],
+  "stats": {
+    "created": 3,
+    "updated": 0,
+    "deleted": 0,
+    "ignored": 0,
+    "total": 3
+  }
+}
+``` 
 
 ## Metadata audit
 
@@ -2875,6 +2977,149 @@ optionsetname,optionsetuid,optionsetcode,optionname,optionuid,optioncode
 "Impact","cJ82jd8sd32","IMPACT","Poor",,"POOR"
 ```
 
+### Option group
+
+<table style="width:100%;">
+<caption>Option Group CSV Format</caption>
+<colgroup>
+<col />
+<col style="width: 14%" />
+<col style="width: 11%" />
+<col style="width: 15%" />
+<col style="width: 59%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Index</th>
+<th>Column</th>
+<th>Required</th>
+<th>Value (default first)</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>OptionGroupName</td>
+<td>Yes</td>
+<td>Name. Max 230 characters. Unique. Should be repeated for each option.</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>OptionGroupUid</td>
+<td>No</td>
+<td>Stable identifier. Max 11 char. Will be generated by system if not specified. Should be repeated for each option.</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>OptionGroupCode</td>
+<td>No</td>
+<td>Stable code. Max 50 char. Should be repeated for each option.</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>OptionGroupShortName</td>
+<td>Yes</td>
+<td>Short Name. Max 50 characters. Unique. Should be repeated for each option.</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>OptionSetUid</td>
+<td>Yes</td>
+<td>Stable identifier. Max 11 char. Should be repeated for each option.</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>OptionUid</td>
+<td>No</td>
+<td>Stable identifier. Max 11 char.</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>OptionCode</td>
+<td>No</td>
+<td>Stable code. Max 50 char.</td>
+</tr>
+</tbody>
+</table>
+
+Sample OptionGroup CSV payload
+
+```csv
+optionGroupName,optionGroupUid,optionGroupCode,optionGroupShortName,optionSetUid,optionUid,optionCode
+optionGroupA,,,groupA,xmRubJIhmaK,,OptionA
+optionGroupA,,,groupA,xmRubJIhmaK,,OptionB
+optionGroupB,,,groupB,QYDAByFgTr1,,OptionC
+```
+### Option Group Set
+
+<table style="width:100%;">
+<caption>Option Group Set CSV Format</caption>
+<colgroup>
+<col />
+<col style="width: 14%" />
+<col style="width: 11%" />
+<col style="width: 15%" />
+<col style="width: 59%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Index</th>
+<th>Column</th>
+<th>Required</th>
+<th>Value (default first)</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>OptionGroupSetName</td>
+<td>Yes</td>
+<td>Name. Max 230 characters. Unique. Should be repeated for each option.</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>OptionGroupSetUid</td>
+<td>No</td>
+<td>Stable identifier. Max 11 char. Will be generated by system if not specified. Should be repeated for each option.</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>OptionGroupSetCode</td>
+<td>No</td>
+<td>Stable code. Max 50 char. Should be repeated for each option.</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>OptionGroupSetDescription</td>
+<td>No</td>
+<td>Description. Should be repeated for each option.</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>DataDimension</td>
+<td>No</td>
+<td>TRUE, FALSE</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>OptionSetUid</td>
+<td>No</td>
+<td>OptionSet UID. Stable identifier. Max 11 char.</td>
+</tr>
+</tbody>
+</table>
+
+Sample OptionGroupSet CSV payload
+
+```csv
+name,uid,code,description,datadimension,optionsetuid
+optiongroupsetA,,,,,xmRubJIhmaK
+optiongroupsetB,,,,false,QYDAByFgTr1
+```
+To add OptionGroups to an imported OptionGroupSet, follow the steps as importing collection membership 
+
 ### Collection membership
 
 In addition to importing objects, you can also choose to only import the
@@ -2886,6 +3131,8 @@ following group and object pairs are supported
   - Data Element Group - Data Element
 
   - Indicator Group - Indicator
+  
+  - Option Group Set - Option Group
 
 The CSV format for these imports are the same
 
@@ -2998,7 +3245,7 @@ deleted.
 
 Whenever a object of type metadata is deleted, a log is being kept of
 the uid, code, the type and the time of when it was deleted. This API is
-available at */api/deletedObjects* field filtering and object filtering
+available at `/api/deletedObjects` field filtering and object filtering
 works similarly to other metadata resources.
 
 Get deleted objects of type data elements:
@@ -3036,7 +3283,11 @@ object (e.g. the dashboard) in the metadata response.
 
 A logged user can subscribe to certain types of objects. Currently
 subscribable objects are those of type Chart, EventChart, EventReport,
-Map and ReportTable.
+Map, ReportTable and Visualization.
+
+> **Note**
+>
+> The Chart and ReportTable objects are deprecated. Use Visualization instead.
 
 To get the subscribers of an object (return an array of user IDs) you
 can make a *GET* request:
@@ -4560,7 +4811,7 @@ of file resources are not possible.
 The data value can now be retrieved as any other but the returned data
 will be the UID of the file resource. In order to retrieve the actual
 contents (meaning the file which is stored in the file resource mapped
-to the data value) a GET request must be made to */api/dataValues/files*
+to the data value) a GET request must be made to `/api/dataValues/files`
 mirroring the query parameters as they would be for the data value
 itself. The `/api/dataValues/files` endpoint only supports GET requests.
 
@@ -4798,7 +5049,7 @@ dataElements with different categoryCombos, resulting in a
 
 ### Importing data - HTTP POST
 
-DHIS2 exposes an endpoint for POST adx data at */api/dataValueSets*
+DHIS2 exposes an endpoint for POST adx data at `/api/dataValueSets`
 using *application/xml+adx* as content type. So, for example, the
 following curl command can be used to POST the example data above to the
 DHIS2 demo server:
@@ -4814,7 +5065,7 @@ same semantics as DXF.
 
 ### Exporting data - HTTP GET
 
-DHIS2 exposes an endpoint to GET adx data sets at */api/dataValueSets*
+DHIS2 exposes an endpoint to GET adx data sets at `/api/dataValueSets`
 using *application/xml+adx* as the accepted content type. So, for
 example, the following curl command can be used to retrieve the adx
 data:
@@ -5663,7 +5914,7 @@ resource like this:
 Indicators represent expressions which can be calculated and presented
 as a result. The indicator expressions are split into a numerator and
 denominator. The numerators and denominators are mathematical
-expressions which can contain references to data elements, constants and
+expressions which can contain references to data elements, other indicators, constants and
 organisation unit groups. The variables will be substituted with data
 values when used e.g. in reports. Variables which are allowed in
 expressions are described in the following table.
@@ -5689,41 +5940,46 @@ expressions are described in the following table.
 <td>Refers to a combination of an aggregate data element and a category option combination. Both category and attribute option combo ids are optional, and a wildcard &quot;*&quot; symbol can be used to indicate any value.</td>
 </tr>
 <tr class="even">
+<td>#{&lt;dataelement-id&gt;.&lt;categoryoptiongroup-id&gt;.&lt;attributeoptcombo-id&gt;}</td>
+<td>Category Option Group</td>
+<td>Refers to an aggregate data element and a category option group, containing multiple category option combinations.</td>
+</tr>
+<tr class="odd">
 <td>#{&lt;dataelement-id&gt;}</td>
 <td>Aggregate data element</td>
 <td>Refers to the total value of an aggregate data element across all category option combinations.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>D{&lt;program-id&gt;.&lt;dataelement-id&gt;</td>
 <td>Program data element</td>
 <td>Refers to the value of a tracker data element within a program.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>A{&lt;program-id&gt;.&lt;attribute-id&gt;</td>
 <td>Program tracked entity attribute</td>
 <td>Refers to the value of a tracked entity attribute within a program.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>I{program-indicator-id&gt;</td>
 <td>Program indicator</td>
 <td>Refers to the value of a program indicator.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>R{&lt;dataset-id&gt;.&lt;metric&gt;}</td>
 <td>Reporting rate</td>
 <td>Refers to a reporting rate metric. The metric can be REPORTING_RATE, REPORTING_RATE_ON_TIME, ACTUAL_REPORTS, ACTUAL_REPORTS_ON_TIME, EXPECTED_REPORTS.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>C{&lt;constant-id&gt;}</td>
 <td>Constant</td>
 <td>Refers to a constant value.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>N{&lt;indicator-id&gt;}</td>
 <td>Indicator</td>
 <td>Refers to an existing Indicator.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>OUG{&lt;orgunitgroup-id&gt;}</td>
 <td>Organisation unit group</td>
 <td>Refers to the count of organisation units within an organisation unit group.</td>
@@ -6330,7 +6586,7 @@ from the following resource with a GET request:
 
 To get a list of multiple approval statuses, you can issue a GET request similar to this:
 
-    /api/dataApprovals/multiple?wf=rIUL3hYOjJc&pe=201801,201802&ou=YuQRtpLP10I
+    /api/dataApprovals/approvals?wf=rIUL3hYOjJc&pe=201801,201802&ou=YuQRtpLP10I
 
 The parameters `wf`, `pe`, `ou`, and `aoc` are the same as for getting a single approval status, except that you can provide a comma-separated list of one or more values for each parameter.
 
@@ -6499,7 +6755,8 @@ The approval payload is supported as JSON and looks like this:
 To retrieve data approval workflows and their data approval levels you 
 can make a GET request similar to this:
 
-    /api/dataApprovalWorkflows?fields=id,name,dataApprovalLevels[id,name,level,orgUnitLevel]
+    /api/dataApprovalWorkflows?
+      fields=id,name,periodType,dataApprovalLevels[id,name,level,orgUnitLevel]
 
 ## Auditing
 
@@ -6515,7 +6772,7 @@ data.
 <!--DHIS2-SECTION-ID:webapi_auditing_aggregate_audits-->
 
 The endpoint for aggregate data value audits is located at
-*/api/audits/dataValue*, and the available parameters are displayed in
+`/api/audits/dataValue`, and the available parameters are displayed in
 the table below.
 
 <table>
@@ -6580,7 +6837,7 @@ Get all audits for data set with ID *lyLU2wR22tC*:
 <!--DHIS2-SECTION-ID:webapi_tracked_entity_data_value_audits-->
 
 The endpoint for tracked entity data value audits is located at
-*/api/audits/trackedEntityDataValue*, and the available parameters are
+`/api/audits/trackedEntityDataValue`, and the available parameters are
 displayed in the table below.
 
 <table>
@@ -6635,7 +6892,7 @@ Get all audits which have data element ID eMyVanycQSC or qrur9Dvnyt5:
 <!--DHIS2-SECTION-ID:webapi_tracked_entity_attribute_value_audits-->
 
 The endpoint for tracked entity attribute value audits is located at
-*/api/audits/trackedEntityAttributeValue*, and the available parameters
+`/api/audits/trackedEntityAttributeValue`, and the available parameters
 are displayed in the table below.
 
 <table>
@@ -7393,7 +7650,7 @@ observation or interpretation about a data report or visualization.
 <!--DHIS2-SECTION-ID:webapi_reading_interpretations-->
 
 To read interpretations we will interact with the
-*/api/interpretations* resource. A typical GET request using field
+`/api/interpretations` resource. A typical GET request using field
 filtering can look like this:
 
     GET /api/interpretations?fields=*,comments[id,text,user,mentions]
@@ -7415,6 +7672,9 @@ fields omitted for brevity):
       },
       "reportTable": {
         "id": "LcSxnfeBxyi"
+      },
+      "visualization": {
+        "id": "LcSxnfeBxyi"
       }
     }, {
       "id": "kr4AnZmYL43",
@@ -7426,6 +7686,9 @@ fields omitted for brevity):
         "id": "uk7diLujYif"
       },
       "chart": {
+        "id": "HDEDqV3yv3H"
+      },
+      "visualization": {
         "id": "HDEDqV3yv3H"
       },
       "mentions": [
@@ -7491,11 +7754,11 @@ fields omitted for brevity):
 </tr>
 <tr class="odd">
 <td>type</td>
-<td>The type of analytical object being interpreted. Valid options: REPORT_TABLE, CHART, MAP, EVENT_REPORT, EVENT_CHART, DATASET_REPORT.</td>
+<td>The type of analytical object being interpreted. Valid options: REPORT_TABLE, CHART, MAP, EVENT_REPORT, EVENT_CHART, DATASET_REPORT.
 </tr>
 <tr class="even">
 <td>user</td>
-<td>Association to the user creating the interpretation.</td>
+<td>Association to the user who created the interpretation.</td>
 </tr>
 <tr class="odd">
 <td>reportTable</td>
@@ -7506,26 +7769,30 @@ fields omitted for brevity):
 <td>Association to the chart if type is CHART.</td>
 </tr>
 <tr class="odd">
+<td>visualization</td>
+<td>Association to the visualization if type is CHART or REPORT_TABLE (**both types are in deprecation process in favour of VISUALIZATION**).</td>
+</tr>
+<tr class="even">
 <td>map</td>
 <td>Association to the map if type is MAP.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>eventReport</td>
 <td>Association to the event report is type is EVENT_REPORT.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>eventChart</td>
 <td>Association to the event chart if type is EVENT_CHART.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>dataSet</td>
 <td>Association to the data set if type is DATASET_REPORT.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>comments</td>
 <td>Array of comments for the interpretation. The text field holds the actual comment.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>mentions</td>
 <td>Array of mentions for the interpretation. A list of users identifiers.</td>
 </tr>
@@ -7576,8 +7843,13 @@ Valid options for object type are *reportTable*, *chart*, *map*,
 
 Some valid examples for interpretations are listed below.
 
+> **Note**
+>
+> The `charts` and `reportTables` APIs are deprecated. We recommend using the `visualizations` API instead.
+
     /api/interpretations/reportTable/yC86zJxU1i1
     /api/interpretations/chart/ZMuYVhtIceD
+    /api/interpretations/visualization/hQxZGXqnLS9
     /api/interpretations/map/FwLHSMCejFu
     /api/interpretations/eventReport/xJmPLGP3Cde
     /api/interpretations/eventChart/nEzXB2M9YBz
@@ -7585,7 +7857,7 @@ Some valid examples for interpretations are listed below.
 
 As an example we will start by writing an interpretation for the chart
 with identifier *EbRN2VIbPdV*. To write chart interpretations we will
-interact with the */api/interpretations/chart/{chartId}* resource.
+interact with the `/api/interpretations/chart/{chartId}` resource.
 The interpretation will be the request body. Based on this we can put
 together the following request using cURL:
 
@@ -7638,7 +7910,7 @@ that a *Location* header is returned. This header tells us the URL of
 the newly created interpretation and from that we can read its
 identifier. This identifier is randomly generated so you will have to
 replace the one in the command below with your own. To write a comment
-we can interact with the */api/interpretations/{id}/comments"*
+we can interact with the `/api/interpretations/{id}/comments`
 resource like this:
 
 ```bash
@@ -7714,11 +7986,11 @@ have liked the interpretation.
 DHIS2 has several resources for data analysis. These resources include
 *charts*, *maps*, *reportTables*, *reports* and *documents*. By visiting
 these resources you will retrieve information about the resource. For
-instance, by navigating to */api/charts/R0DVGvXDUNP* the response will
+instance, by navigating to `/api/charts/R0DVGvXDUNP` the response will
 contain the name, last date of modification and so on for the chart. To
 retrieve the analytical representation, for instance a PNG
 representation of the chart, you can append */data* to all these
-resources. For instance, by visiting */api/charts/R0DVGvXDUNP/data* the
+resources. For instance, by visiting `/api/charts/R0DVGvXDUNP/data` the
 system will return a PNG image of the chart.
 
 <table>
@@ -9270,7 +9542,7 @@ Will search for the following:
 <tr class="even">
 <td>max</td>
 <td>The type to return the maxCount for</td>
-<td>String [CHART|MAP|REPORT_TABLE|USER|REPORT|RESOURCE]</td>
+<td>String [CHART|MAP|REPORT_TABLE|USER|REPORT|RESOURCE|VISUALIZATION]</td>
 <td>N/A</td>
 </tr>
 </tbody>
@@ -9292,6 +9564,15 @@ similar to this:
   }, {
     "name": "ANC: 1st and 3rd trends Monthly",
     "id": "gnROK20DfAA"
+  }],
+  "visualizations": [{
+    "name": "ANC: ANC 3 Visits Cumulative Numbers",
+    "id": "arf9OiyV7df",
+    "type": "LINE"
+  }, {
+    "name": "ANC: 1st and 2rd trends Monthly",
+    "id": "jkf6OiyV7el",
+    "type": "PIVOT_TABLE"
   }],
   "maps": [{
     "name": "ANC: 1st visit at facility (fixed) 2013",
@@ -9328,7 +9609,7 @@ similar to this:
 
 Creating, updating and deleting dashboards follow standard REST
 semantics. In order to create a new dashboard you can make a *POST*
-request to the */api/dashboards* resource. From a consumer perspective
+request to the `/api/dashboards` resource. From a consumer perspective
 it might be convenient to first create a dashboard and later add items
 to it. JSON and XML formats are supported for the request payload. To
 create a dashboard with the name "My dashboard" you can use a payload in
@@ -9374,7 +9655,7 @@ parameters are described in detail in the following table.
 <tr class="odd">
 <td>type</td>
 <td>Type of the resource to be represented by the dashboard item</td>
-<td>chart | map | reportTable | users | reports | reportTables | resources | patientTabularReports | app</td>
+<td>chart | visualization | map | reportTable | users | reports | reportTables | resources | patientTabularReports | app</td>
 </tr>
 <tr class="even">
 <td>id</td>
@@ -9427,6 +9708,619 @@ report from a dashboard item of type reports, as opposed to removing the
 dashboard item completely:
 
     /api/dashboards/<dashboard-id>/items/<item-id>/content/<content-resource-id>
+
+## Visualization
+
+<!--DHIS2-SECTION-ID:webapi_visualization-->
+
+The Visualization API is designed to help clients to interact with charts and pivot/report tables. The endpoints of this API are used by the Data Visualization application which allows the creation, configuration and management of charts and pivot tables based on the client's definitions. The main idea is to enable clients and users to have a unique and centralized API providing all types of charts and pivot tables as well as specific parameters and configuration for each type of visualization.
+
+This API was introduced with the expectation to unify both `charts` and `reportTables` APIs and entirely replace them in favour of the `visualizations` API (which means that the usage of `charts` and `reportTables` APIs should be avoided). In summary, the following resources/APIs:
+
+    /api/charts, /api/reportTables
+
+*are being replaced by*
+
+    /api/visualizations
+
+> **Note**
+>
+> New applications and clients should avoid using the `charts` and `reportTables` APIs because they are deprecated. Use the `visualizations` API instead.
+
+A Visualization object is composed of many attributes (some of them related to charts and others related to pivot tables), but the most important ones responsible to reflect the core information of the object are: *"id", "name", "type", "dataDimensionItems", "columns", "rows" and "filters".*
+
+The root endpoint of the API is `/api/visualizations`, and the list of current attributes and elements are described in the table below.
+
+<table>
+<caption>Visualization attributes</caption>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 75%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>id</td>
+<td>The unique identifier.</td>
+</tr>
+<tr class="even">
+<td>code</td>
+<td>A custom code to identify the Visualiation.</td>
+</tr>
+<tr class="odd">
+<td>name</td>
+<td>The name of the Visualization</td>
+</tr>
+<tr class="even">
+<td>type</td>
+<td>The type of the Visualiation. The valid types are: COLUMN, STACKED_COLUMN, BAR, STACKED_BAR, LINE, AREA, PIE, RADAR, GAUGE, YEAR_OVER_YEAR_LINE YEAR_OVER_YEAR_COLUMN, SINGLE_VALUE, PIVOT_TABLE.</td>
+</tr>
+<tr class="odd">
+<td>title</td>
+<td>A custom title.</td>
+</tr>
+<tr class="even">
+<td>subtitle</td>
+<td>A custom subtitle.</td>
+</tr>
+<tr class="odd">
+<td>description</td>
+<td>Defines a custom description for the Visualization.</td>
+</tr>
+<tr class="even">
+<td>created</td>
+<td>The date/time of the Visualization creation.</td>
+</tr>
+<tr class="odd">
+<td>startDate</td>
+<td>The beginning date used for during the filtering.</td>
+</tr>
+<tr class="even">
+<td>endDate</td>
+<td>The ending date used for during the filtering.</td>
+</tr>
+<tr class="odd">
+<td>sortOrder</td>
+<td>The sorting order of this Visualization. Integer value.</td>
+</tr>
+<tr class="even">
+<td>user</td>
+<td>An object representing the creator of the Visualization.</td>
+</tr>
+<tr class="odd">
+<td>publicAccess</td>
+<td>Sets the permissions for public access.</td>
+</tr>
+<tr class="even">
+<td>displayDensity</td>
+<td>The display density of the text.</td>
+</tr>
+<tr class="odd">
+<td>fontSize</td>
+<td>The font size of the text.</td>
+</tr>
+<tr class="even">
+<td>relativePeriods</td>
+<td>An object representing the relative periods used in the analytics query.</td>
+</tr>
+<tr class="odd">
+<td>legendSet</td>
+<td>An object representing the definitions for the legend.</td>
+</tr>
+<tr class="even">
+<td>legendDisplayStyle</td>
+<td>The legend's display style. It can be: FILL or TEXT.</td>
+</tr>
+<tr class="odd">
+<td>legendDisplayStrategy</td>
+<td>The legend's display style. It can be: FIXED or BY_DATA_ITEM.</td>
+</tr>
+<tr class="even">
+<td>aggregationType</td>
+<td>Determines how the values in the pivot table are aggregated. Valid options: SUM, AVERAGE, AVERAGE_SUM_ORG_UNIT, LAST, LAST_AVERAGE_ORG_UNIT, FIRST, FIRST_AVERAGE_ORG_UNIT, COUNT, STDDEV, VARIANCE, MIN, MAX, NONE, CUSTOM or DEFAULT.</td>
+</tr>
+<tr class="odd">
+<td>regressionType</td>
+<td>A valid regression type: NONE, LINEAR, POLYNOMIAL or LOESS.</td>
+</tr>
+<tr class="even">
+<td>targetLineValue</td>
+<td>The chart target line. Accepts a Double type.</td>
+</tr>
+<tr class="odd">
+<td>targetLineLabel</td>
+<td>The chart target line label.</td>
+</tr>
+<tr class="even">
+<td>rangeAxisLabel</td>
+<td>The chart vertical axis (y) label/title.</td>
+</tr>
+<tr class="odd">
+<td>domainAxisLabel</td>
+<td>The chart horizontal axis (x) label/title.</td>
+</tr>
+<tr class="even">
+<td>rangeAxisMaxValue</td>
+<td>The chart axis maximum value. Values outside of the range will not be displayed.</td>
+</tr>
+<tr class="odd">
+<td>rangeAxisMinValue</td>
+<td>The chart axis minimum value. Values outside of the range will not be displayed.</td>
+</tr>
+<tr class="even">
+<td>rangeAxisSteps</td>
+<td>The number of axis steps between the minimum and maximum values.</td>
+</tr>
+<tr class="odd">
+<td>rangeAxisDecimals</td>
+<td>The number of decimals for the axes values.</td>
+</tr>
+<tr class="even">
+<td>baseLineValue</td>
+<td>A chart baseline value.</td>
+</tr>
+<tr class="odd">
+<td>baseLineLabel</td>
+<td>A chart baseline label.</td>
+</tr>
+<tr class="even">
+<td>digitGroupSeparator</td>
+<td>The digit group separator. Valid values: COMMA, SPACE or NONE.</td>
+</tr>
+<tr class="odd">
+<td>topLimit</td>
+<td>The top limit set for the Pivot table.</td>
+</tr>
+<tr class="even">
+<td>measureCriteria</td>
+<td>Describes the criteria applied to this measure.</td>
+</tr>
+<tr class="odd">
+<td>percentStackedValues</td>
+<td>Uses stacked values or not. More likely to be applied for graphics/charts. Boolean value.</td>
+</tr>
+<tr class="even">
+<td>noSpaceBetweenColumns</td>
+<td>Show/hide space between columns. Boolean value.</td>
+</tr>
+<tr class="odd">
+<td>regression</td>
+<td>Indicates whether the Visualization contains regression columns. More likely to be applicable to Pivot/Report. Boolean value.</td>
+</tr>
+<tr class="even">
+<td>externalAccess</td>
+<td>Indicates whether the Visualization is available as external read-only. Boolean value.</td>
+</tr>
+<tr class="odd">
+<td>userOrganisationUnit</td>
+<td>Indicates if the user has an organisation unit. Boolean value.</td>
+</tr>
+<tr class="even">
+<td>userOrganisationUnitChildren</td>
+<td>Indicates if the user has a children organisation unit. Boolean value.</td>
+</tr>
+<tr class="odd">
+<td>userOrganisationUnitGrandChildren</td>
+<td>Indicates if the user has a grand children organisation unit . Boolean value.</td>
+</tr>
+<tr class="even">
+<td>reportingParams</td>
+<td>Object used to define boolean attributes related to reporting.</td>
+</tr>
+<tr class="odd">
+<td>rowTotals</td>
+<td>Displays (or not) the row totals. Boolean value.</td>
+</tr>
+<tr class="even">
+<td>colTotals</td>
+<td>Displays (or not) the columns totals. Boolean value.</td>
+</tr>
+<tr class="odd">
+<td>rowSubTotals</td>
+<td>Displays (or not) the row sub-totals. Boolean value.</td>
+</tr>
+<tr class="even">
+<td>colSubTotals</td>
+<td>Displays (or not) the columns sub-totals. Boolean value.</td>
+</tr>
+<tr class="odd">
+<td>cumulativeValues</td>
+<td>Indicates whether the visualization is using cumulative values. Boolean value.</td>
+</tr>
+<tr class="even">
+<td>hideEmptyColumns</td>
+<td>Indicates whether to hide columns with no data values. Boolean value.</td>
+</tr>
+<tr class="odd">
+<td>hideEmptyRows</td>
+<td>Indicates whether to hide rows with no data values. Boolean value.</td>
+</tr>
+<tr class="even">
+<td>completedOnly</td>
+<td>Indicates whether to hide columns with no data values. Boolean value.</td>
+</tr>
+<tr class="odd">
+<td>skipRounding</td>
+<td>Apply or not rounding. Boolean value.</td>
+</tr>
+<tr class="even">
+<td>showDimensionLabels</td>
+<td>Shows the dimension labels or not. Boolean value.</td>
+</tr>
+<tr class="odd">
+<td>hideTitle</td>
+<td>Hides the title or not. Boolean value.</td>
+</tr>
+<tr class="even">
+<td>hideSubtitle</td>
+<td>Hides the subtitle or not. Boolean value.</td>
+</tr>
+<tr class="odd">
+<td>hideLegend</td>
+<td>Show/hide the legend. Very likely to be used by charts. Boolean value.</td>
+</tr>
+<tr class="even">
+<td>showHierarchy</td>
+<td>Displays (or not) the organisation unit hierarchy names. Boolean value.</td>
+</tr>
+<tr class="odd">
+<td>showData</td>
+<td>Used by charts to hide or not data/values within the rendered model. Boolean value.</td>
+</tr>
+<tr class="even">
+<td>lastUpdatedBy</td>
+<td>Object that represents the user that applied the last changes to the Visualization.</td>
+</tr>
+<tr class="odd">
+<td>lastUpdated</td>
+<td>The date/time of the last time the Visualization was changed.</td>
+</tr>
+<tr class="even">
+<td>favorites</td>
+<td>List of user ids who have marked this object as a favorite.</td>
+</tr>
+<tr class="odd">
+<td>subscribers</td>
+<td>List of user ids who have subscribed to this Visualization.</td>
+</tr>
+<tr class="even">
+<td>translations</td>
+<td>Set of available object translation, normally filtered by locale.</td>
+</tr>
+</tbody>
+</table>
+
+### Retrieving visualizations
+
+<!--DHIS2-SECTION-ID:webapi_visualization_retrieving_visualizations-->
+
+To retrieve a list of all existing visualizations, in JSON format, with some basic information (including identifier, name and pagination) you can make a `GET` request to the URL below. You should see a list of all public/shared visualizations plus your private ones.
+
+    GET /api/visualizations.json
+
+If you want to retrieve the JSON definition of a specific Visualization you can add its respective identifier to the URL:
+
+    GET /api/visualizations/hQxZGXqnLS9.json
+
+The following representation is an example of a response in JSON format (for brevity, certain information has been removed). For the complete schema, please use `GET /api/schemas/visualization`.
+
+```json
+{
+  "lastUpdated": "2020-02-06T11:57:09.678",
+  "href": "http://my-domain/dhis/api/visualizations/hQxZGXqnLS9",
+  "id": "hQxZGXqnLS9",
+  "created": "2017-05-19T17:22:00.785",
+  "name": "ANC: ANC 1st visits last 12 months cumulative values",
+  "publicAccess": "rw------",
+  "userOrganisationUnitChildren": false,
+  "type": "LINE",
+  "access": {},
+  "reportingParams": {
+    "parentOrganisationUnit": false,
+    "reportingPeriod": false,
+    "organisationUnit": false,
+    "grandParentOrganisationUnit": false
+  },
+  "dataElementGroupSetDimensions": [],
+  "attributeDimensions": [],
+  "yearlySeries": [],
+  "filterDimensions": [
+    "dx"
+  ],
+  "columns": [
+    {
+      "id": "ou"
+    }
+  ],
+  "dataElementDimensions": [],
+  "categoryDimensions": [],
+  "rowDimensions": [
+    "pe"
+  ],
+  "columnDimensions": [
+    "ou"
+  ],
+  "dataDimensionItems": [
+    {
+      "dataDimensionItemType": "DATA_ELEMENT",
+      "dataElement": {
+        "id": "fbfJHSPpUQD"
+      }
+    }
+  ],
+  "filters": [
+    {
+      "id": "dx"
+    }
+  ],
+  "rows": [
+    {
+      "id": "pe"
+    }
+  ]
+}
+```
+A more tailored response can be obtained by specifying, in the URL, the fields you want to extract. Ie.:
+
+    GET /api/visualizations/hQxZGXqnLS9.json?fields=interpretations
+
+will return
+
+```json
+{
+  "interpretations": [
+    {
+      "id": "Lfr8I2RPU0C"
+    },
+    {
+      "id": "JuwgdJlJPGb"
+    },
+    {
+      "id": "WAoU2rSpyZp"
+    }
+  ]
+}
+```
+
+As seen, the `GET` above will return only the interpretations related to the given identifier (in this case `hQxZGXqnLS9`).
+
+### Creating, updating and removing visualizations
+
+<!--DHIS2-SECTION-ID:webapi_visualization_add_update_remove_visualizations-->
+
+These operations follow the standard *REST* semantics. A new Visualization can be created through a `POST` request to the `/api/visualizations` resource with a valid JSON payload. An example of payload could be:
+
+```json
+{
+  "columns": [
+    {
+      "dimension": "J5jldMd8OHv",
+      "items": [
+        {
+          "name": "CHP",
+          "id": "uYxK4wmcPqA",
+          "displayName": "CHP",
+          "displayShortName": "CHP",
+          "dimensionItemType": "ORGANISATION_UNIT_GROUP"
+        },
+        {
+          "name": "Hospital",
+          "id": "tDZVQ1WtwpA",
+          "displayName": "Hospital",
+          "displayShortName": "Hospital",
+          "dimensionItemType": "ORGANISATION_UNIT_GROUP"
+        }
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "dimension": "SooXFOUnciJ",
+      "items": [
+        {
+          "name": "DOD",
+          "id": "B0bjKC0szQX",
+          "displayName": "DOD",
+          "displayShortName": "DOD",
+          "dimensionItemType": "CATEGORY_OPTION_GROUP"
+        },
+        {
+          "name": "CDC",
+          "id": "OK2Nr4wdfrZ",
+          "displayName": "CDC",
+          "displayShortName": "CDC",
+          "dimensionItemType": "CATEGORY_OPTION_GROUP"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "dimension": "ou",
+      "items": [
+        {
+          "name": "Sierra Leone",
+          "id": "ImspTQPwCqd",
+          "displayName": "Sierra Leone",
+          "displayShortName": "Sierra Leone",
+          "dimensionItemType": "ORGANISATION_UNIT"
+        },
+        {
+          "name": "LEVEL-1",
+          "id": "LEVEL-H1KlN4QIauv",
+          "displayName": "LEVEL-1"
+        }
+      ]
+    }
+  ],
+  "name": "HIV Cases Monthly",
+  "description": "Cases of HIV across the months",
+  "category": "XY1vwCQskjX",
+  "showDimensionLabels": true,
+  "hideEmptyRows": true,
+  "hideEmptyColumns": true,
+  "skipRounding": true,
+  "aggregationType": "SUM",
+  "regressionType": "LINEAR",
+  "type": "PIVOT_TABLE",
+  "numberType": "VALUE",
+  "measureCriteria": "Some criteria",
+  "showHierarchy": true,
+  "completedOnly": true,
+  "displayDensity": "NORMAL",
+  "fontSize": "NORMAL",
+  "digitGroupSeparator": "SPACE",
+  "legendDisplayStyle": "FILL",
+  "legendDisplayStrategy": "FIXED",
+  "hideEmptyRowItems": "BEFORE_FIRST_AFTER_LAST",
+  "regression": false,
+  "cumulative": true,
+  "sortOrder": 1,
+  "topLimit": 2,
+  "rowTotals": true,
+  "colTotals": true,
+  "hideTitle": true,
+  "hideSubtitle": true,
+  "hideLegend": true,
+  "showData": true,
+  "baseLineLabel": "A base label",
+  "targetLineLabel": "A target label",
+  "targetLineValue": 45.5,
+  "baseLineValue": 19.99,
+  "percentStackedValues": true,
+  "noSpaceBetweenColumns": true,
+  "rowSubTotals": true,
+  "colSubTotals": true,
+  "domainAxisLabel": "A domain axis label",
+  "rangeAxisLabel": "A range axis label",
+  "rangeAxisMaxValue": 123.65,
+  "rangeAxisMinValue": 33.89,
+  "rangeAxisSteps": 5,
+  "rangeAxisDecimals": 10,
+  "userOrgUnitType": "TEI_SEARCH",
+  "externalAccess": false,
+  "publicAccess": "--------",
+  "reportingParams": {
+    "reportingPeriod": true,
+    "organisationUnit": true,
+    "parentOrganisationUnit": true,
+    "grandParentOrganisationUnit": true
+  },
+  "parentGraphMap": {
+    "ImspTQPwCqd": ""
+  },
+  "access": {
+    "read": true,
+    "update": true,
+    "externalize": true,
+    "delete": false,
+    "write": true,
+    "manage": false
+  },
+  "optionalAxes": [
+    {
+      "dimensionalItem": "fbfJHSPpUQD",
+      "axis": 1
+    },
+    {
+      "dimensionalItem": "cYeuwXTCPkU",
+      "axis": 2
+    }
+  ],
+  "relativePeriods": {
+    "thisYear": false,
+    "quartersLastYear": true,
+    "last52Weeks": false,
+    "thisWeek": false,
+    "lastMonth": false,
+    "last14Days": false,
+    "biMonthsThisYear": false,
+    "monthsThisYear": false,
+    "last2SixMonths": false,
+    "yesterday": false,
+    "thisQuarter": false,
+    "last12Months": false,
+    "last5FinancialYears": false,
+    "thisSixMonth": false,
+    "lastQuarter": false,
+    "thisFinancialYear": false,
+    "last4Weeks": false,
+    "last3Months": false,
+    "thisDay": false,
+    "thisMonth": false,
+    "last5Years": false,
+    "last6BiMonths": false,
+    "last4BiWeeks": false,
+    "lastFinancialYear": false,
+    "lastBiWeek": false,
+    "weeksThisYear": false,
+    "last6Months": false,
+    "last3Days": false,
+    "quartersThisYear": false,
+    "monthsLastYear": false,
+    "lastWeek": false,
+    "last7Days": false,
+    "thisBimonth": false,
+    "lastBimonth": false,
+    "lastSixMonth": false,
+    "thisBiWeek": false,
+    "lastYear": false,
+    "last12Weeks": false,
+    "last4Quarters": false
+  },
+  "user": {},
+  "yearlySeries": [
+    "THIS_YEAR"
+  ],
+  "userGroupAccesses": [
+    {
+      "access": "rwx-----",
+      "userGroupUid": "ZoHNWQajIoe",
+      "displayName": "Bo District M&E officers",
+      "id": "ZoHNWQajIoe"
+    }
+  ],
+  "userAccesses": [
+    {
+      "access": "--------",
+      "displayName": "John Barnes",
+      "id": "DXyJmlo9rge",
+      "userUid": "DXyJmlo9rge"
+    }
+  ],
+  "legendSet": {
+    "name": "Death rate up",
+    "id": "ham2eIDJ9k6",
+    "legends": [
+      {
+        "startValue": 1,
+        "endValue": 2,
+        "color": "red",
+        "image": "some-image"
+      },
+      {
+        "startValue": 2,
+        "endValue": 3,
+        "color": "blue",
+        "image": "other-image"
+      }
+    ]
+  }
+}
+```
+
+To update a specific Visualization, you can send a `PUT` request to the same `/api/visualizations` resource with a similar payload `PLUS` the respective Visualization's identifier, ie.:
+
+    PUT /api/visualizations/hQxZGXqnLS9
+
+Finally, to delete an existing Visualization, you can make a `DELETE` request specifying the identifier of the Visualization to be removed, as shown:
+
+    DELETE /api/visualizations/hQxZGXqnLS9
 
 ## Analytics
 
@@ -16953,20 +17847,19 @@ following table.
 </tbody>
 </table>
 
-Note that you can specify attributes with filters for constraining the
-instances to return, or attributes without filters in order to include
-the attribute in the response without any constraints. Attributes will
-be included in the response, while filters will only be used as
-criteria.
+Note that you can specify "attribute" with filters or directly using the "filter" params for constraining the
+instances to return.
 
-Certain rules apply to which attributes are defined when no attributes
-are specified in the request:
+Certain rules apply to which attributes are returned.
 
-  - If not specifying a program, the attributes defined to be displayed
-    in lists with no program will be included in the response.
+  - If "query" is specified without any attributes or program, then all attributes that 
+    are marked as "Display in List without Program" is included in the response.
 
-  - If specifying a program, the attributes linked to the program will
+  - If program is specified,  all the attributes linked to the program will
     be included in the response.
+
+  - If tracked entity type is specified, then all tracked entity type attributes 
+    will be included in the response.
 
 You can specify queries with words separated by space - in that
 situation the system will query for each word independently and return
@@ -18005,7 +18898,7 @@ curl "http://localhost/api/33/events/ID" -H "Content-Type: application/xml" -u a
 This section explains how to read out the events that have been stored
 in the DHIS2 instance. For more advanced uses of the event data, please
 see the section on event analytics. The output format from the
-*/api/events* endpoint will match the format that is used to send events
+`/api/events` endpoint will match the format that is used to send events
 to it (which the analytics event api does not support). Both XML and
 JSON are supported, either through adding .json/.xml or by setting the
 appropriate *Accept* header. The query is paged by default and the
@@ -18359,7 +19252,7 @@ based on data element
 <!--DHIS2-SECTION-ID:webapi_event_filters-->
 
 To create, read, update and delete event filters you
-can interact with the */api/eventFilters* resource.
+can interact with the `/api/eventFilters` resource.
 
     /api/33/eventFilters
 
@@ -18985,9 +19878,9 @@ introduced support for the CSV format. Support for this format builds on
 what was described in the last section, so here we will only write about
 what the CSV specific parts are.
 
-To use the CSV format you must either use the */api/events.csv*
+To use the CSV format you must either use the `/api/events.csv`
 endpoint, or add *content-type: text/csv* for import, and *accept:
-text/csv* for export when using the */api/events* endpoint.
+text/csv* for export when using the `/api/events` endpoint.
 
 The order of column in the CSV which are used for both export and import
 is as follows:
@@ -19383,7 +20276,7 @@ DHIS2 allows for scheduling of jobs of various types. Each type of job has diffe
 </tr>
 <tr class="even">
 <td>cronExpression</td>
-<td>The cron expression which defines the interval for when the job should run. See the [cron expression reference](https://docs.oracle.com/cd/E12058_01/doc/doc.1014/e12030/cron_expressions.htm) for details.</td>
+<td>The cron expression which defines the interval for when the job should run.</td>
 <td>String (Cron expression)</td>
 </tr>
 <tr class="odd">
@@ -19397,11 +20290,6 @@ DHIS2 allows for scheduling of jobs of various types. Each type of job has diffe
 <td>(See list of job types)</td>
 </tr>
 <tr class="odd">
-<td>continuousExecution</td>
-<td>A job may be added as a continuous job which means, as soon as the job finished, it will be scheduled to run again right away. You can set `continuousExecution` to true in the payload for the job to run continuously.</td>
-<td>Boolean</td>
-</tr>
-<tr class="even">
 <td>enabled</td>
 <td>A job can be added to the system without it being scheduled by setting `enabled` to false in the JSON payload. Use this if you want to temporarily stop scheduling for a job, or if a job configuration is not complete yet.</td>
 <td>Boolean</td>
@@ -19419,19 +20307,16 @@ DHIS2 allows for scheduling of jobs of various types. Each type of job has diffe
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>DATA_INTEGRITY</td>
 <td>NONE</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>ANALYTICS_TABLE</td>
 <td><ul>
 <li><p>lastYears: Number of years back to include</p></li>
-<li><p>skipTableTypes: Skip generation of tables</p>
-<ul>
-<li><p>Possible values: DATA_VALUE, COMPLETENESS, COMPLETENESS_TARGET, ORG_UNIT_TARGET, EVENT, ENROLLMENT, VALIDATION_RESULT</p></li>
-</ul></li>
+<li><p>skipTableTypes: Skip generation of tables</p><p>Possible values: DATA_VALUE, COMPLETENESS, COMPLETENESS_TARGET, ORG_UNIT_TARGET, EVENT, ENROLLMENT, VALIDATION_RESULT</p></li>
 <li><p>skipResourceTables: Skip generation of resource tables</p></li>
 </ul></td>
 <td><ul>
@@ -19440,27 +20325,41 @@ DHIS2 allows for scheduling of jobs of various types. Each type of job has diffe
 <li><p>skipResourceTables (Boolean)</p></li>
 </ul></td>
 </tr>
-<tr class="odd">
+<tr>
+<td>CONTINUOUS_ANALYTICS_TABLE</td>
+<td><ul>
+<li><p>fullUpdateHourOfDay: Hour of day for full update of analytics tables (0-23)</p></li>
+<li><p>lastYears: Number of years back to include</p></li>
+<li><p>skipTableTypes: Skip generation of tables</p><p>Possible values: DATA_VALUE, COMPLETENESS, COMPLETENESS_TARGET, ORG_UNIT_TARGET, EVENT, ENROLLMENT, VALIDATION_RESULT</p></li>
+<li><p>skipResourceTables: Skip generation of resource tables</p></li>
+</ul></td>
+<td><ul>
+<li><p>lastYears (int:0)</p></li>
+<li><p>skipTableTypes (Array of String (Enum):None )</p></li>
+<li><p>skipResourceTables (Boolean)</p></li>
+</ul></td>
+</tr>
+<tr>
 <td>DATA_SYNC</td>
 <td>NONE</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr >
 <td>META_DATA_SYNC</td>
 <td>NONE</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>SEND_SCHEDULED_MESSAGE</td>
 <td>NONE</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>PROGRAM_NOTIFICATIONS</td>
 <td>NONE</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>MONITORING (Validation rule analysis)</td>
 <td><ul>
 <li><p>relativeStart: A number related to date of execution which resembles the start of the period to monitor</p></li>
@@ -19477,7 +20376,7 @@ DHIS2 allows for scheduling of jobs of various types. Each type of job has diffe
 <li><p>persistsResults (Boolean:false)</p></li>
 </ul></td>
 </tr>
-<tr class="even">
+<tr>
 <td>PUSH_ANALYSIS</td>
 <td><ul>
 <li><p>pushAnalysis: The uid of the push analysis you want to run</p></li>
@@ -19486,7 +20385,7 @@ DHIS2 allows for scheduling of jobs of various types. Each type of job has diffe
 <li><p>pushAnalysis (String:None)</p></li>
 </ul></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>PREDICTOR</td>
 <td><ul>
 <li><p>relativeStart: A number related to date of execution which resembles the start of the period to monitor</p></li>
@@ -19502,11 +20401,46 @@ DHIS2 allows for scheduling of jobs of various types. Each type of job has diffe
 </tbody>
 </table>
 
+### Get available job types
+
+To get a list of all available job types you can use the following endpoint:
+
+	GET /api/jobConfigurations/jobTypes
+
+The response contains information about each job type including name, job type, key, scheduling type and available parameters. The scheduling type can either be `CRON`, meaning jobs can be scheduled using a cron expression with the `cronExpression` field, or `FIXED_DELAY`, meaning jobs can be scheduled to run with a fixed delay in between with the `delay` field. The field delay is given in seconds. 
+
+A response will look similar to this:
+
+```json
+{
+  "jobTypes": [
+    {
+      "name": "Data integrity",
+      "jobType": "DATA_INTEGRITY",
+      "key": "dataIntegrityJob",
+      "schedulingType": "CRON"
+    }, {
+      "name": "Resource table",
+      "jobType": "RESOURCE_TABLE",
+      "key": "resourceTableJob",
+      "schedulingType": "CRON"
+    }, {
+      "name": "Continuous analytics table",
+      "jobType": "CONTINUOUS_ANALYTICS_TABLE",
+      "key": "continuousAnalyticsTableJob",
+      "schedulingType": "FIXED_DELAY"
+    }
+  ]
+}
+```
+
+### Create job
+
 To configure jobs you can do a POST request to the following resource:
 
     /api/jobConfigurations
 
-Adding job without parameters in JSON format:
+A job without parameters in JSON format looks like this :
 
 ```json
 {
@@ -19516,15 +20450,14 @@ Adding job without parameters in JSON format:
 }
 ```
 
-Adding job with parameters in JSON format (ANALYTICS_TABLE example):
+An example of an analytics table job with parameters in JSON format:
 
 ```json
 {
-  "name": "Analytics last two years",
+  "name": "Analytics tables last two years",
   "jobType": "ANALYTICS_TABLE",
   "cronExpression": "0 * * ? * *",
-  "jobParameters":
-  {
+  "jobParameters": {
     "lastYears": "2",
     "skipTableTypes": [],
     "skipResourceTables": false
@@ -19532,11 +20465,11 @@ Adding job with parameters in JSON format (ANALYTICS_TABLE example):
 }
 ```
 
-Adding job with parameters in JSON format (PUSH_ANALYSIS example):
+As example of a push analysis job with parameters in JSON format:
 
 ```json
- {
-   "name": "test-push-anlysis-chart",
+{
+   "name": "Push anlysis charts",
    "jobType": "PUSH_ANALYSIS",
    "cronExpression": "0 * * ? * *",
    "jobParameters": {
@@ -19547,13 +20480,30 @@ Adding job with parameters in JSON format (PUSH_ANALYSIS example):
  }
 ```
 
-List all jobConfigurations:
+An example of a job with scheduling type `FIXED_DELAY` and 120 seconds delay:
+
+```json
+{
+  "name": "Continuous analytics table",
+  "jobType": "CONTINUOUS_ANALYTICS_TABLE",
+  "delay": "120",
+  "jobParameters": {
+    "fullUpdateHourOfDay": 4
+  }
+}
+```
+
+### Get jobs
+
+List all job configurations:
 
     GET /api/jobConfigurations
 
-Retrieve a job: (ANALYTICS_TABLE example):
+Retrieve a job:
 
-    GET /api/jobConfigurations/KBcP6Qw37gT
+    GET /api/jobConfigurations/{id}
+
+The response payload looks like this:
 
 ```json
 {
@@ -19566,7 +20516,6 @@ Retrieve a job: (ANALYTICS_TABLE example):
   "displayName": "analytics last two years",
   "enabled": true,
   "externalAccess": false,
-  "continuousExecution": false,
   "jobType": "ANALYTICS_TABLE",
   "nextExecutionTime": "2018-02-26T03:00:00.000",
   "cronExpression": "0 0 3 ? * MON",
@@ -19596,16 +20545,17 @@ Retrieve a job: (ANALYTICS_TABLE example):
 }
 ```
 
-Updating job with parameters in JSON format (ANALYTICS_TABLE example):
+### Update job
 
-    PUT /api/jobConfiguration/KBcP6Qw37gT
+Update a job with parameters using the following endpoint and JSON payload format:
+
+    PUT /api/jobConfiguration/{id}
 
 ```json
 {
   "name": "analytics last two years",
   "enabled": true,
   "cronExpression": "0 0 3 ? * MON",
-  "continuousExecution": false,
   "jobType": "ANALYTICS_TABLE",
   "jobParameters": {
     "lastYears": "3",
@@ -19615,11 +20565,13 @@ Updating job with parameters in JSON format (ANALYTICS_TABLE example):
 }
 ```
 
-Deleting a job:
+### Delete job
 
-    DELETE /api/jobConfiguration/KBcP6Qw37gT
+Delete a job using:
 
-Some jobs with custom configuration parameters may not be added if the
+    DELETE /api/jobConfiguration/{id}
+
+Note that some jobs with custom configuration parameters may not be added if the
 required system settings are not configured. An example of this is data
 synchronization, which requires remote server configuration.
 
@@ -19628,8 +20580,8 @@ synchronization, which requires remote server configuration.
 <!--DHIS2-SECTION-ID:webapi_schema-->
 
 A resource which can be used to introspect all available DXF 2 objects
-can be found on */api/schemas*. For specific resources you can have a
-look at */api/schemas/TYPE*.
+can be found on `/api/schemas`. For specific resources you can have a
+look at `/api/schemas/<type>`.
 
 To get all available schemas in XML:
 
@@ -19737,7 +20689,7 @@ credentials you can make a GET request to the following resource:
 
 <!--DHIS2-SECTION-ID:webapi_apps-->
 
-The */api/apps* endpoint can be used for installing, deleting and
+The `/api/apps` endpoint can be used for installing, deleting and
 listing apps. The app key is based on the app name, but with all
 non-alphanumerical characters removed, and spaces replaced with a dash.
 *My app!* will return the key *My-app*.
@@ -20414,7 +21366,7 @@ curl -X DELETE -u admin:district "play.dhis2.org/api/33/userDataStore/foo"
 
 A predictor allows you to generate data values based on an expression.
 This can be used to generate targets, thresholds and estimated values.
-You can interact with predictors through the */api/33/predictors*
+You can interact with predictors through the `/api/33/predictors`
 resource.
 
     /api/33/predictors
